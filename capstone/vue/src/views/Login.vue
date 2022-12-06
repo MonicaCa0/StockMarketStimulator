@@ -34,6 +34,7 @@
         required
       />
       <router-link class="link" :to="{ name: 'register' }">Need an account?</router-link>
+      <button v-on:click="transferBack">Cancel</button>
       <button type="submit">Sign in</button>
       </div>
       </div>
@@ -74,6 +75,9 @@ export default {
             this.invalidCredentials = true;
           }
         });
+    },
+    transferBack(){
+      this.$router.push("/landing")
     }
   }
 };

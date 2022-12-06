@@ -7,6 +7,7 @@
 <script>
 import Hero from '../components/Hero.vue'
 export default {
+  name: 'landingPage',
 components:{
     Hero
 }
