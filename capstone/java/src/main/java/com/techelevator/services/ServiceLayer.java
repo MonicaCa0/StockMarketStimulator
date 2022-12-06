@@ -25,6 +25,10 @@ public class ServiceLayer {
         this.portfolioDao = portfolioDao;
     }
 
+    public void addUser(Game game, int id, Principal principal){
+        
+    }
+
     public List<User> getAllUsers(){
         return userDao.findAll();
     }
