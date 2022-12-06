@@ -80,6 +80,18 @@ public class JdbcGameDao implements GameDao{
 
         return game;
     }
+    @Override
+    public Game getGameByGameName(String gameName) {
+        Game game = new Game();
+        String sql ="SELECT game_id, game_name, date_finished, date_start, organizer_account_id, organizer_user_id FROM game" +
+                " WHERE game_name = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, gameName);
+        if(rowSet.next()){
+            game = mapToGameTableOnly(rowSet);
+        }
+
+        return game;
+    }
 
     @Override
     public Game createGame(Game game, int accountId) {
@@ -103,9 +115,8 @@ public class JdbcGameDao implements GameDao{
     public void addUser(Game game, int accountId) {
         String sql = "INSERT INTO game_history(game_id, user_id, account_id) VALUES(?,?,?) RETURNING game_history_id";
         jdbcTemplate.update(sql, game.getGameId(), game.getPlayerUserId(), accountId);
-
-
     }
+
 
     @Override
     public void deleteUser(int userId) {
@@ -122,6 +133,8 @@ public class JdbcGameDao implements GameDao{
 
 
     }
+
+
     private Game mapToGameHistoryTableOnly(SqlRowSet result){
         Game game = new Game();
         game.setGameId(result.getInt("game_id"));

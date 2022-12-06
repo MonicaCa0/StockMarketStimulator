@@ -14,6 +14,7 @@ public class Game {
     @JsonProperty(value = "dateFinished")
     private LocalDate dateFinished;
     private LocalDate dateStart;
+    @JsonProperty(value = "playerUserId")
     private int playerUserId;
     private int playerAccountId;
     private int organizerAccountId;
