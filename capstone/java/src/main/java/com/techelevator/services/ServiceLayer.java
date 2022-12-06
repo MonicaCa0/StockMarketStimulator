@@ -6,8 +6,11 @@ import com.techelevator.dao.UserDao;
 import com.techelevator.model.Game;
 import com.techelevator.model.Portfolio;
 import com.techelevator.model.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.List;
 
 @Component
@@ -35,9 +38,17 @@ public class ServiceLayer {
         return userDao.findIdByUsername(username);
     }
 
-   public Game createNewGame(Game game){
-       Portfolio portfolio = portfolioDao.createPortfolio(game.getOrganizerUserId());
-       return gameDao.createGame(game, portfolio.getAccountId());
+   public Game createNewGame(Game game, Principal principal, int id){
+       int userId = userDao.findIdByUsername(principal.getName());
+
+       if(id == userId) {
+           Portfolio portfolio = portfolioDao.createPortfolio(game.getOrganizerUserId());
+           game.setOrganizerUserId(userId);
+           return gameDao.createGame(game, portfolio.getAccountId());
+
+       } else {
+           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+       }
 
    }
 

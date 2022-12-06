@@ -103,8 +103,11 @@ public class JdbcGameDao implements GameDao{
         Game game = new Game();
         game.setGameId(result.getInt("game_id"));
         game.setGameName(result.getString("game_name"));
-        game.setDateFinished(result.getDate("date_finished"));
-        game.setDateStart(result.getDate("date_start"));
+        if(result.getDate("date_finished") != null) {
+            game.setDateFinished(result.getDate("date_finished").toLocalDate());
+        } if(result.getDate("date_start") != null) {
+            game.setDateStart(result.getDate("date_start").toLocalDate());
+        }
         game.setOrganizerAccountId(result.getInt("organizer_account_id"));
         game.setOrganizerUserId(result.getInt("organizer_user_id"));
         return game;
@@ -113,8 +116,11 @@ public class JdbcGameDao implements GameDao{
         Game game = new Game();
         game.setGameId(result.getInt("game_id"));
         game.setGameName(result.getString("game_name"));
-        game.setDateFinished(result.getDate("date_finished"));
-        game.setDateStart(result.getDate("date_start"));
+        if(result.getDate("date_finished") != null) {
+            game.setDateFinished(result.getDate("date_finished").toLocalDate());
+        } if(result.getDate("date_start") != null) {
+            game.setDateStart(result.getDate("date_start").toLocalDate());
+        }
         game.setOrganizerAccountId(result.getInt("organizer_account_id"));
         game.setOrganizerUserId(result.getInt("organizer_user_id"));
         game.setPlayerUserId(result.getInt("user_id"));

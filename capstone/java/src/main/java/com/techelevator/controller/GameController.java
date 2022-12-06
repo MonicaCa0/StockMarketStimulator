@@ -30,13 +30,7 @@ public class GameController {
     }
    @RequestMapping(path ="/{id}/create", method= RequestMethod.POST)
     public Game createGame(@RequestBody Game game, @PathVariable int id, Principal principal){
-       int userId = serviceLayer.findIdByUsername(principal.getName());
-       if(id == userId) {
-           game.setOrganizerUserId(userId);
-           return serviceLayer.createNewGame(game);
-       } else {
-           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
-       }
+           return serviceLayer.createNewGame(game, principal, id);
    }
 
     @RequestMapping(path="/games/{id}")

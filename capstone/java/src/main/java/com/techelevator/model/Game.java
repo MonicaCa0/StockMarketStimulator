@@ -12,8 +12,8 @@ public class Game {
     @JsonProperty(value = "gameName")
     private String gameName;
     @JsonProperty(value = "dateFinished")
-    private Date dateFinished;
-    private Date dateStart;
+    private LocalDate dateFinished;
+    private LocalDate dateStart;
     private int playerUserId;
     private int playerAccountId;
     private int organizerAccountId;
@@ -35,19 +35,19 @@ public class Game {
         this.gameName = gameName;
     }
 
-    public Date getDateFinished() {
+    public LocalDate getDateFinished() {
         return dateFinished;
     }
 
-    public void setDateFinished(Date dateFinished) {
+    public void setDateFinished(LocalDate dateFinished) {
         this.dateFinished = dateFinished;
     }
 
-    public Date getDateStart() {
+    public LocalDate getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(LocalDate dateStart) {
         this.dateStart = dateStart;
     }
 
