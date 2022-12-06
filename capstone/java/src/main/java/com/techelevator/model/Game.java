@@ -1,5 +1,6 @@
 package com.techelevator.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -7,8 +8,8 @@ public class Game {
 
     private int gameId;
     private String gameName;
-    private Date dateFinished;
-    private Date dateStart;
+    private LocalDate dateFinished;
+    private LocalDate dateStart;
     private int userId;
     private int organizer;
 
@@ -38,19 +39,19 @@ public class Game {
         this.gameName = gameName;
     }
 
-    public Date getDateFinished() {
+    public LocalDate getDateFinished() {
         return dateFinished;
     }
 
-    public void setDateFinished(Date dateFinished) {
+    public void setDateFinished(LocalDate dateFinished) {
         this.dateFinished = dateFinished;
     }
 
-    public Date getDateStart() {
+    public LocalDate getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(LocalDate dateStart) {
         this.dateStart = dateStart;
     }
 
