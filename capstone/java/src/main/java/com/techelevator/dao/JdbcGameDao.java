@@ -16,6 +16,7 @@ public class JdbcGameDao implements GameDao{
     JdbcGameDao(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
+
     @Override
     public List<Game> getAllGames() {
         List<Game> games = new ArrayList<>();
@@ -28,7 +29,7 @@ public class JdbcGameDao implements GameDao{
 
         return games;
     }
-    public List<Game> getAllGamesById(int userId) {
+    public List<Game> getAllGamesByPlayerId(int userId) {
         List<Game> games = new ArrayList<>();
         String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id AS user_id, gh.game_id, gh.account_id "+
                 "FROM game g " +
@@ -52,6 +53,19 @@ public class JdbcGameDao implements GameDao{
 
         }
         return games;
+    }
+    public Game getGameByOrganizer (int userId){
+        Game game = new Game();
+        String sql = "SELECT game_id, game_name, date_finished, date_start, organizer_user_id, organizer_account_id "+
+                "FROM game  " +
+                "  WHERE organizer_user_id = ?";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql,userId);
+        if(rowSet.next()){
+            game = (mapToGameTableOnly(rowSet));
+
+        }
+        return game;
     }
 
     @Override
@@ -79,14 +93,23 @@ public class JdbcGameDao implements GameDao{
 
     @Override
     public Game updateGame(Game game) {
+
+
         return null;
     }
 
     @Override
-    public Game addUser(int userId, int accountId) {
-
-
-        return null;
+    public Game addUser(Game game, int accountId) {
+        Game newGame = new Game();
+        String sql = "INSERT INTO game_history (game_id, user_id, account_id) " +
+                "VALUES (?,?,?) " ;
+         jdbcTemplate.update(sql, game.getGameId(), game.getPlayerUserId(), accountId);
+         String sql2 = "SELECT game_id, user_id, account_id FROM game_history WHERE game_id = ?";
+         SqlRowSet result = jdbcTemplate.queryForRowSet(sql2, game.getGameId());
+         if(result.next()){
+             newGame = mapToGameHistoryTableOnly(result);
+         }
+        return newGame;
     }
 
     @Override
@@ -97,7 +120,18 @@ public class JdbcGameDao implements GameDao{
     @Override
     public void deleteGame(int accountId) {
 
+
     }
+    private Game mapToGameHistoryTableOnly(SqlRowSet result){
+        Game game = new Game();
+        game.setGameId(result.getInt("game_id"));
+        game.setPlayerUserId(result.getInt("user_id"));
+        game.setPlayerAccountId(result.getInt("account_id"));
+        return game;
+    }
+
+
+
     private Game mapToGameTableOnly(SqlRowSet result){
         Game game = new Game();
         game.setGameId(result.getInt("game_id"));
@@ -111,6 +145,7 @@ public class JdbcGameDao implements GameDao{
         game.setOrganizerUserId(result.getInt("organizer_user_id"));
         return game;
     }
+
     private Game mapToGameAndHistoryTable(SqlRowSet result){
         Game game = new Game();
         game.setGameId(result.getInt("game_id"));

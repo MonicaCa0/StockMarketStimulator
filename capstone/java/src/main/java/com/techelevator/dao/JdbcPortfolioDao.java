@@ -56,9 +56,7 @@ public JdbcPortfolioDao(JdbcTemplate jdbcTemplate){
     @Override
     public void updatePortfolio(Portfolio portfolio) {
     String sql = "UPDATE portfolio SET account_id = ?, user_id = ? current_balance = ?, portfolio_balance = ? WHERE user_id = ?";
-
     jdbcTemplate.update(sql, portfolio.getAccountId(),portfolio.getUserId(), portfolio.getCurrentBalance(),portfolio.getPortfolioBalance(), portfolio.getUserId());
-
     }
 
     @Override

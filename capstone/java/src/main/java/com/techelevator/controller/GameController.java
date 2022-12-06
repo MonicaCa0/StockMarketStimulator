@@ -40,5 +40,9 @@ public class GameController {
            return serviceLayer.getAllGamesByUserId(id, principal);
     }
 
+    @RequestMapping(path="/{id}/addUser")
+    public Game addUser(@PathVariable int id, Game game, Principal principal){
+        return serviceLayer.addUser(game, id,principal);
+    }
 
 }
