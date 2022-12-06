@@ -56,8 +56,14 @@ public class ServiceLayer {
         return gameDao.getAllGames();
    }
 
-   public List<Game> getAllGamesByUserId(int userId){
-        return gameDao.getAllGamesById(userId);
+   public List<Game> getAllGamesByUserId(int userId, Principal principal){
+       int checkId = userDao.findIdByUsername(principal.getName());
+       if(checkId == userId) {
+           return gameDao.getAllGamesById(userId);
+       } else{
+           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+       }
+
    }
 
 

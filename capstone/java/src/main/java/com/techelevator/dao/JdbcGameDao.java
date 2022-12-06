@@ -30,12 +30,12 @@ public class JdbcGameDao implements GameDao{
     }
     public List<Game> getAllGamesById(int userId) {
         List<Game> games = new ArrayList<>();
-        String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id, gh.game_account_id "+
+        String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id AS user_id, gh.game_id, gh.account_id "+
                 "FROM game g " +
-                "JOIN ON game_history gh g.game_id = gh.game_id  WHERE user_id = ?";
+                "JOIN game_history gh ON g.game_id = gh.game_id  WHERE user_id = ?";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
         while(rowSet.next()){
-            games.add(mapToGame(rowSet));
+            games.add(mapToGameAndHistoryTable(rowSet));
         }
 
         return games;
@@ -84,8 +84,7 @@ public class JdbcGameDao implements GameDao{
 
     @Override
     public Game addUser(int userId, int accountId) {
-        // In the service layer we can call the JdbcPortfolioDao to create
-        // a new account based on adding a user to the game and then
+
 
         return null;
     }
@@ -112,7 +111,7 @@ public class JdbcGameDao implements GameDao{
         game.setOrganizerUserId(result.getInt("organizer_user_id"));
         return game;
     }
-    private Game mapToGame(SqlRowSet result){
+    private Game mapToGameAndHistoryTable(SqlRowSet result){
         Game game = new Game();
         game.setGameId(result.getInt("game_id"));
         game.setGameName(result.getString("game_name"));

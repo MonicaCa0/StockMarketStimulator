@@ -28,19 +28,16 @@ public class GameController {
     public List<Game> getAllGames(){
         return serviceLayer.getAllGames();
     }
+
+
    @RequestMapping(path ="/{id}/create", method= RequestMethod.POST)
     public Game createGame(@RequestBody Game game, @PathVariable int id, Principal principal){
            return serviceLayer.createNewGame(game, principal, id);
    }
 
-    @RequestMapping(path="/games/{id}")
-    public List<Game> getAllGames(@PathVariable int id, Principal principal){
-       int checkId = serviceLayer.findIdByUsername(principal.getName());
-       if(checkId == id) {
-           return serviceLayer.getAllGamesByUserId(id);
-       } else{
-           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
-       }
+    @RequestMapping(path="/{id}")
+    public List<Game> getAllGamesByOrganizerId(@PathVariable int id, Principal principal){
+           return serviceLayer.getAllGamesByUserId(id, principal);
     }
 
 
