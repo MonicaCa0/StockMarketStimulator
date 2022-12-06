@@ -12,7 +12,9 @@ public interface GameDao {
     Game getGameById(int gameId);
     Game createGame(Game game, int accountId);
     Game updateGame(Game game);
-    Game addUser(Game game, int accountId);
+
+    void addUser(Game game, int accountId);
+
     void deleteUser(int userId);
     void deleteGame(int accountId); // Organizer's account ID
 

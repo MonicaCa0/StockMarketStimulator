@@ -25,7 +25,10 @@ public class ServiceLayer {
         this.portfolioDao = portfolioDao;
     }
 
-    public List<User> getAllUsers() {
+
+
+    public List<User> getAllUsers(){
+
         return userDao.findAll();
     }
 
@@ -69,18 +72,6 @@ public class ServiceLayer {
 
     }
 
-    public Game addUser(Game game, int id, Principal principal) {
-        Game gameCheck = gameDao.getGameByOrganizer(id);
-        int checkId = userDao.findIdByUsername(principal.getName());
-        if (gameCheck.getOrganizerUserId() == id && checkId == id) {
-            game.setGameId(gameCheck.getGameId());
-            Portfolio portfolio = portfolioDao.createPortfolio(game.getPlayerUserId());
-            int accountId = portfolio.getAccountId();
-            return gameDao.addUser(game, accountId);
-        } else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
-        }
 
 
-    }
 }

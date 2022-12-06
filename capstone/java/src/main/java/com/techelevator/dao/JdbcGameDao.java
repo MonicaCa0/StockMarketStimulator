@@ -99,26 +99,26 @@ public class JdbcGameDao implements GameDao{
     }
 
     @Override
-    public Game addUser(Game game, int accountId) {
-        Game newGame = new Game();
-        String sql = "INSERT INTO game_history (game_id, user_id, account_id) " +
-                "VALUES (?,?,?) " ;
-         jdbcTemplate.update(sql, game.getGameId(), game.getPlayerUserId(), accountId);
-         String sql2 = "SELECT game_id, user_id, account_id FROM game_history WHERE game_id = ?";
-         SqlRowSet result = jdbcTemplate.queryForRowSet(sql2, game.getGameId());
-         if(result.next()){
-             newGame = mapToGameHistoryTableOnly(result);
-         }
-        return newGame;
+
+    public void addUser(Game game, int accountId) {
+        String sql = "INSERT INTO game_history(game_id, user_id, account_id) VALUES(?,?,?) RETURNING game_history_id";
+        jdbcTemplate.update(sql, game.getGameId(), game.getPlayerUserId(), accountId);
+
+
     }
 
     @Override
     public void deleteUser(int userId) {
+        String sql ="DELETE FROM game_history WHERE user_id = ?";
+        jdbcTemplate.update(sql, userId);
+
 
     }
 
     @Override
     public void deleteGame(int accountId) {
+        String sql = "DELETE FROM game WHERE game_id = ?";
+        jdbcTemplate.update(sql, accountId);
 
 
     }
