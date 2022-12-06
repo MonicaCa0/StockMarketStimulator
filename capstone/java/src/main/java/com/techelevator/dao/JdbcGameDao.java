@@ -16,7 +16,6 @@ public class JdbcGameDao implements GameDao{
     JdbcGameDao(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
-
     @Override
     public List<Game> getAllGames() {
         List<Game> games = new ArrayList<>();
@@ -29,7 +28,7 @@ public class JdbcGameDao implements GameDao{
 
         return games;
     }
-    public List<Game> getAllGamesByPlayerId(int userId) {
+    public List<Game> getAllGamesById(int userId) {
         List<Game> games = new ArrayList<>();
         String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id AS user_id, gh.game_id, gh.account_id "+
                 "FROM game g " +
@@ -53,19 +52,6 @@ public class JdbcGameDao implements GameDao{
 
         }
         return games;
-    }
-    public Game getGameByOrganizer (int userId){
-        Game game = new Game();
-        String sql = "SELECT game_id, game_name, date_finished, date_start, organizer_user_id, organizer_account_id "+
-                "FROM game  " +
-                "  WHERE organizer_user_id = ?";
-
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql,userId);
-        if(rowSet.next()){
-            game = (mapToGameTableOnly(rowSet));
-
-        }
-        return game;
     }
 
     @Override
@@ -91,47 +77,43 @@ public class JdbcGameDao implements GameDao{
         return getGameById(gameId);
     }
 
+    //ToDo change update game to be a boolean and also pass in a newGame
     @Override
-    public Game updateGame(Game game) {
+    public boolean updateGame(int gameId, Game newGame) {
+        LocalDate date = LocalDate.now();
+        String sql = "UPDATE game  SET game_name = ?, date_finished = ?, date_start = ?, organizer_account_id = ?, organizer_user_id = ? " +
+                "WHERE game_id = ?";
+        return jdbcTemplate.update(sql, newGame.getGameName(), newGame.getDateFinished(), newGame.getDateStart(), newGame.getOrganizerAccountId(), newGame.getOrganizerUserId(), gameId) == 1;
+    }
+
+//ToDo Service layer when we create the service layer
+/*
+    public void updateExistingGame(int gameId, Game newGame) {gameDao.update(gameId, newGame);}
+ */
+
+    //ToDo Controller
+/*
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void updateExistingCard(@Valid @RequestBody Game newGame, @PathVariable int gameId) {
+        gameService.updateExistingGame(gameId, newGame);
+        }
+ */
+    @Override
+    public Game addUser(int userId, int accountId) {
 
 
         return null;
     }
 
     @Override
-
-    public void addUser(Game game, int accountId) {
-        String sql = "INSERT INTO game_history(game_id, user_id, account_id) VALUES(?,?,?) RETURNING game_history_id";
-        jdbcTemplate.update(sql, game.getGameId(), game.getPlayerUserId(), accountId);
-
-
-    }
-
-    @Override
     public void deleteUser(int userId) {
-        String sql ="DELETE FROM game_history WHERE user_id = ?";
-        jdbcTemplate.update(sql, userId);
-
 
     }
 
     @Override
     public void deleteGame(int accountId) {
-        String sql = "DELETE FROM game WHERE game_id = ?";
-        jdbcTemplate.update(sql, accountId);
-
 
     }
-    private Game mapToGameHistoryTableOnly(SqlRowSet result){
-        Game game = new Game();
-        game.setGameId(result.getInt("game_id"));
-        game.setPlayerUserId(result.getInt("user_id"));
-        game.setPlayerAccountId(result.getInt("account_id"));
-        return game;
-    }
-
-
-
     private Game mapToGameTableOnly(SqlRowSet result){
         Game game = new Game();
         game.setGameId(result.getInt("game_id"));
@@ -145,7 +127,6 @@ public class JdbcGameDao implements GameDao{
         game.setOrganizerUserId(result.getInt("organizer_user_id"));
         return game;
     }
-
     private Game mapToGameAndHistoryTable(SqlRowSet result){
         Game game = new Game();
         game.setGameId(result.getInt("game_id"));
