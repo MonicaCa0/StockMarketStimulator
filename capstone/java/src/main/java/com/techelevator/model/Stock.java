@@ -1,14 +1,29 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Stock {
-    private int stockId;
-    private String stock_name;
-    private BigDecimal stockPrice;
-    private BigDecimal stockClosePrice;
-    private LocalDate date;
+private int stockId;
+@JsonProperty("symbol")
+private String stockName;
+@JsonProperty("open")
+private BigDecimal stockPrice;
+@JsonProperty("close")
+private BigDecimal stockClosePrice;
+@JsonProperty("from")
+private LocalDate date;
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setLocalDate(LocalDate date) {
+        this.date = date;
+    }
 
     public int getStockId() {
         return stockId;
@@ -19,11 +34,11 @@ public class Stock {
     }
 
     public String getStock_name() {
-        return stock_name;
+        return stockName;
     }
 
-    public void setStock_name(String stock_name) {
-        this.stock_name = stock_name;
+    public void setStockName(String stockName) {
+        this.stockName = stockName;
     }
 
     public BigDecimal getStockPrice() {
@@ -40,13 +55,5 @@ public class Stock {
 
     public void setStockClosePrice(BigDecimal stockClosePrice) {
         this.stockClosePrice = stockClosePrice;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 }
