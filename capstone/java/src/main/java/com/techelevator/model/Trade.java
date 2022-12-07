@@ -9,17 +9,16 @@ public class Trade {
     private int tradeType;
     BigDecimal totalCost;
     private double amountOfShares;
-    //if user entered in # of shares to buy or dollars
-    private String buyType;
+    private int accountID;
 
 
 
-    public String getBuyType() {
-        return buyType;
+    public int getAccountID() {
+        return accountID;
     }
 
-    public void setBuyType(String buyType) {
-        this.buyType = buyType;
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
     }
 
     public int getTradeID() {
@@ -67,11 +66,11 @@ public class Trade {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Trade trade = (Trade) o;
-        return getTradeID() == trade.getTradeID() && getStockID() == trade.getStockID() && getTradeType() == trade.getTradeType() && Double.compare(trade.getAmountOfShares(), getAmountOfShares()) == 0 && Objects.equals(getTotalCost(), trade.getTotalCost()) && Objects.equals(getBuyType(), trade.getBuyType());
+        return getTradeID() == trade.getTradeID() && getStockID() == trade.getStockID() && getTradeType() == trade.getTradeType() && Double.compare(trade.getAmountOfShares(), getAmountOfShares()) == 0 && Objects.equals(getTotalCost(), trade.getTotalCost()) && Objects.equals(getAccountID(), trade.getAccountID());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTradeID(), getStockID(), getTradeType(), getTotalCost(), getAmountOfShares(), getBuyType());
+        return Objects.hash(getTradeID(), getStockID(), getTradeType(), getTotalCost(), getAmountOfShares(), getAccountID());
     }
 }

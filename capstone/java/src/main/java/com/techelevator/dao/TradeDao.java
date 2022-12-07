@@ -12,4 +12,6 @@ public interface TradeDao {
     //changed this from a Stock to a Portfolio
 
     void createTrade(Trade trade);
+
+    void deleteTrade(Trade trade);
 }
