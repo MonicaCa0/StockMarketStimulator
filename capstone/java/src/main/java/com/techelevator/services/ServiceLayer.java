@@ -1,13 +1,7 @@
 package com.techelevator.services;
 
-import com.techelevator.dao.GameDao;
-import com.techelevator.dao.PortfolioDao;
-import com.techelevator.dao.StockDao;
-import com.techelevator.dao.UserDao;
-import com.techelevator.model.Game;
-import com.techelevator.model.Portfolio;
-import com.techelevator.model.Stock;
-import com.techelevator.model.User;
+import com.techelevator.dao.*;
+import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,13 +20,15 @@ public class ServiceLayer {
     private PortfolioDao portfolioDao;
     private StockDao stockDao;
     private ApiService apiService;
+    private TradeDao tradeDao;
 
-    ServiceLayer(GameDao gameDao, UserDao userDao, PortfolioDao portfolioDao, StockDao stockDao, ApiService apiService){
+    ServiceLayer(GameDao gameDao, UserDao userDao, PortfolioDao portfolioDao, StockDao stockDao, ApiService apiService, TradeDao tradeDao){
         this.gameDao =gameDao;
         this.userDao = userDao;
         this.portfolioDao = portfolioDao;
         this.stockDao = stockDao;
         this.apiService = apiService;
+        this.tradeDao =tradeDao;
     }
 
     public List<User> getAllUsers(){
@@ -95,6 +91,14 @@ public class ServiceLayer {
 
    }
 
+   //Greg Additions Below
+   public void buy(Trade trade, Portfolio portfolio ){
+        tradeDao.buy(trade, portfolio);
+   }
 
+   public void sell(Trade trade, Portfolio portfolio){
+        tradeDao.sell(trade, portfolio);
+   }
+  //Greg Additions above
 
 }
