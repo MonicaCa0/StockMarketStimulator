@@ -115,13 +115,16 @@ public class JdbcGameDao implements GameDao {
         }
 
 
-        @Override
-        public void deleteUser ( int userId){
+    @Override
+    public void deleteUser(int userId) {
+        String sql = "DELETE FROM game_history WHERE user_id = ?";
+        jdbcTemplate.update(sql, userId);
+    }
 
-        }
-
-        @Override
-        public void deleteGame ( int accountId){
+    @Override
+    public void deleteGame(int accountId) {
+        String sql = "DELETE FROM game WHERE game_id = ?";
+        jdbcTemplate.update(sql, accountId);
 
         }
 
