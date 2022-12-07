@@ -10,9 +10,19 @@ public interface GameDao {
     Game getGameById(int gameId);
     Game createGame(Game game, int accountId);
     boolean updateGame(int gameId, Game newGame);
-    Game addUser(int userId, int accountId);
+    void addUser(Game game, int accountId);
     void deleteUser(int userId);
     void deleteGame(int accountId); // Organizer's account ID
+    //ToDo Controller
+/*
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void updateExistingCard(@Valid @RequestBody Game newGame, @PathVariable int gameId) {
+        gameService.updateExistingGame(gameId, newGame);
+        }
+ */
+
+
+
 
 
 }

@@ -86,6 +86,11 @@ public class JdbcGameDao implements GameDao{
         return jdbcTemplate.update(sql, newGame.getGameName(), newGame.getDateFinished(), newGame.getDateStart(), newGame.getOrganizerAccountId(), newGame.getOrganizerUserId(), gameId) == 1;
     }
 
+    @Override
+    public void addUser(Game game, int accountId) {
+        String sql = "INSERT INTO game_history(game_id, user_id, account_id) VALUES(?,?,?)";
+        jdbcTemplate.update(sql, game.getGameId(), game.getPlayerUserId(), accountId);
+    }
 //ToDo Service layer when we create the service layer
 /*
     public void updateExistingGame(int gameId, Game newGame) {gameDao.update(gameId, newGame);}
@@ -98,20 +103,19 @@ public class JdbcGameDao implements GameDao{
         gameService.updateExistingGame(gameId, newGame);
         }
  */
-    @Override
-    public Game addUser(int userId, int accountId) {
 
-
-        return null;
-    }
 
     @Override
     public void deleteUser(int userId) {
+        String sql = "DELETE FROM game_history WHERE user_id = ?";
+        jdbcTemplate.update(sql, userId);
 
     }
 
     @Override
     public void deleteGame(int accountId) {
+        String sql = "DELETE FROM game WHERE game_id = ?";
+        jdbcTemplate.update(sql, accountId);
 
     }
     private Game mapToGameTableOnly(SqlRowSet result){

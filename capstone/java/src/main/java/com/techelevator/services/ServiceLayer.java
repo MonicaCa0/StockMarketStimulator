@@ -62,6 +62,11 @@ public class ServiceLayer {
 
    }
 
+
+    public void addUser(int id, Game game, Principal principal){
+        int user = userDao.findIdByUsername(principal.getName());
+    }
+
    public List<Game> getAllGames(){
         return gameDao.getAllGames();
    }
