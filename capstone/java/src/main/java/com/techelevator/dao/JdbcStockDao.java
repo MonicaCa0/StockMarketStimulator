@@ -1,13 +1,17 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Portfolio;
 import com.techelevator.model.Stock;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcStockDao implements StockDao{
+
     private JdbcTemplate jdbcTemplate;
 
     public JdbcStockDao(JdbcTemplate jdbcTemplate) {
@@ -17,7 +21,7 @@ public class JdbcStockDao implements StockDao{
     @Override
     public Stock getStockInfo(int stockId) {
         Stock stock = null;
-        String sql = "SELECT stock_name, current_stock_price, stock_price_at_close, date FROM stock WHERE stock_id = ?";
+        String sql = "SELECT stock_id, stock_name, current_stock_price, stock_price_at_close, date FROM stock WHERE stock_id = ?";
         SqlRowSet rowset = jdbcTemplate.queryForRowSet(sql, stockId);
         if(rowset.next()){
             stock = mapToStock(rowset);
@@ -37,13 +41,19 @@ public class JdbcStockDao implements StockDao{
         return stocks;
     }
 
+    public Stock createStock(Stock stock){
+        String sql = "INSERT INTO stock (stock_name, current_stock_price, stock_price_at_close, date) " +
+                "VALUES (?, ?, ?, ?) RETURNING stock_id ";
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, stock.getStock_name(), stock.getStockPrice(), stock.getStockClosePrice(), stock.getDate());
+        return getStockInfo(id);
+    }
     private Stock mapToStock(SqlRowSet result){
         Stock stock = new Stock();
-        stock.setStock_name(result.getString("stock_name"));
+        stock.setStockId(result.getInt("stock_id"));
+        stock.setStockName(result.getString("stock_name"));
         stock.setStockPrice(result.getBigDecimal("current_stock_price"));
         stock.setStockClosePrice(result.getBigDecimal("stock_price_at_close"));
-        if(result.getDate("date").toLocalDate()!= null){stock.setDate(result.getDate("date").toLocalDate());}
+        if(result.getDate("date").toLocalDate()!= null){stock.setLocalDate(result.getDate("date").toLocalDate());}
         return stock;
     }
-
 }

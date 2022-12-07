@@ -35,6 +35,7 @@
         required
       />
       <router-link class="link" :to="{ name: 'login' }">Have an account?</router-link>
+      <button v-on:click="transferBack">Cancel</button>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
@@ -90,6 +91,9 @@ export default {
       this.registrationErrors = false;
       this.registrationErrorMsg = 'There were problems registering this user.';
     },
+      transferBack(){
+      this.$router.push("/landing")
+    }
   },
 };
 </script>
