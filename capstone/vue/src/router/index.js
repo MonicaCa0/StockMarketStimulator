@@ -5,6 +5,9 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import LandingPage from '../views/LandingPage.vue'
+import CreateGame from '../views/CreateGame.vue'
+import JoinGame from '../views/JoinGame.vue'
+import ViewCurrentGames from '../views/ViewCurrentGames.vue'
 import store from '../store/index'
 
 Vue.use(Router)
@@ -60,6 +63,30 @@ const router = new Router({
       component: LandingPage,
       meta: {
         requiresAuth: false
+      }
+    },
+    {
+      path: "/creating",
+      name: "creating",
+      component: CreateGame,
+      meta:{
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/join",
+      name: "join",
+      component: JoinGame,
+      meta:{
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/view",
+      name: "view",
+      component: ViewCurrentGames,
+      meta:{
+        requiresAuth: true
       }
     }
   ]
