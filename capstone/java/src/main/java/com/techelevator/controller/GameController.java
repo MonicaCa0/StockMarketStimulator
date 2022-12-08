@@ -46,8 +46,8 @@ public class GameController {
 
 
     @RequestMapping(path="/{id}/addUser", method=RequestMethod.POST)
-    public void addUser(@PathVariable int id, @RequestBody Game game, Principal principal){
-        serviceLayer.addUser(game,id, principal);
+    public Game addUser(@PathVariable int id, @RequestBody Game game, Principal principal){
+        return serviceLayer.addUser(game,id, principal);
     }
 
 

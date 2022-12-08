@@ -22,6 +22,7 @@ public class Game {
     private int organizerAccountId;
     private int organizerUserId;
 
+
     public int getGameId() {
         return gameId;
     }

@@ -93,10 +93,10 @@ public class ServiceLayer {
         int userIdFromGame = checkGame.getOrganizerUserId();
         int checkId = userDao.findIdByUsername(principal.getName());
         if (userIdFromGame == id && checkId == id) {
-            game.setGameId(checkGame.getGameId());
+            checkGame.setPlayerUserId(game.getPlayerUserId());
             Portfolio portfolio = portfolioDao.createPortfolio(game.getPlayerUserId());
             int accountId = portfolio.getAccountId();
-            return gameDao.addUser(game, accountId);
+            return gameDao.addUser(checkGame, accountId);
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }

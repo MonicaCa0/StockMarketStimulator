@@ -44,20 +44,6 @@ public class JdbcGameDao implements GameDao {
         }
         return games;
     }
-    public Game getGameByOrganizer(int userId) {
-       Game game = new Game();
-        String sql = "SELECT game_id, game_name, date_finished, date_start, organizer_user_id, organizer_account_id " +
-                "FROM game  " +
-                "  WHERE organizer_user_id = ?";
-
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
-        if (rowSet.next()) {
-           game = mapToGameTableOnly(rowSet);
-
-        }
-        return game;
-    }
-
     @Override
     public Game getGameById(int gameId) {
         Game game = new Game();
@@ -80,7 +66,6 @@ public class JdbcGameDao implements GameDao {
         if (rowSet.next()) {
             game = mapToGameTableOnly(rowSet);
         }
-
         return game;
     }
 
@@ -94,29 +79,27 @@ public class JdbcGameDao implements GameDao {
         return getGameById(gameId);
     }
 
-    public boolean updateGame(int gameId, Game newGame) {
-        LocalDate date = LocalDate.now();
+    public void updateGame(int gameId, Game newGame) {
         String sql = "UPDATE game  SET game_name = ?, date_finished = ?, date_start = ?, organizer_account_id = ?, organizer_user_id = ? " +
                 "WHERE game_id = ?";
-        return jdbcTemplate.update(sql, newGame.getGameName(), newGame.getDateFinished(), newGame.getDateStart(), newGame.getOrganizerAccountId(), newGame.getOrganizerUserId(), gameId) == 1;
+       jdbcTemplate.update(sql, newGame.getGameName(), newGame.getDateFinished(), newGame.getDateStart(), newGame.getOrganizerAccountId(), newGame.getOrganizerUserId(), gameId);
     }
 
 
     public Game addUser(Game game, int accountId) {
-        Game newGame = new Game();
         String sql = "INSERT INTO game_history (game_id, user_id, account_id) " +
                 "VALUES (?,?,?) ";
 
         int gameId = game.getGameId();
         jdbcTemplate.update(sql, gameId, game.getPlayerUserId(), accountId);
-        String sql2 = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id AS user_id, gh.game_id AS game_id, gh.account_id "+
+        String sql2 = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id AS user_id, gh.game_id, gh.account_id AS account_id "+
                 "FROM game g " +
-                "JOIN game_history gh ON g.game_id = gh.game_id  WHERE g.game_id = ? AND gh.user_id =? ";
+                "JOIN game_history gh ON g.game_id = gh.game_id  WHERE g.game_id = ? AND gh.user_id = ?";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql2, gameId, game.getPlayerUserId());
         if (result.next()) {
-            newGame = mapToGameAndHistoryTable(result);
+            game = mapToGameAndHistoryTable(result);
         }
-        return newGame;
+        return game;
     }
 
     public List<Game> getAllPlayersInAGame(int gameId){
