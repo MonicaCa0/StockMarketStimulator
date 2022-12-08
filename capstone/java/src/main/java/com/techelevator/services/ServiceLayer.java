@@ -70,10 +70,6 @@ public class ServiceLayer {
    }
 
 
-    public void addUser(int id, Game game, Principal principal){
-        int user = userDao.findIdByUsername(principal.getName());
-    }
-
    public List<Game> getAllGames(){
         return gameDao.getAllGames();
     }
@@ -166,6 +162,41 @@ public class ServiceLayer {
    public List<Stock> getAllStocks(){
         return stockDao.getAllStocks();
    }
+
+   public List<Trade> getAllTrades(int id, int gameID, Principal principal) {
+        int checkId = userDao.findIdByUsername(principal.getName());
+        Game game = gameDao.getGameById(gameID);
+        int userId = game.getPlayerUserId();
+
+        if(userId == id && checkId == id){
+            return tradeDao.getAllTrades(game.getPlayerAccountId());
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
+
+    public Trade buyStock(int id, int gameID, Principal principal, Trade trade) {
+        int checkId = userDao.findIdByUsername(principal.getName());
+        Game game = gameDao.getGameById(gameID);
+        int userId = game.getPlayerUserId();
+
+        if(userId == id && checkId == id) {
+            return tradeDao.buyStock(trade);
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
+
+    public Trade sellStock(int id, int gameID, Principal principal, Trade trade) {
+        int checkId = userDao.findIdByUsername(principal.getName());
+        Game game = gameDao.getGameById(gameID);
+        int userId = game.getPlayerUserId();
+        if(userId == id && checkId == id) {
+            return tradeDao.sellStock(trade);
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
 
 }
 
