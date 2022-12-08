@@ -10,6 +10,7 @@ import com.techelevator.dao.*;
 
 import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -80,13 +81,30 @@ public class ServiceLayer {
    public List<Game> getAllGamesByUserId(int userId, Principal principal){
        int checkId = userDao.findIdByUsername(principal.getName());
        if(checkId == userId) {
-           return gameDao.getGamesByOrganizer(userId);
+           return gameDao.getAllGamesByOrganizer(userId);
        } else{
            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
        }
 
    }
 
+    public Game addUser(Game game, int id, Principal principal) {
+        Game checkGame =gameDao.getGameByGameName(game.getGameName());
+        int userIdFromGame = checkGame.getOrganizerUserId();
+        int checkId = userDao.findIdByUsername(principal.getName());
+        if (userIdFromGame == id && checkId == id) {
+            game.setGameId(checkGame.getGameId());
+            Portfolio portfolio = portfolioDao.createPortfolio(game.getPlayerUserId());
+            int accountId = portfolio.getAccountId();
+            return gameDao.addUser(game, accountId);
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+
+    }
+    public List<Game> getAllPlayers(int gameId){
+        return gameDao.getAllPlayersInAGame(gameId);
+    }
 
    public List<Stock> populateStock() {
        File file = new File("src\\Stocks.txt");
@@ -106,7 +124,7 @@ public class ServiceLayer {
    public BigDecimal getPortfolioBalance (){
         //  Need to log how much of the stock they currently have
        //  Need to take that of that stock and multiply it by the currentStock price
-       //  Then need to take that stock and add up all the prices;
+       //  Then need to take those stocks and add up all the prices;
 
         List<Trade> tradesList= new ArrayList<>();
         List<Stock> listofCurrentStocks = stockDao.getAllStocks();
@@ -135,14 +153,14 @@ public class ServiceLayer {
 
    public Stock getCurrentStock(String info) {
        LocalDate localDate = LocalDate.now().minusDays(1);
-
        Stock stock = stockDao.getStockByDate(localDate, info);
-
-           if (stock.getDate() == localDate && stock.getStockName().equals(info)) {
-               return stock;
-           } else {
-            return stockDao.createStock(apiService.getStockCurrent(info));
-           }
+       if(!(stock.getStockName().equals(info)) && stock.getDate() != localDate) {
+           Stock newStock = apiService.getStockCurrent(info);
+          if(newStock != null){
+              stock =stockDao.createStock(newStock);
+          }
+        }
+        return stock;
    }
 
    public List<Stock> getAllStocks(){

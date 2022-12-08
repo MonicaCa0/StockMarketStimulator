@@ -28,12 +28,18 @@ public class StockController {
 
     @RequestMapping(path = "/{info}" ,method = RequestMethod.GET)
     public Stock getCurrentStock(@PathVariable String info){
-        return serviceLayer.getCurrentStock(info);}
+        return serviceLayer.getCurrentStock(info);
+    }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public List<Stock> getAllStocks(){
-        return serviceLayer.getAllStocks();}
+        return serviceLayer.getAllStocks();
+    }
+
+    //TestPath to make sure that date parameter was not the issue, this works
+
     @RequestMapping(path = "/{info}/{date}", method = RequestMethod.GET)
     public Stock getStocksBDateAndName(@PathVariable String info, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date){
-        return serviceLayer.getStockByDateAndName(date,info);}
+        return serviceLayer.getStockByDateAndName(date,info);
+    }
 }
