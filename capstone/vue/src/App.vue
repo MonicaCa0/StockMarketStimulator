@@ -14,5 +14,6 @@ body{
 
 #nav{
   background:ivory;
+  margin:20px
 }
 </style>
