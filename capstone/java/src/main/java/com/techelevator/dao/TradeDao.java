@@ -6,9 +6,7 @@ import com.techelevator.model.Trade;
 
 public interface TradeDao {
 
-    void buy(Trade trade, Portfolio portfolio);
-
-    void sell(Trade trade, Stock stock);
-
     void createTrade(Trade trade);
+
+    void deleteTrade(Trade trade);
 }

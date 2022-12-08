@@ -2,6 +2,7 @@ package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
@@ -9,11 +10,13 @@ import java.util.Objects;
 public class Game {
 
     private int gameId;
-    @JsonProperty(value = "gameName")
+    @JsonProperty("gameName")
     private String gameName;
-    @JsonProperty(value = "dateFinished")
+    @JsonProperty( "dateFinished")
+    @NotBlank(message = "Please insert the day that your game is finished")
     private LocalDate dateFinished;
     private LocalDate dateStart;
+    @JsonProperty("playerUserId")
     private int playerUserId;
     private int playerAccountId;
     private int organizerAccountId;

@@ -6,11 +6,14 @@ import java.util.List;
 
 public interface GameDao {
     List<Game> getAllGames();
-    List<Game> getAllGamesById(int userId);
+    List<Game> getAllGamesByOrganizer(int userId);
+    Game getGameByOrganizer(int userId);
+    List<Game> getAllPlayersInAGame(int gameId);
     Game getGameById(int gameId);
     Game createGame(Game game, int accountId);
+    Game getGameByGameName(String gameName);
+    Game addUser(Game game, int accountId);
     boolean updateGame(int gameId, Game newGame);
-    void addUser(Game game, int accountId);
     void deleteUser(int userId);
     void deleteGame(int accountId); // Organizer's account ID
     //ToDo Controller
@@ -20,7 +23,6 @@ public interface GameDao {
         gameService.updateExistingGame(gameId, newGame);
         }
  */
-
 
 
 

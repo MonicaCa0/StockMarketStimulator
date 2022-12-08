@@ -1,6 +1,7 @@
 package com.techelevator.services;
 
 import com.techelevator.model.Stock;
+import com.techelevator.model.StockDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,9 +20,14 @@ public class ApiService {
     }
 
     public Stock getStockCurrent(String info){
-        Stock stock;
+        Stock stock = new Stock();
+        StockDTO dto;
         LocalDate localDate = LocalDate.now().minusDays(1);
-        stock = restTemplate.getForObject(API_BASE_URL + info + "/" + localDate + API_KEY, Stock.class);
+        dto = restTemplate.getForObject(API_BASE_URL + info + "/" + localDate + API_KEY, StockDTO.class);
+        stock.setStockName(dto.getStockName());
+        stock.setCurrentStockPrice(dto.getCurrentStockPrice());
+        stock.setStockPriceAtClose(dto.getStockPriceAtClose());
+        stock.setDate(dto.getDate());
         return stock;
     }
 }

@@ -34,8 +34,8 @@
         required
       />
       <router-link class="link" :to="{ name: 'register' }">Need an account?</router-link>
-      <button v-on:click="transferBack">Cancel</button>
       <button type="submit">Sign in</button>
+      <button v-on:click="transferBack">Cancel</button>
       </div>
       </div>
     </form>
@@ -65,7 +65,7 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/");
+            this.$router.push("/home");
           }
         })
         .catch(error => {
@@ -77,7 +77,7 @@ export default {
         });
     },
     transferBack(){
-      this.$router.push("/landing")
+      this.$router.push("/")
     }
   }
 };
@@ -129,6 +129,7 @@ color:#6A6EBD;
   color: #EAFF45;
 }
 button{
+  cursor: pointer;
    background:#EAFF45;
     border-color:#EAFF45;
     border-radius: 30px;

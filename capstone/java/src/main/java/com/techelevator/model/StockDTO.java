@@ -1,17 +1,23 @@
 package com.techelevator.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
-public class Stock {
+public class StockDTO {
+
     private int stockId;
+    @JsonProperty("symbol")
     private String stockName;
+    @JsonProperty("open")
     private BigDecimal currentStockPrice;
+    @JsonProperty("close")
     private BigDecimal stockPriceAtClose;
+    @JsonProperty("from")
     private LocalDate date;
 
     public int getStockId() {
@@ -54,17 +60,5 @@ public class Stock {
         this.date = date;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Stock stock = (Stock) o;
-        return stockId == stock.stockId && stockName.equals(stock.stockName) && currentStockPrice.equals(stock.currentStockPrice) && stockPriceAtClose.equals(stock.stockPriceAtClose) && date.equals(stock.date);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(stockId, stockName, currentStockPrice, stockPriceAtClose, date);
-    }
 }
-

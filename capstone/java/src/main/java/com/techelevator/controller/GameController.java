@@ -28,6 +28,10 @@ public class GameController {
     public List<Game> getAllGames(){
         return serviceLayer.getAllGames();
     }
+    @RequestMapping(path="/players/{gameId}", method= RequestMethod.GET)
+    public List<Game> getAllPlayers(@PathVariable int gameId){
+        return serviceLayer.getAllPlayers(gameId);
+    }
 
 
    @RequestMapping(path ="/{id}/create", method= RequestMethod.POST)
@@ -40,9 +44,11 @@ public class GameController {
            return serviceLayer.getAllGamesByUserId(id, principal);
     }
 
+
     @RequestMapping(path="/{id}/addUser", method=RequestMethod.POST)
     public void addUser(@PathVariable int id, @RequestBody Game game, Principal principal){
-        serviceLayer.addUser(id,game,principal);
+        serviceLayer.addUser(game,id, principal);
     }
+
 
 }
