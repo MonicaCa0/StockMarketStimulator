@@ -101,18 +101,8 @@ public class JdbcGameDao implements GameDao {
         jdbcTemplate.update(sql, game.getGameId(), game.getPlayerUserId(), accountId);
     }
         //ToDo Controller
-/*
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void updateExistingCard(@Valid @RequestBody Game newGame, @PathVariable int gameId) {
-        gameService.updateExistingGame(gameId, newGame);
-        }
- */
-        @Override
-        public Game addUser ( int userId, int accountId){
 
 
-            return null;
-        }
 
 
     @Override

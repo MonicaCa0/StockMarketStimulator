@@ -34,8 +34,8 @@
         required
       />
       <router-link class="link" :to="{ name: 'register' }">Need an account?</router-link>
-      <button v-on:click="transferBack">Cancel</button>
       <button type="submit">Sign in</button>
+      <button v-on:click="transferBack">Cancel</button>
       </div>
       </div>
     </form>

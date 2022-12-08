@@ -1,6 +1,8 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Portfolio;
+import com.techelevator.model.Stock;
+import com.techelevator.model.Trade;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -52,6 +54,29 @@ public JdbcPortfolioDao(JdbcTemplate jdbcTemplate){
 
         return getPortfolioByAccountId(accountId);
     }
+
+    @Override
+    public Portfolio updateBalance(Trade trade) {
+    if(trade.getTradeType() == 1) {
+        String sql = "UPDATE portfolio SET balance += ? WHERE account_id = ? ";
+        jdbcTemplate.update(sql, trade.getTotalCost(), trade.getAccountId());
+
+    }else if (trade.getTradeType() == 2){
+        String sql = "UPDATE portfolio SET balance -= ? WHERE account_id = ? ";
+        jdbcTemplate.update(sql, trade.getTotalCost(), trade.getAccountId());
+
+    }
+        return getPortfolioByAccountId(trade.getAccountId());
+    }
+
+    @Override
+    public BigDecimal updatePortfolioBalance(int accountId, BigDecimal balance) {
+            String sql = "UPDATE portfolio SET portfolio_balance = ? WHERE account_id = ? ";
+            jdbcTemplate.update(sql,balance, accountId);
+
+        return balance;
+    }
+
 
     @Override
     public void updatePortfolio(Portfolio portfolio) {

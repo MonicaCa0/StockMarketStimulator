@@ -34,16 +34,16 @@ public class JdbcTradeDao implements TradeDao{
 
     }
 
-    private Trade mapToTrade(SqlRowSet result){
-        Trade trade = new Trade();
-        trade.setTradeID(result.getInt("trade_id"));
-        trade.setStockID(result.getInt("stock_id"));
-        trade.setTradeType(result.getInt("trade_type_id"));
-        trade.setTotalCost(result.getBigDecimal("total_cost"));
-        trade.setAmountOfShares(result.getDouble("amount_of_shares"));
-        trade.setBuyType(result.getString("buy_type"));
-        return trade;
-    }
+//    private Trade mapToTrade(SqlRowSet result){
+//        Trade trade = new Trade();
+//        trade.setTradeID(result.getInt("trade_id"));
+//        trade.setStockID(result.getInt("stock_id"));
+//        trade.setTradeType(result.getInt("trade_type_id"));
+//        trade.setTotalCost(result.getBigDecimal("total_cost"));
+//        trade.setAmountOfShares(result.getDouble("amount_of_shares"));
+//        trade.setBuyType(result.getString("buy_type"));
+//        return trade;
+//    }
 
 
 

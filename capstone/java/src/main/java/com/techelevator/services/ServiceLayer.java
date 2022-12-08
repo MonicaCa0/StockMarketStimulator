@@ -4,10 +4,7 @@ import com.techelevator.dao.GameDao;
 import com.techelevator.dao.PortfolioDao;
 import com.techelevator.dao.StockDao;
 import com.techelevator.dao.UserDao;
-import com.techelevator.model.Game;
-import com.techelevator.model.Portfolio;
-import com.techelevator.model.Stock;
-import com.techelevator.model.User;
+import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,7 +12,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.File;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -91,6 +90,30 @@ public class ServiceLayer {
        } catch (IOException e) {
            System.out.println(e.getMessage());
        }
+   }
+
+   public BigDecimal getPortfolioBalance (){
+        //  Need to log how much of the stock they currently have
+       //  Need to take that of that stock and multiply it by the currentStock price
+       //  Then need to take that stock and add up all the prices;
+
+        List<Trade> tradesList= new ArrayList<>();
+        List<Stock> listofCurrentStocks = stockDao.getAllStocks();
+//        int i =0;
+//       while (tradesList.size()-1 != i) {
+//
+//
+//           i++;
+//       }
+
+       for(Trade t: tradesList){
+           if(t.getTradeType() == 1){
+
+           }
+       }
+// will then return that calculated balance and insert it into the portfolio
+
+       return null;
    }
 
 }
