@@ -2,11 +2,14 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Portfolio;
 import com.techelevator.model.Stock;
+import org.apache.tomcat.jni.Local;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -37,7 +40,18 @@ public class JdbcStockDao implements StockDao{
         while(rowSet.next()){
             stocks.add(mapToStock(rowSet));
         }
+        return stocks;
+    }
 
+    @Override
+    public List<Stock> getAllStocksByDate(Date date) {
+        LocalDate localDate = LocalDate.now().minusDays(1);
+        List<Stock> stocks = new ArrayList<>();
+        String sql = "SELECT stock_name, current_stock_price, stock_price_at_close, date FROM stock";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+        while(rowSet.next()){
+            stocks.add(mapToStock(rowSet));
+        }
         return stocks;
     }
 

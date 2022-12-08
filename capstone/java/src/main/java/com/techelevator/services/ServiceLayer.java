@@ -1,9 +1,13 @@
 package com.techelevator.services;
 
+<<<<<<< HEAD
 import com.techelevator.dao.GameDao;
 import com.techelevator.dao.PortfolioDao;
 import com.techelevator.dao.StockDao;
 import com.techelevator.dao.UserDao;
+=======
+import com.techelevator.dao.*;
+>>>>>>> 8510f72cd5b2329ac4394bed4783ba77dc83b931
 import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -25,13 +29,15 @@ public class ServiceLayer {
     private PortfolioDao portfolioDao;
     private StockDao stockDao;
     private ApiService apiService;
+    private TradeDao tradeDao;
 
-    ServiceLayer(GameDao gameDao, UserDao userDao, PortfolioDao portfolioDao, StockDao stockDao, ApiService apiService){
+    ServiceLayer(GameDao gameDao, UserDao userDao, PortfolioDao portfolioDao, StockDao stockDao, ApiService apiService, TradeDao tradeDao){
         this.gameDao =gameDao;
         this.userDao = userDao;
         this.portfolioDao = portfolioDao;
         this.stockDao = stockDao;
         this.apiService = apiService;
+        this.tradeDao =tradeDao;
     }
 
     public List<User> getAllUsers(){
@@ -92,6 +98,7 @@ public class ServiceLayer {
        }
    }
 
+<<<<<<< HEAD
    public BigDecimal getPortfolioBalance (){
         //  Need to log how much of the stock they currently have
        //  Need to take that of that stock and multiply it by the currentStock price
@@ -115,6 +122,17 @@ public class ServiceLayer {
 
        return null;
    }
+=======
+   //Greg Additions Below
+   public void buy(Trade trade, Portfolio portfolio ){
+        tradeDao.buy(trade, portfolio);
+   }
+
+   public void sell(Trade trade, Portfolio portfolio){
+        tradeDao.sell(trade, portfolio);
+   }
+  //Greg Additions above
+>>>>>>> 8510f72cd5b2329ac4394bed4783ba77dc83b931
 
 }
 
