@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -76,7 +77,7 @@ public class ServiceLayer {
        }
 
    }
-   public void populateStock(){
+   public List<Stock> populateStock(){
         List<String> stockInfo = new ArrayList<>();
        File file = new File("src\\Stocks.txt");
        try(Scanner scanner = new Scanner(file)){
@@ -84,21 +85,30 @@ public class ServiceLayer {
                String stockName = scanner.nextLine();
                Stock stock = apiService.getStockCurrent(stockName);
                stockDao.createStock(stock);
+
            }
        }catch(Exception e){
            e.getMessage();
        }
+       return stockDao.getAllStocks();
 
    }
-
-   //Greg Additions Below
-   public void buy(Trade trade, Portfolio portfolio ){
-        tradeDao.buy(trade, portfolio);
+   public Stock getCurrentStock(String info){
+       LocalDate localDate = LocalDate.now().minusDays(1);
+       //Stock stock = stockDao.getStockByDate(Date, info);
+       Stock checkStock = apiService.getStockCurrent(info);
+      /*  if(stock.equals(checkStock)){
+           return checkStock;
+        } else {
+            stockDao.createStock(apiService.getStockCurrent(info));
+            return apiService.getStockCurrent(info);
+        }*/
+       return apiService.getStockCurrent(info);
    }
 
-   public void sell(Trade trade, Portfolio portfolio){
-        tradeDao.sell(trade, portfolio);
+   public List<Stock> getAllStocks(){
+        return stockDao.getAllStocks();
    }
-  //Greg Additions above
+
 
 }

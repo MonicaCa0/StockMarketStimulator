@@ -35,7 +35,7 @@ public class JdbcStockDao implements StockDao{
     @Override
     public List<Stock> getAllStocks() {
         List<Stock> stocks = new ArrayList<>();
-        String sql = "SELECT stock_name, current_stock_price, stock_price_at_close, date FROM stock";
+        String sql = "SELECT stock_id, stock_name, current_stock_price, stock_price_at_close, date FROM stock";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
         while(rowSet.next()){
             stocks.add(mapToStock(rowSet));
@@ -44,11 +44,21 @@ public class JdbcStockDao implements StockDao{
     }
 
     @Override
+    public Stock getStockByDate(Date date, String info) {
+        Stock stock = new Stock();
+        String sql = "SELECT stock_id, stock_name, current_stock_price, stock_price_at_close, date FROM stock WHERE date = ? AND stock_name = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, date, info);
+        if(rowSet.next()){
+        stock = (mapToStock(rowSet));
+        }
+        return stock;
+    }
+
+    @Override
     public List<Stock> getAllStocksByDate(Date date) {
-        LocalDate localDate = LocalDate.now().minusDays(1);
         List<Stock> stocks = new ArrayList<>();
-        String sql = "SELECT stock_name, current_stock_price, stock_price_at_close, date FROM stock";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+        String sql = "SELECT stock_id, stock_name, current_stock_price, stock_price_at_close, date FROM stock WHERE date = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, date);
         while(rowSet.next()){
             stocks.add(mapToStock(rowSet));
         }

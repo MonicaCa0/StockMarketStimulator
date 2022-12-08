@@ -19,15 +19,5 @@ public class TradeController {
         this.serviceLayer = serviceLayer;
     }
 
-    //Gonna need help with this.
-    @RequestMapping(path = "/buy")
-    public void buy(@RequestBody Trade trade, @PathVariable Portfolio portfolio){
-        serviceLayer.buy(trade, portfolio);
-    }
-
-    @RequestMapping(path = "/{id}/sell")
-    public void sell(@RequestBody Trade trade, @PathVariable Portfolio portfolio){
-        serviceLayer.sell(trade, portfolio);
-    }
 
 }

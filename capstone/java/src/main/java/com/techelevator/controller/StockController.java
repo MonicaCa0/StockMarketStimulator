@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequestMapping(path = "/stocks")
 @RestController
 public class StockController {
@@ -20,9 +22,12 @@ public class StockController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public void getStock(){serviceLayer.populateStock();}
-/*
+    public List<Stock> getStock(){return serviceLayer.populateStock();}
+
     @RequestMapping(path = "/{info}" ,method = RequestMethod.GET)
-    public Stock getCurrentStock(@PathVariable String info){return apiService.getStockCurrent(info);}
-*/
+    public Stock getCurrentStock(@PathVariable String info){return serviceLayer.getCurrentStock(info);}
+
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public List<Stock> getAllStocks(){return serviceLayer.getAllStocks();}
+
 }
