@@ -92,7 +92,7 @@ export default {
       this.registrationErrorMsg = 'There were problems registering this user.';
     },
       transferBack(){
-      this.$router.push("/landing")
+      this.$router.push("/")
     }
   },
 };
@@ -147,6 +147,7 @@ color:#6A6EBD;
   color: #EAFF45;
 }
 button{
+  cursor: pointer;
    background:#EAFF45;
     border-color:#EAFF45;
     border-radius: 30px;
