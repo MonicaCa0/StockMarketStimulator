@@ -28,8 +28,9 @@ export default {
     <sidebarlink to="/" font-awesome-icon icon="fa-solid fa-house" >Home</sidebarlink>
     <sidebarlink to="/portfolio" i class="fa-solid fa-file">Portfolio</sidebarlink>
     <sidebarlink to="/games" icon="fa-solid fa-gamepad">Games</sidebarlink>
-    <sidebarlink to="/friends" icon="fas fa-users">Trade</sidebarlink>
+    <sidebarlink to="/trade" icon="fas fa-users">Trade</sidebarlink>
     <sidebarlink to="/image" icon="fas fa-image">Research</sidebarlink> 
+    <sidebarlink to="/logout">Logout</sidebarlink>
 
     <span
       class="collapse-icon"
