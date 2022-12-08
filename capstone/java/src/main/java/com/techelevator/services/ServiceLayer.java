@@ -203,14 +203,11 @@ public class ServiceLayer {
 
    public Stock getCurrentStock(String info) {
        LocalDate localDate = LocalDate.now().minusDays(1);
-       Stock stock = stockDao.getStockByDate(localDate, info);
-       if(!(stock.getStockName().equals(info)) && stock.getDate() != localDate) {
            Stock newStock = apiService.getStockCurrent(info);
           if(newStock != null){
-              stock =stockDao.createStock(newStock);
+              stockDao.createStock(newStock);
           }
-        }
-        return stock;
+        return newStock;
    }
 
    public List<Stock> getAllStocks(){

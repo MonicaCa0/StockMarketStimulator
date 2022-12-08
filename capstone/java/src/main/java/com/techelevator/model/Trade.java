@@ -8,6 +8,16 @@ public class Trade {
     private int stockId;
     private int accountId;
     private int tradeType;
+
+    public String getTradeDesc() {
+        return tradeDesc;
+    }
+
+    public void setTradeDesc(String tradeDesc) {
+        this.tradeDesc = tradeDesc;
+    }
+
+    private String tradeDesc;
     BigDecimal totalCost;
     private double amountOfShares;
     //if user entered in # of shares to buy or dollars

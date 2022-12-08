@@ -21,7 +21,7 @@ public class ApiService {
 
     public Stock getStockCurrent(String info){
         Stock stock = new Stock();
-        StockDTO  n = new StockDTO();
+        StockDTO  n ;
         LocalDate localDate = LocalDate.now().minusDays(1);
         n = restTemplate.getForObject(API_BASE_URL + info + "/" + localDate + API_KEY, StockDTO.class);
         stock.setStockName(n.getStockName());

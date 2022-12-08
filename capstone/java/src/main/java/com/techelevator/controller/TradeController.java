@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
-@RequestMapping(path = "/trade")
+@RequestMapping(path = "/trades")
 @RestController
 public class TradeController {
 
@@ -19,7 +19,7 @@ public class TradeController {
         this.serviceLayer = serviceLayer;
     }
 
-    @RequestMapping(path = "/{id}/{gameID}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}/allTrades/{gameID}", method = RequestMethod.GET)
     public List<Trade> getAllTrades(@PathVariable int id, @PathVariable int gameID, Principal principal){
         return serviceLayer.getAllTrades(id, gameID, principal);
     }

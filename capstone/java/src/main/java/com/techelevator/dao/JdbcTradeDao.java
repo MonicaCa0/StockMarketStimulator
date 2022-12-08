@@ -37,19 +37,31 @@ public class JdbcTradeDao implements TradeDao{
     @Override
     public List<Trade> getAllTrades(int accountID){
         List<Trade> allTrades = new ArrayList<>();
-        String sql = "SELECT trade_id, stock_id, account_id, trade_type_id, total_cost, amount_of_shares " +
-                "FROM trade WHERE account_id = ?";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, accountID, Trade.class);
+        String sql = "SELECT t.trade_id, t.stock_id, t.account_id, t.trade_type_id, t.total_cost, t.amount_of_shares, ta.trade_type_desc " +
+                "FROM trade t " +
+                "JOIN trade_type ON t.trade_type_id = ta.trade_type_id WHERE account_id = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, accountID);
         while(rowSet.next()){
             allTrades.add(mapToTrade(rowSet));
         }
         return allTrades;
     }
+    public Trade getTradeById(int tradeID){
+        Trade newTrade = new Trade();
+        String sql = "SELECT t.trade_id, t.stock_id, t.account_id, t.trade_type_id, t.total_cost, t.amount_of_shares, ta.trade_type_desc " +
+                "FROM trade t " +
+                "JOIN trade_type ON t.trade_type_id = ta.trade_type_id WHERE t.trade_id = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, tradeID);
+        if(rowSet.next()){
+            newTrade = mapToTrade(rowSet);
+        }
+        return newTrade;
+    }
 
     @Override
     public Trade buyStock(Trade trade){
         String sql = "INSERT INTO trade(stock_id, account_id, trade_type_id, total_cost, amount_of_shares " +
-                "VALUES(?,?,?,?,?)";
+                "VALUES(?,?,?,?,?) RETURNING trade_id";
         Integer id = jdbcTemplate.queryForObject(sql, Integer.class, trade.getStockId(), trade.getAccountID(), 1, trade.getTotalCost(), trade.getAmountOfShares());
         return getTradeById(id);
     }
@@ -62,17 +74,7 @@ public class JdbcTradeDao implements TradeDao{
         return getTradeById(id);
     }
 
-    //make the trade
-    public Trade getTradeById(int tradeID){
-        Trade newTrade = new Trade();
-        String sql = "SELECT trade_id, stock_id, account_id, trade_type_id, total_cost, amount_of_shares " +
-                "FROM trade WHERE trade_id = ?";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, tradeID);
-        if(rowSet.next()){
-            newTrade = mapToTrade(rowSet);
-        }
-        return newTrade;
-    }
+
 
     private Trade mapToTrade(SqlRowSet result){
         Trade trade = new Trade();
@@ -80,7 +82,9 @@ public class JdbcTradeDao implements TradeDao{
         trade.setStockId(result.getInt("stock_id"));
         trade.setAccountID(result.getInt("account_id"));
         trade.setTradeType(result.getInt("trade_type_id"));
+        trade.setTradeDesc(result.getString("trade_type_id"));
         trade.setTotalCost(result.getBigDecimal("total_cost"));
+        trade.setTradeDesc(result.getString("trade_type_desc"));
         trade.setAmountOfShares(result.getDouble("amount_of_shares"));
         return trade;
     }
