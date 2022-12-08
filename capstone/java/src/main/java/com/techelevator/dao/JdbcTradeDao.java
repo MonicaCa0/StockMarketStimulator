@@ -34,9 +34,9 @@ public class JdbcTradeDao implements TradeDao{
         jdbcTemplate.update(sql, trade.getTradeId());
     }
 
-    public List<Trade> getAllTrades(Portfolio portfolio){
+    @Override
+    public List<Trade> getAllTrades(int accountID){
         List<Trade> allTrades = new ArrayList<>();
-        int accountID = portfolio.getAccountId();
         String sql = "SELECT trade_id, stock_id, account_id, trade_type_id, total_cost, amount_of_shares " +
                 "FROM trade WHERE account_id = ?";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, accountID, Trade.class);
@@ -46,7 +46,33 @@ public class JdbcTradeDao implements TradeDao{
         return allTrades;
     }
 
+    @Override
+    public Trade buyStock(Trade trade){
+        String sql = "INSERT INTO trade(stock_id, account_id, trade_type_id, total_cost, amount_of_shares " +
+                "VALUES(?,?,?,?,?)";
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, trade.getStockId(), trade.getAccountID(), 1, trade.getTotalCost(), trade.getAmountOfShares());
+        return getTradeById(id);
+    }
 
+    @Override
+    public Trade sellStock(Trade trade){
+        String sql = "INSERT INTO trade(stock_id, account_id, trade_type_id, total_cost, amount_of_shares " +
+                "VALUES(?,?,?,?,?) RETURNING trade_id";
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, trade.getStockId(), trade.getAccountID(), 2, trade.getTotalCost(), trade.getAmountOfShares());
+        return getTradeById(id);
+    }
+
+    //make the trade
+    public Trade getTradeById(int tradeID){
+        Trade newTrade = new Trade();
+        String sql = "SELECT trade_id, stock_id, account_id, trade_type_id, total_cost, amount_of_shares " +
+                "FROM trade WHERE trade_id = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, tradeID);
+        if(rowSet.next()){
+            newTrade = mapToTrade(rowSet);
+        }
+        return newTrade;
+    }
 
     private Trade mapToTrade(SqlRowSet result){
         Trade trade = new Trade();

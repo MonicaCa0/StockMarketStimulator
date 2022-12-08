@@ -167,5 +167,41 @@ public class ServiceLayer {
         return stockDao.getAllStocks();
    }
 
+   public List<Trade> getAllTrades(int id, int gameID, Principal principal) {
+        int checkId = userDao.findIdByUsername(principal.getName());
+        Game game = gameDao.getGameById(gameID);
+        int userId = game.getPlayerUserId();
+
+        if(userId == id && checkId == id){
+            return tradeDao.getAllTrades(game.getPlayerAccountId());
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
+
+    public Trade buyStock(int id, int gameID, Principal principal, Trade trade) {
+        int checkId = userDao.findIdByUsername(principal.getName());
+        Game game = gameDao.getGameById(gameID);
+        int userId = game.getPlayerUserId();
+
+        if(userId == id && checkId == id) {
+            return tradeDao.buyStock(trade);
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
+
+    public Trade sellStock(int id, int gameID, Principal principal, Trade trade) {
+        int checkId = userDao.findIdByUsername(principal.getName());
+        Game game = gameDao.getGameById(gameID);
+        int userId = game.getPlayerUserId();
+
+        if(userId == id && checkId == id) {
+            return tradeDao.sellStock(trade);
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
+
 }
 
