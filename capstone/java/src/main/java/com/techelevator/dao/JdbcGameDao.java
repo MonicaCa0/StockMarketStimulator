@@ -87,12 +87,12 @@ public class JdbcGameDao implements GameDao {
 
 
     public Game addUser(Game game, int accountId) {
-        String sql = "INSERT INTO game_history (game_id, user_id, account_id) " +
-                "VALUES (?,?,?) ";
+        String sql = "INSERT INTO game_history (game_id, user_id, account_id, approval_id) " +
+                "VALUES (?,?,?,?) ";
 
         int gameId = game.getGameId();
-        jdbcTemplate.update(sql, gameId, game.getPlayerUserId(), accountId);
-        String sql2 = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id AS user_id, gh.game_id, gh.account_id AS account_id "+
+        jdbcTemplate.update(sql, gameId, game.getPlayerUserId(), accountId, 1);
+        String sql2 = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id AS user_id, gh.game_id, gh.account_id AS account_id, gh.approval_id, a.approval_desc "+
                 "FROM game g " +
                 "JOIN game_history gh ON g.game_id = gh.game_id  WHERE g.game_id = ? AND gh.user_id = ?";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql2, gameId, game.getPlayerUserId());
@@ -102,12 +102,25 @@ public class JdbcGameDao implements GameDao {
         return game;
     }
 
+
+    public Game userApprove(Game game,  int approvalId){
+        String sql = "UPDATE INTO game_history SET approval_id = ?" +
+                "VALUES(?) WHERE game_id = ? AND account_id = ?";
+        jdbcTemplate.update(sql, approvalId, game.getGameId(), game.getPlayerAccountId());
+
+        return getGameById(game.getGameId());
+
+    }
+
     public List<Game> getAllPlayersInAGame(int gameId){
         List<Game> players = new ArrayList<>();
-        String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id, gh.game_id, gh.account_id "+
+        String approvalDesc = "Approved";
+        String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id, gh.game_id, gh.account_id, gh.approval_id, a.approval_desc  "+
                 "FROM game g " +
-        "JOIN game_history gh ON g.game_id = gh.game_id  WHERE g.game_id = ? ";
-        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, gameId);
+        "JOIN game_history gh ON g.game_id = gh.game_id  " +
+                "JOIN approval a ON gh.approval_id = a.approval_id " +
+                "WHERE g.game_id = ? AND a.approval_desc = ?";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, gameId, approvalDesc);
         while (result.next()) {
             players.add(mapToGameAndHistoryTable(result));
 
@@ -168,6 +181,8 @@ public class JdbcGameDao implements GameDao {
             game.setOrganizerUserId(result.getInt("organizer_user_id"));
             game.setPlayerUserId(result.getInt("user_id"));
             game.setPlayerAccountId(result.getInt("account_id"));
+            game.setApprovalId(result.getInt("approval_id"));
+            game.setApprovalId(result.getInt("approval_desc"));
             return game;
         }
 

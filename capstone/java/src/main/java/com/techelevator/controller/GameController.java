@@ -49,6 +49,18 @@ public class GameController {
     public Game addUser(@PathVariable int id, @RequestBody Game game, Principal principal){
         return serviceLayer.addUser(game,id, principal);
     }
+//    @RequestMapping(path="/{playerId}/invites", method=RequestMethod.POST)
+            //can see the List of pending invites they have
+//    public Game approveOrDenyRequest(@PathVariable int playerId, @RequestBody Game game, Principal principal){
+//
+//    }
+    //    @RequestMapping(path="/{playerId}/response", method=RequestMethod.POST)
+    //can see the List of pending invites they have
+//    public Game approveOrDenyRequest(@PathVariable int playerId, @RequestBody Game game, Principal principal){
+//
+//    }
+
+
 
 
 }

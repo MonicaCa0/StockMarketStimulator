@@ -21,7 +21,16 @@ public class Game {
     private int playerAccountId;
     private int organizerAccountId;
     private int organizerUserId;
+    private int approvalId;
+    private String approvalDesc;
 
+    public int getApprovalId() {
+        return approvalId;
+    }
+
+    public void setApprovalId(int approvalId) {
+        this.approvalId = approvalId;
+    }
 
     public int getGameId() {
         return gameId;
