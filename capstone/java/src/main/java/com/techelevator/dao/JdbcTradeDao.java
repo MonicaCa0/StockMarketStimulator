@@ -20,26 +20,6 @@ public class JdbcTradeDao implements TradeDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-//ToDo Greg Additions between todos Below
-    @Override
-    public void buy(Trade trade, Portfolio portfolio) {
-        String sql = "SELECT current_balance FROM portfolio WHERE account_id = ? ";
-        BigDecimal initialBalance = jdbcTemplate.queryForObject(sql, BigDecimal.class, portfolio.getAccountId());
-        BigDecimal newBalance = initialBalance.subtract(trade.getTotalCost());
-        String sql2 = "UPDATE portfolio SET current_balance = ? WHERE account_id = ?";
-        jdbcTemplate.update(sql2, newBalance, portfolio.getAccountId());
-    }
-
-    @Override
-    public void sell(Trade trade, Portfolio portfolio) {
-        String sql = "SELECT current_balance FROM portfolio WHERE account_id = ? ";
-        BigDecimal initialBalance = jdbcTemplate.queryForObject(sql, BigDecimal.class, portfolio.getAccountId());
-        BigDecimal newBalance = initialBalance.add(trade.getTotalCost());
-        String sql2 = "UPDATE portfolio SET current_balance = ? WHERE account_id = ?";
-        jdbcTemplate.update(sql2, newBalance, portfolio.getAccountId());
-        //We need to pass in a portfolio here, not a stock. The trade object will have what we need
-    }
-    //ToDo Greg Additions between todos Above
 
     @Override
     public void createTrade(Trade trade) {

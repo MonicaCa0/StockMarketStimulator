@@ -1,13 +1,13 @@
 package com.techelevator.services;
 
-<<<<<<< HEAD
+
 import com.techelevator.dao.GameDao;
 import com.techelevator.dao.PortfolioDao;
 import com.techelevator.dao.StockDao;
 import com.techelevator.dao.UserDao;
-=======
+
 import com.techelevator.dao.*;
->>>>>>> 8510f72cd5b2329ac4394bed4783ba77dc83b931
+
 import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -85,20 +86,26 @@ public class ServiceLayer {
        }
 
    }
-   public void populateStock() {
+
+
+   public List<Stock> populateStock() {
+       List<String> stockInfo = new ArrayList<>();
+
        File file = new File("src\\Stocks.txt");
        try (Scanner scanner = new Scanner(file)) {
            while (scanner.hasNextLine()) {
                String stockName = scanner.nextLine();
                Stock stock = apiService.getStockCurrent(stockName);
                stockDao.createStock(stock);
+
            }
        } catch (IOException e) {
            System.out.println(e.getMessage());
        }
+        return getAllStocks();
    }
 
-<<<<<<< HEAD
+
    public BigDecimal getPortfolioBalance (){
         //  Need to log how much of the stock they currently have
        //  Need to take that of that stock and multiply it by the currentStock price
@@ -122,17 +129,24 @@ public class ServiceLayer {
 
        return null;
    }
-=======
-   //Greg Additions Below
-   public void buy(Trade trade, Portfolio portfolio ){
-        tradeDao.buy(trade, portfolio);
+
+   public Stock getCurrentStock(String info){
+       LocalDate localDate = LocalDate.now().minusDays(1);
+       //Stock stock = stockDao.getStockByDate(Date, info);
+       Stock checkStock = apiService.getStockCurrent(info);
+      /*  if(stock.equals(checkStock)){
+           return checkStock;
+        } else {
+            stockDao.createStock(apiService.getStockCurrent(info));
+            return apiService.getStockCurrent(info);
+        }*/
+       return apiService.getStockCurrent(info);
+
    }
 
-   public void sell(Trade trade, Portfolio portfolio){
-        tradeDao.sell(trade, portfolio);
+   public List<Stock> getAllStocks(){
+        return stockDao.getAllStocks();
    }
-  //Greg Additions above
->>>>>>> 8510f72cd5b2329ac4394bed4783ba77dc83b931
 
 }
 

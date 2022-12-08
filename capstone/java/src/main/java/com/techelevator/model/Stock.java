@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 public class Stock {
 private int stockId;
@@ -56,4 +57,5 @@ private LocalDate date;
     public void setStockClosePrice(BigDecimal stockClosePrice) {
         this.stockClosePrice = stockClosePrice;
     }
+
 }
