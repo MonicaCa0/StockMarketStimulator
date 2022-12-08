@@ -30,6 +30,7 @@ export default {
     <sidebarlink to="/games" icon="fa-solid fa-gamepad">Games</sidebarlink>
     <sidebarlink to="/friends" icon="fas fa-users">Trade</sidebarlink>
     <sidebarlink to="/image" icon="fas fa-image">Research</sidebarlink> 
+    <sidebarlink to="/logout">Logout</sidebarlink>
 
     <span
       class="collapse-icon"
