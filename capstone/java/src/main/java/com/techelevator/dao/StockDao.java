@@ -10,6 +10,6 @@ public interface StockDao {
     Stock getStockInfo(int stockId);
     List<Stock> getAllStocks();
     Stock createStock(Stock stock);
-    public List<Stock> getAllStocksByDate(Date date);
-    public Stock getStockByDate(Date date, String info);
+    public List<Stock> getAllStocksByDate(LocalDate date);
+    public Stock getStockByDate(LocalDate date, String info);
 }

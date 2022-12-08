@@ -44,7 +44,7 @@ public class JdbcStockDao implements StockDao{
     }
 
     @Override
-    public Stock getStockByDate(Date date, String info) {
+    public Stock getStockByDate(LocalDate date, String info) {
         Stock stock = new Stock();
         String sql = "SELECT stock_id, stock_name, current_stock_price, stock_price_at_close, date FROM stock WHERE date = ? AND stock_name = ?";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, date, info);
@@ -55,7 +55,7 @@ public class JdbcStockDao implements StockDao{
     }
 
     @Override
-    public List<Stock> getAllStocksByDate(Date date) {
+    public List<Stock> getAllStocksByDate(LocalDate date) {
         List<Stock> stocks = new ArrayList<>();
         String sql = "SELECT stock_id, stock_name, current_stock_price, stock_price_at_close, date FROM stock WHERE date = ?";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, date);
@@ -68,16 +68,17 @@ public class JdbcStockDao implements StockDao{
     public Stock createStock(Stock stock){
         String sql = "INSERT INTO stock (stock_name, current_stock_price, stock_price_at_close, date) " +
                 "VALUES (?, ?, ?, ?) RETURNING stock_id ";
-        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, stock.getStock_name(), stock.getStockPrice(), stock.getStockClosePrice(), stock.getDate());
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, stock.getStockName(), stock.getCurrentStockPrice(), stock.getStockPriceAtClose(), stock.getDate());
         return getStockInfo(id);
     }
     private Stock mapToStock(SqlRowSet result){
         Stock stock = new Stock();
         stock.setStockId(result.getInt("stock_id"));
         stock.setStockName(result.getString("stock_name"));
-        stock.setStockPrice(result.getBigDecimal("current_stock_price"));
-        stock.setStockClosePrice(result.getBigDecimal("stock_price_at_close"));
-        if(result.getDate("date").toLocalDate()!= null){stock.setLocalDate(result.getDate("date").toLocalDate());}
+        stock.setCurrentStockPrice(result.getBigDecimal("current_stock_price"));
+        stock.setStockPriceAtClose(result.getBigDecimal("stock_price_at_close"));
+        if(result.getDate("date").toLocalDate()!= null){
+            stock.setDate(result.getDate("date").toLocalDate());}
         return stock;
     }
 }

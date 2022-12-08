@@ -89,15 +89,12 @@ public class ServiceLayer {
 
 
    public List<Stock> populateStock() {
-       List<String> stockInfo = new ArrayList<>();
-
        File file = new File("src\\Stocks.txt");
        try (Scanner scanner = new Scanner(file)) {
            while (scanner.hasNextLine()) {
                String stockName = scanner.nextLine();
                Stock stock = apiService.getStockCurrent(stockName);
                stockDao.createStock(stock);
-
            }
        } catch (IOException e) {
            System.out.println(e.getMessage());
@@ -130,18 +127,22 @@ public class ServiceLayer {
        return null;
    }
 
-   public Stock getCurrentStock(String info){
-       LocalDate localDate = LocalDate.now().minusDays(1);
-       //Stock stock = stockDao.getStockByDate(Date, info);
-       Stock checkStock = apiService.getStockCurrent(info);
-      /*  if(stock.equals(checkStock)){
-           return checkStock;
-        } else {
-            stockDao.createStock(apiService.getStockCurrent(info));
-            return apiService.getStockCurrent(info);
-        }*/
-       return apiService.getStockCurrent(info);
+   public Stock getStockByDateAndName(LocalDate date, String info){
+        return stockDao.getStockByDate(date,info);
+   }
 
+
+
+   public Stock getCurrentStock(String info) {
+       LocalDate localDate = LocalDate.now().minusDays(1);
+
+       Stock stock = stockDao.getStockByDate(localDate, info);
+
+           if (stock.getDate() == localDate && stock.getStockName().equals(info)) {
+               return stock;
+           } else {
+            return stockDao.createStock(apiService.getStockCurrent(info));
+           }
    }
 
    public List<Stock> getAllStocks(){
