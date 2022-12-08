@@ -20,6 +20,7 @@ public class StockDTO {
     @JsonProperty("from")
     private LocalDate date;
 
+
     public int getStockId() {
         return stockId;
     }

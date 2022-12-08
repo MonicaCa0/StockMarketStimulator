@@ -21,11 +21,20 @@ public class Game {
     private int playerAccountId;
     private int organizerAccountId;
     private int organizerUserId;
+    @JsonProperty("approvalId")
     private int approvalId;
     private String approvalDesc;
 
     public int getApprovalId() {
         return approvalId;
+    }
+
+    public String getApprovalDesc() {
+        return approvalDesc;
+    }
+
+    public void setApprovalDesc(String approvalDesc) {
+        this.approvalDesc = approvalDesc;
     }
 
     public void setApprovalId(int approvalId) {

@@ -12,6 +12,7 @@ import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
@@ -98,9 +99,62 @@ public class ServiceLayer {
         }
 
     }
-    public List<Game> getAllPlayers(int gameId){
-        return gameDao.getAllPlayersInAGame(gameId);
+    public List<Game> getAllPlayersInvited(int gameId, Principal principal){
+        int checkId = userDao.findIdByUsername(principal.getName());
+        Game game = gameDao.getGameById(gameId);
+        int secondCheck = game.getOrganizerUserId();
+        if(checkId == secondCheck){
+            return gameDao.getAllPlayersInvitedToAGame(gameId);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
     }
+
+    public List<Game> getAllPlayersApproved(int gameId, Principal principal){
+        int checkId = userDao.findIdByUsername(principal.getName());
+        Game game = gameDao.getGameById(gameId);
+        int secondCheck = game.getOrganizerUserId();
+        if(checkId == secondCheck){
+            return gameDao.getAllApprovedPlayersInAGame(gameId);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
+    public List<Game> getAllGamesForPlayer(int playerId, Principal principal){
+        int checkId = userDao.findIdByUsername(principal.getName());
+        if(playerId == checkId){
+            return gameDao.getAllGamesForPlayer(playerId);
+
+        }else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
+    public List<Game> getPendingInvites(@PathVariable int playerId, Principal principal){
+        int checkId = userDao.findIdByUsername(principal.getName());
+        if(checkId == playerId){
+            return gameDao.getPlayersPendingInvites(playerId);
+
+        }else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
+
+
+
+   public Game approveOrDenyRequest (int playerId, int gameId, Game game, Principal principal){
+       int checkId = userDao.findIdByUsername(principal.getName());
+
+       if(checkId == playerId ){
+           Game updatedGame = gameDao.getGameByPlayer(playerId,gameId);
+           updatedGame.setApprovalId(game.getApprovalId());
+           return gameDao.userApproveOrDeny(updatedGame,gameId);
+
+       }else {
+           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+       }
+   }
 
    public List<Stock> populateStock() {
        File file = new File("src\\Stocks.txt");

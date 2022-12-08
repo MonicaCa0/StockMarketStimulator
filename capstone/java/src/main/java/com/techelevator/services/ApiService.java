@@ -21,13 +21,13 @@ public class ApiService {
 
     public Stock getStockCurrent(String info){
         Stock stock = new Stock();
-        StockDTO dto;
+        StockDTO  n = new StockDTO();
         LocalDate localDate = LocalDate.now().minusDays(1);
-        dto = restTemplate.getForObject(API_BASE_URL + info + "/" + localDate + API_KEY, StockDTO.class);
-        stock.setStockName(dto.getStockName());
-        stock.setCurrentStockPrice(dto.getCurrentStockPrice());
-        stock.setStockPriceAtClose(dto.getStockPriceAtClose());
-        stock.setDate(dto.getDate());
+        n = restTemplate.getForObject(API_BASE_URL + info + "/" + localDate + API_KEY, StockDTO.class);
+        stock.setStockName(n.getStockName());
+        stock.setCurrentStockPrice(n.getCurrentStockPrice());
+        stock.setStockPriceAtClose(n.getStockPriceAtClose());
+        stock.setDate(n.getDate());
         return stock;
     }
 }
