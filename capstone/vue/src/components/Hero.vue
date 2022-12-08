@@ -4,11 +4,11 @@
           <div class="container">
               <div class="content">
              <h1 id="h">Navigate the Stock Market the right way.</h1>
-            <Button class="upperButton" title="Join The Mission">Coming soon</Button>
+
+             <router-link to ="/about"><Button class="upperButtons" title="Learn More"></Button></router-link>
                 <div class='buttons'> 
-                    <router-link v-bind:to="{name:'home'}"><Button  class="lowerButtons" :title="'Login'"></Button></router-link>
-                    
-                   <router-link v-bind:to="{name:'register'}"> <Button class="lowerButtons" :title="'Register'"></Button></router-link>
+                <router-link v-bind:to="{name:'home'}"><Button  class="lowerButtons" :title="'Login'"></Button></router-link>
+                <router-link v-bind:to="{name:'register'}"> <Button class="lowerButtons" :title="'Register'"></Button></router-link>
         
                 </div>
                 </div>
@@ -71,6 +71,7 @@ p.learn{
 
 }
 .lowerButtons{
+    cursor: pointer;
     background:none;
     border-color:#EAFF45;
     border-radius: 5px;
@@ -78,14 +79,15 @@ p.learn{
     padding:12px 24px 12px 24px;
     color: #EAFF45;
 }
-.upperButton{
-      background:#EAFF45;
+.upperButtons{
+    cursor: pointer;
+    background:#EAFF45;
     border-color:#EAFF45;
     border-radius: 30px;
     border-style:solid;
     padding:12px 24px 12px 24px;
     color: #6A6EBD;
-    width: 15%;
+    
 }
 .buttons{
     display:flex;

@@ -9,6 +9,7 @@ import CreateGame from '../views/CreateGame.vue'
 import JoinGame from '../views/JoinGame.vue'
 import ViewCurrentGames from '../views/ViewCurrentGames.vue'
 import store from '../store/index'
+import About from '../views/About.vue'
 
 Vue.use(Router)
 
@@ -26,7 +27,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: Home,
       meta: {
@@ -58,7 +59,7 @@ const router = new Router({
       }
     },
     {
-      path: "/landing",
+      path: "/",
       name: "landing",
       component: LandingPage,
       meta: {
@@ -87,6 +88,14 @@ const router = new Router({
       component: ViewCurrentGames,
       meta:{
         requiresAuth: true
+      }
+    },
+    {
+      path: "/about",
+      name: "about",
+      component: About,
+      meta: {
+        requiresAuth: false
       }
     }
   ]
