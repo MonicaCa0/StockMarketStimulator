@@ -1,8 +1,8 @@
 <template>
 <div class="background">
   <div class="gradient">
-  <div class="container">
-    <div class="game-page">
+  <div class="Gamecontainer">
+    <div class="Gamegame-page">
         <h1 class="game-page-header"> Games Page</h1>
       <div class="all-buttons">
         <div class="create-button">
@@ -65,7 +65,7 @@
     justify-content: center;
 }
 
-.container{
+.Gamecontainer{
     height: 100vh;
     background-image: url('../assets/yellowObjects.svg');
     background-repeat: no-repeat;
@@ -79,7 +79,7 @@
    background-image:linear-gradient(-45deg,#AFB2ED 10%,#FFACBD,#AFB2ED );
 }
 
-.game-page{
+.Gamegame-page{
     font-family: Roboto;
     display: flex;
     flex-direction: column;
