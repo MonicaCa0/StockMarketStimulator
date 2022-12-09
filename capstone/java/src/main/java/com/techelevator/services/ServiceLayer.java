@@ -33,60 +33,65 @@ public class ServiceLayer {
     private StockDao stockDao;
     private ApiService apiService;
     private TradeDao tradeDao;
+    private StocksOwnedDao stocksOwnedDao;
 
-    ServiceLayer(GameDao gameDao, UserDao userDao, PortfolioDao portfolioDao, StockDao stockDao, ApiService apiService, TradeDao tradeDao){
-        this.gameDao =gameDao;
+    ServiceLayer(GameDao gameDao, UserDao userDao, PortfolioDao portfolioDao, StockDao stockDao, ApiService apiService, TradeDao tradeDao, StocksOwnedDao stocksOwnedDao) {
+        this.gameDao = gameDao;
         this.userDao = userDao;
         this.portfolioDao = portfolioDao;
         this.stockDao = stockDao;
         this.apiService = apiService;
-        this.tradeDao =tradeDao;
+        this.tradeDao = tradeDao;
+        this.stocksOwnedDao = stocksOwnedDao;
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userDao.findAll();
     }
-    public User getUserById(int userId){
+
+    public User getUserById(int userId) {
         return userDao.getUserById(userId);
     }
-    public User findByUsername(String username){
+
+    public User findByUsername(String username) {
         return userDao.findByUsername(username);
     }
-    public int findIdByUsername(String username){
+
+    public int findIdByUsername(String username) {
         return userDao.findIdByUsername(username);
     }
 
-   public Game createNewGame(Game game, Principal principal, int id){
-       int userId = userDao.findIdByUsername(principal.getName());
+    public Game createNewGame(Game game, Principal principal, int id) {
+        int userId = userDao.findIdByUsername(principal.getName());
 
-       if(id == userId) {
-           Portfolio portfolio = portfolioDao.createPortfolio(game.getOrganizerUserId());
-           game.setOrganizerUserId(userId);
-           return gameDao.createGame(game, portfolio.getAccountId());
+        if (id == userId) {
+            Portfolio portfolio = portfolioDao.createPortfolio(game.getOrganizerUserId());
+            game.setOrganizerUserId(userId);
+            return gameDao.createGame(game, portfolio.getAccountId());
 
-       } else {
-           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
-       }
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
 
-   }
+    }
 
 
-   public List<Game> getAllGames(){
+    public List<Game> getAllGames() {
         return gameDao.getAllGames();
     }
 
-   public List<Game> getAllGamesByUserId(int userId, Principal principal){
-       int checkId = userDao.findIdByUsername(principal.getName());
-       if(checkId == userId) {
-           return gameDao.getAllGamesByOrganizer(userId);
-       } else{
-           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
-       }
+    public List<Game> getAllGamesByUserId(int userId, Principal principal) {
+        int checkId = userDao.findIdByUsername(principal.getName());
+        if (checkId == userId) {
+            return gameDao.getAllGamesByOrganizer(userId);
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
 
-   }
+    }
 
     public Game addUser(Game game, int id, Principal principal) {
-        Game checkGame =gameDao.getGameByGameName(game.getGameName());
+        Game checkGame = gameDao.getGameByGameName(game.getGameName());
         int userIdFromGame = checkGame.getOrganizerUserId();
         int checkId = userDao.findIdByUsername(principal.getName());
         if (userIdFromGame == id && checkId == id) {
@@ -99,84 +104,84 @@ public class ServiceLayer {
         }
 
     }
-    public List<Game> getAllPlayersInvited(int gameId, Principal principal){
+
+    public List<Game> getAllPlayersInvited(int gameId, Principal principal) {
         int checkId = userDao.findIdByUsername(principal.getName());
         Game game = gameDao.getGameById(gameId);
         int secondCheck = game.getOrganizerUserId();
-        if(checkId == secondCheck){
+        if (checkId == secondCheck) {
             return gameDao.getAllPlayersInvitedToAGame(gameId);
-        }
-        else {
+        } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
     }
 
-    public List<Game> getAllPlayersApproved(int gameId, Principal principal){
+    public List<Game> getAllPlayersApproved(int gameId, Principal principal) {
         int checkId = userDao.findIdByUsername(principal.getName());
         Game game = gameDao.getGameById(gameId);
         int secondCheck = game.getOrganizerUserId();
-        if(checkId == secondCheck){
+        if (checkId == secondCheck) {
             return gameDao.getAllApprovedPlayersInAGame(gameId);
-        }
-        else {
+        } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
     }
-    public List<Game> getAllGamesForPlayer(int playerId, Principal principal){
+
+    public List<Game> getAllGamesForPlayer(int playerId, Principal principal) {
         int checkId = userDao.findIdByUsername(principal.getName());
-        if(playerId == checkId){
+        if (playerId == checkId) {
             return gameDao.getAllGamesForPlayer(playerId);
 
-        }else {
+        } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
     }
-    public List<Game> getPendingInvites(@PathVariable int playerId, Principal principal){
+
+    public List<Game> getPendingInvites(@PathVariable int playerId, Principal principal) {
         int checkId = userDao.findIdByUsername(principal.getName());
-        if(checkId == playerId){
+        if (checkId == playerId) {
             return gameDao.getPlayersPendingInvites(playerId);
 
-        }else {
+        } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
     }
 
 
+    public Game approveOrDenyRequest(int playerId, int gameId, Game game, Principal principal) {
+        int checkId = userDao.findIdByUsername(principal.getName());
 
-   public Game approveOrDenyRequest (int playerId, int gameId, Game game, Principal principal){
-       int checkId = userDao.findIdByUsername(principal.getName());
+        if (checkId == playerId) {
+            Game updatedGame = gameDao.getGameByPlayer(playerId, gameId);
+            updatedGame.setApprovalId(game.getApprovalId());
+            return gameDao.userApproveOrDeny(updatedGame, gameId);
 
-       if(checkId == playerId ){
-           Game updatedGame = gameDao.getGameByPlayer(playerId,gameId);
-           updatedGame.setApprovalId(game.getApprovalId());
-           return gameDao.userApproveOrDeny(updatedGame,gameId);
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
 
-       }else {
-           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
-       }
-   }
-
-   public List<Stock> populateStock() {
-       File file = new File("src\\Stocks.txt");
-       try (Scanner scanner = new Scanner(file)) {
-           while (scanner.hasNextLine()) {
-               String stockName = scanner.nextLine();
-               Stock stock = apiService.getStockCurrent(stockName);
-               stockDao.createStock(stock);
-           }
-       } catch (IOException e) {
-           System.out.println(e.getMessage());
-       }
+    public List<Stock> populateStock() {
+        File file = new File("src\\Stocks.txt");
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String stockName = scanner.nextLine();
+                Stock stock = apiService.getStockCurrent(stockName);
+                stockDao.createStock(stock);
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         return getAllStocks();
-   }
+    }
 
 
-   public BigDecimal getPortfolioBalance (){
+    public BigDecimal getPortfolioBalance() {
         //  Need to log how much of the stock they currently have
-       //  Need to take that of that stock and multiply it by the currentStock price
-       //  Then need to take those stocks and add up all the prices;
+        //  Need to take that of that stock and multiply it by the currentStock price
+        //  Then need to take those stocks and add up all the prices;
 
-        List<Trade> tradesList= new ArrayList<>();
+        List<Trade> tradesList = new ArrayList<>();
         List<Stock> listofCurrentStocks = stockDao.getAllStocks();
 //        int i =0;
 //       while (tradesList.size()-1 != i) {
@@ -185,55 +190,65 @@ public class ServiceLayer {
 //           i++;
 //       }
 
-       for(Trade t: tradesList){
-           if(t.getTradeType() == 1){
-
-           }
-       }
+//        for (Trade t : tradesList) {
+//            if (t.getTradeType() == 1) {
+//
+//            }
+//        }
 // will then return that calculated balance and insert it into the portfolio
+//
+        return null;
+    }
 
-       return null;
-   }
-
-   public Stock getStockByDateAndName(LocalDate date, String info){
-        return stockDao.getStockByDate(date,info);
-   }
+    public Stock getStockByDateAndName(LocalDate date, String info) {
+        return stockDao.getStockByDate(date, info);
+    }
 
 
-
-   public Stock getCurrentStock(String info) {
-       LocalDate localDate = LocalDate.now().minusDays(1);
-           Stock newStock = apiService.getStockCurrent(info);
-          if(newStock != null){
-              stockDao.createStock(newStock);
-          }
+    public Stock getCurrentStock(String info) {
+        LocalDate localDate = LocalDate.now().minusDays(1);
+        Stock newStock = apiService.getStockCurrent(info);
+        if (newStock != null) {
+            stockDao.createStock(newStock);
+        }
         return newStock;
-   }
+    }
 
-   public List<Stock> getAllStocks(){
+    public List<Stock> getAllStocks() {
         return stockDao.getAllStocks();
-   }
+    }
 
-   public List<Trade> getAllTrades(int id, int gameID, Principal principal) {
+    public List<Trade> getAllTrades(int id, int gameID, Principal principal) {
         int checkId = userDao.findIdByUsername(principal.getName());
         Game game = gameDao.getGameById(gameID);
         int userId = game.getPlayerUserId();
 
-        if(userId == id && checkId == id){
+        if (userId == id && checkId == id) {
             return tradeDao.getAllTrades(game.getPlayerAccountId());
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
     }
 
-    public Trade buyStock(int id, int gameID, Principal principal, Trade trade) {
+    public Trade buyStock(int id, int gameId, Principal principal, Trade trade) {
         int checkId = userDao.findIdByUsername(principal.getName());
-        Game game = gameDao.getGameById(gameID);
+        Game game = gameDao.getGameByPlayer(id,gameId);
         int userId = game.getPlayerUserId();
-        Portfolio portfolio = portfolioDao.getPortfolioByAccountId(trade.getAccountId());
-        if(userId == id && checkId == id) {
-            if(trade.getTradeTypeId() == 1){
-
+        Portfolio portfolio = portfolioDao.getPortfolioByAccountId(game.getPlayerAccountId());
+        BigDecimal currentBalance = portfolio.getCurrentBalance();
+        BigDecimal tradeCost = trade.getTotalCost();
+        trade.setTradeTypeId(1);
+        if (userId == id && checkId == id) {
+            if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
+            } else {
+                Stock stock = stockDao.getStockInfo(trade.getStockId());
+                String stockName = stock.getStockName();
+                portfolioDao.updateBalance(trade);
+                StocksOwned stocksOwnedCheck = stocksOwnedDao.getStocksOwnedByIdAndName(portfolio.getAccountId(), stockName);
+                if(stocksOwnedCheck == null) {
+                    stocksOwnedDao.logStocks(trade, id, stockName);
+                }
                 return tradeDao.buyStock(trade);
 
             }
@@ -242,16 +257,29 @@ public class ServiceLayer {
         }
     }
 
-    public Trade sellStock(int id, int gameID, Principal principal, Trade trade) {
+    public Trade sellStock(int id, int gameId, Principal principal, Trade trade) {
         int checkId = userDao.findIdByUsername(principal.getName());
-        Game game = gameDao.getGameById(gameID);
+        Game game = gameDao.getGameByPlayer(id,gameId);
         int userId = game.getPlayerUserId();
-        if(userId == id && checkId == id) {
-            return tradeDao.sellStock(trade);
+        Portfolio portfolio = portfolioDao.getPortfolioByAccountId(trade.getAccountId());
+        BigDecimal currentBalance = portfolio.getCurrentBalance();
+        BigDecimal tradeCost = trade.getTotalCost();
+        trade.setTradeTypeId(2);
+        if (userId == id && checkId == id) {
+            if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
+            } else {
+                Stock stock = stockDao.getStockInfo(trade.getStockId());
+                String stockName = stock.getStockName();
+                portfolioDao.updateBalance(trade);
+                stocksOwnedDao.logStocks(trade, id, stockName);
+                return tradeDao.sellStock(trade);
+
+            }
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
-    }
 
+    }
 }
 

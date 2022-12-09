@@ -24,12 +24,12 @@ public class TradeController {
         return serviceLayer.getAllTrades(id, gameID, principal);
     }
 
-    @RequestMapping(path = "/{id}/{gameID}/sell", method = RequestMethod.POST)
+    @RequestMapping(path = "/{id}/sell/{gameID}", method = RequestMethod.POST)
     public Trade buyStock(@PathVariable int id, @PathVariable int gameID, @RequestBody Trade trade, Principal principal){
         return serviceLayer.buyStock(id, gameID, principal, trade);
     }
 
-    @RequestMapping(path = "/{id}/{gameID}/buy", method = RequestMethod.POST)
+    @RequestMapping(path = "/{id}/buy/{gameID}", method = RequestMethod.POST)
     public Trade sellStock(@PathVariable int id, @PathVariable int gameID, @RequestBody Trade trade, Principal principal){
         return serviceLayer.sellStock(id, gameID, principal, trade);
     }

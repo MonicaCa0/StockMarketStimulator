@@ -6,15 +6,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcStocksOwned implements StocksOwnedDao{
+public class JdbcStocksOwnedDao implements StocksOwnedDao{
     private final JdbcTemplate jdbcTemplate;
 
-    public JdbcStocksOwned(JdbcTemplate jdbcTemplate){
+    public JdbcStocksOwnedDao(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -43,7 +42,17 @@ public class JdbcStocksOwned implements StocksOwnedDao{
 
         return stocksOwned;
     }
+    public StocksOwned getStocksOwnedByIdAndName(int accountId, String stockName) {
+        StocksOwned stocksOwned = new StocksOwned();
+        String sql = "SELECT stocks_owned_id, user_id, stock_name, account_id, total_amount_shares FROM stocks_owned" +
+                " WHERE account_id = ? AND stock_name = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, stockName);
+        if (rowSet.next()) {
+            stocksOwned = mapToStocksOwned(rowSet);
+        }
 
+        return stocksOwned;
+    }
     @Override
     public StocksOwned logStocks(Trade trade, int userId, String stockName) {
         String sql = "INSERT INTO stocks_owned (user_id, stock_name, account_id, total_amount_shares ) " +
@@ -54,17 +63,15 @@ public class JdbcStocksOwned implements StocksOwnedDao{
     }
 
     @Override
-    public void updateStocksWhenSold(Trade trade, String stockName) {
-        String sql = "UPDATE stocks_owned SET total_amount_shares -= ? WHERE account_id = ? AND stock_name = ?";
-      jdbcTemplate.update(sql,trade.getAmountOfShares(), stockName);
+    public void updateStocks(Trade trade, String stockName) {
+        if(trade.getTradeTypeId() ==1 ) {
+            String sql = "UPDATE stocks_owned SET total_amount_shares -= ? WHERE account_id = ? AND stock_name = ?";
+            jdbcTemplate.update(sql, trade.getAmountOfShares(), stockName);
+        } else if(trade.getTradeTypeId() ==2){
+            String sql = "UPDATE stocks_owned SET total_amount_shares += ? WHERE account_id = ? AND stock_name = ?";
+            jdbcTemplate.update(sql,trade.getAmountOfShares(), stockName);
+        }
     }
-
-    public void updateStocksWhenBought(Trade trade, String stockName) {
-        String sql = "UPDATE stocks_owned SET total_amount_shares += ? WHERE account_id = ? AND stock_name = ?";
-        jdbcTemplate.update(sql,trade.getAmountOfShares(), stockName);
-    }
-
-
 
 
     private StocksOwned mapToStocksOwned(SqlRowSet result){

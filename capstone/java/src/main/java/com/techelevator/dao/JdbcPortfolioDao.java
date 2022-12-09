@@ -58,11 +58,11 @@ public JdbcPortfolioDao(JdbcTemplate jdbcTemplate){
     @Override
     public Portfolio updateBalance(Trade trade) {
     if(trade.getTradeTypeId() == 1) {
-        String sql = "UPDATE portfolio SET balance += ? WHERE account_id = ? ";
+        String sql = "UPDATE portfolio SET balance -= ? WHERE account_id = ? ";
         jdbcTemplate.update(sql, trade.getTotalCost(), trade.getAccountId());
 
     }else if (trade.getTradeTypeId() == 2){
-        String sql = "UPDATE portfolio SET balance -= ? WHERE account_id = ? ";
+        String sql = "UPDATE portfolio SET balance += ? WHERE account_id = ? ";
         jdbcTemplate.update(sql, trade.getTotalCost(), trade.getAccountId());
 
     }
