@@ -94,11 +94,24 @@ public class ServiceLayer {
         Game checkGame = gameDao.getGameByGameName(game.getGameName());
         int userIdFromGame = checkGame.getOrganizerUserId();
         int checkId = userDao.findIdByUsername(principal.getName());
-        if (userIdFromGame == id && checkId == id) {
-            checkGame.setPlayerUserId(game.getPlayerUserId());
-            Portfolio portfolio = portfolioDao.createPortfolio(game.getPlayerUserId());
-            int accountId = portfolio.getAccountId();
-            return gameDao.addUser(checkGame, accountId);
+        boolean exists = false;
+        List<Game> games = gameDao.getAllPlayersInvitedToAGame(checkGame.getGameId());
+        if (userIdFromGame == id && checkId  == id) {
+            for(Game g : games){
+                if(g.getPlayerUserId() == game.getPlayerUserId()){
+                    exists = true;
+                }
+            }
+            if(exists) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The player has already been invited to the game.");
+            }
+           else {
+                    checkGame.setPlayerUserId(game.getPlayerUserId());
+                    Portfolio portfolio = portfolioDao.createPortfolio(game.getPlayerUserId());
+                    int accountId = portfolio.getAccountId();
+                    return gameDao.addUser(checkGame, accountId);
+
+            }
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
