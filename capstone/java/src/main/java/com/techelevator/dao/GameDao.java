@@ -17,6 +17,7 @@ public interface GameDao {
     Game userApproveOrDeny(Game game, int gameId);
     List<Game> getPlayersPendingInvites(int playerId);
     Game getGameByPlayer(int playerId, int gameId);
+    Game getGameByOrganizer(int playerId, int gameId);
     void updateGame(int gameId, Game newGame);
     void deletePlayer(int userId);
     void deleteGame(int accountId); // Organizer's account ID

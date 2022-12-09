@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface TradeDao {
 
-    void createTrade(Trade trade);
-
     void deleteTrade(Trade trade);
 
     List<Trade> getAllTrades(int accountID);

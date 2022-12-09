@@ -182,6 +182,20 @@ public class JdbcGameDao implements GameDao {
         return game;
 
     }
+    public Game getGameByOrganizer(int playerId, int gameId){
+        Game game = new Game();
+        String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id, gh.game_id, gh.account_id, gh.approval_id, a.approval_desc "+
+                "FROM game g " +
+                "JOIN game_history gh ON g.game_id = gh.game_id  " +
+                "JOIN approval a ON gh.approval_id = a.approval_id " +
+                "WHERE g.organizer_user_id = ? AND g.game_id = ?";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, playerId, gameId);
+        if (result.next()) {
+            game = mapToGameAndHistoryTable(result);
+        }
+        return game;
+
+    }
 
     public List<Game> getAllGamesForPlayer(int playerId){
        List<Game> games = new ArrayList<>();

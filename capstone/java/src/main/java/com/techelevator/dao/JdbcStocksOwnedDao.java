@@ -20,7 +20,7 @@ public class JdbcStocksOwnedDao implements StocksOwnedDao{
         @Override
     public List<StocksOwned> getAllStocksByAccountId(int accountId) {
        List<StocksOwned> stocksOwned = new ArrayList<>();
-        String sql = "SELECT stocks_owned_id, user_id, stock_name, account_id, total_amount_shares FROM stocks_owned" +
+        String sql = "SELECT stocks_owned_id, user_id, stock_name, account_id, total_amount_of_shares FROM stocks_owned" +
                 " WHERE account_id = ?";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, accountId);
         while (rowSet.next()) {
@@ -33,7 +33,7 @@ public class JdbcStocksOwnedDao implements StocksOwnedDao{
     @Override
     public StocksOwned getStocksOwnedById(int stocksOwnedId) {
        StocksOwned stocksOwned = new StocksOwned();
-        String sql = "SELECT stocks_owned_id, user_id, stock_name, account_id, total_amount_shares FROM stocks_owned" +
+        String sql = "SELECT stocks_owned_id, user_id, stock_name, account_id, total_amount_of_shares FROM stocks_owned" +
                 " WHERE stocks_owned_id = ?";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, stocksOwnedId);
         if (rowSet.next()) {
@@ -44,9 +44,9 @@ public class JdbcStocksOwnedDao implements StocksOwnedDao{
     }
     public StocksOwned getStocksOwnedByIdAndName(int accountId, String stockName) {
         StocksOwned stocksOwned = new StocksOwned();
-        String sql = "SELECT stocks_owned_id, user_id, stock_name, account_id, total_amount_shares FROM stocks_owned" +
+        String sql = "SELECT stocks_owned_id, user_id, stock_name, account_id, total_amount_of_shares FROM stocks_owned" +
                 " WHERE account_id = ? AND stock_name = ?";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, stockName);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql,accountId, stockName);
         if (rowSet.next()) {
             stocksOwned = mapToStocksOwned(rowSet);
         }
@@ -55,7 +55,7 @@ public class JdbcStocksOwnedDao implements StocksOwnedDao{
     }
     @Override
     public StocksOwned logStocks(Trade trade, int userId, String stockName) {
-        String sql = "INSERT INTO stocks_owned (user_id, stock_name, account_id, total_amount_shares ) " +
+        String sql = "INSERT INTO stocks_owned (user_id, stock_name, account_id, total_amount_of_shares ) " +
                 "VALUES (?,?,?,?) RETURNING stocks_owned_id";
         Integer id = jdbcTemplate.queryForObject(sql, Integer.class, userId, stockName, trade.getAccountId(), trade.getAmountOfShares()) ;
 
@@ -65,10 +65,10 @@ public class JdbcStocksOwnedDao implements StocksOwnedDao{
     @Override
     public void updateStocks(Trade trade, String stockName) {
         if(trade.getTradeTypeId() ==1 ) {
-            String sql = "UPDATE stocks_owned SET total_amount_shares -= ? WHERE account_id = ? AND stock_name = ?";
+            String sql = "UPDATE stocks_owned SET total_amount_of_shares = total_amount_of_shares - ? WHERE account_id = ? AND stock_name = ?";
             jdbcTemplate.update(sql, trade.getAmountOfShares(), stockName);
         } else if(trade.getTradeTypeId() ==2){
-            String sql = "UPDATE stocks_owned SET total_amount_shares += ? WHERE account_id = ? AND stock_name = ?";
+            String sql = "UPDATE stocks_owned SET total_amount_of_shares = total_amount_of_shares + ? WHERE account_id = ? AND stock_name = ?";
             jdbcTemplate.update(sql,trade.getAmountOfShares(), stockName);
         }
     }

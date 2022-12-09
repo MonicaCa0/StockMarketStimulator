@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.sound.sampled.Port;
 import java.io.File;
 
 import java.io.IOException;
@@ -96,20 +97,19 @@ public class ServiceLayer {
         int checkId = userDao.findIdByUsername(principal.getName());
         boolean exists = false;
         List<Game> games = gameDao.getAllPlayersInvitedToAGame(checkGame.getGameId());
-        if (userIdFromGame == id && checkId  == id) {
-            for(Game g : games){
-                if(g.getPlayerUserId() == game.getPlayerUserId()){
+        if (userIdFromGame == id && checkId == id) {
+            for (Game g : games) {
+                if (g.getPlayerUserId() == game.getPlayerUserId()) {
                     exists = true;
                 }
             }
-            if(exists) {
+            if (exists) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The player has already been invited to the game.");
-            }
-           else {
-                    checkGame.setPlayerUserId(game.getPlayerUserId());
-                    Portfolio portfolio = portfolioDao.createPortfolio(game.getPlayerUserId());
-                    int accountId = portfolio.getAccountId();
-                    return gameDao.addUser(checkGame, accountId);
+            } else {
+                checkGame.setPlayerUserId(game.getPlayerUserId());
+                Portfolio portfolio = portfolioDao.createPortfolio(game.getPlayerUserId());
+                int accountId = portfolio.getAccountId();
+                return gameDao.addUser(checkGame, accountId);
 
             }
         } else {
@@ -188,6 +188,24 @@ public class ServiceLayer {
         return getAllStocks();
     }
 
+    public List<Portfolio> getAllPortfolios(int id, Principal principal){
+        int checkId = userDao.findIdByUsername(principal.getName());
+        if(id == checkId){
+            return portfolioDao.getAllPortfolios(id);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
+    public Portfolio getPortfolioByAccountId(int id,int accountId, Principal principal){
+        int checkId = userDao.findIdByUsername(principal.getName());
+        if(id == checkId){
+            return portfolioDao.getPortfolioByAccountId(accountId);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+        }
+    }
 
     public BigDecimal getPortfolioBalance() {
         //  Need to log how much of the stock they currently have
@@ -221,6 +239,7 @@ public class ServiceLayer {
     public Stock getCurrentStock(String info) {
         LocalDate localDate = LocalDate.now().minusDays(1);
         Stock newStock = apiService.getStockCurrent(info);
+        Stock stock = stockDao.getStockByDate(localDate, info);
         if (newStock != null) {
             stockDao.createStock(newStock);
         }
@@ -245,21 +264,44 @@ public class ServiceLayer {
 
     public Trade buyStock(int id, int gameId, Principal principal, Trade trade) {
         int checkId = userDao.findIdByUsername(principal.getName());
-        Game game = gameDao.getGameByPlayer(id,gameId);
-        int userId = game.getPlayerUserId();
-        Portfolio portfolio = portfolioDao.getPortfolioByAccountId(game.getPlayerAccountId());
-        BigDecimal currentBalance = portfolio.getCurrentBalance();
-        BigDecimal tradeCost = trade.getTotalCost();
-        trade.setTradeTypeId(1);
-        if (userId == id && checkId == id) {
+        Game gameForPlayer = gameDao.getGameByPlayer(id, gameId);
+        Game gameForOrganizer = gameDao.getGameByOrganizer(id, gameId);
+        int playerId = gameForPlayer.getPlayerUserId();
+        int organizerId = gameForOrganizer.getOrganizerUserId();
+
+        if (checkId == id && id == playerId) {
+            Portfolio portfolio = portfolioDao.getPortfolioByAccountId(gameForPlayer.getPlayerAccountId());
+            BigDecimal currentBalance = portfolio.getCurrentBalance();
+            BigDecimal tradeCost = trade.getTotalCost();
+            trade.setTradeTypeId(1);
             if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
             } else {
+                trade.setAccountId(portfolio.getAccountId());
                 Stock stock = stockDao.getStockInfo(trade.getStockId());
                 String stockName = stock.getStockName();
                 portfolioDao.updateBalance(trade);
                 StocksOwned stocksOwnedCheck = stocksOwnedDao.getStocksOwnedByIdAndName(portfolio.getAccountId(), stockName);
-                if(stocksOwnedCheck == null) {
+                if (stocksOwnedCheck == null) {
+                    stocksOwnedDao.logStocks(trade, id, stockName);
+                }
+                return tradeDao.buyStock(trade);
+
+            }
+        } else if (checkId == id && id == organizerId) {
+            Portfolio portfolio = portfolioDao.getPortfolioByAccountId(gameForOrganizer.getOrganizerAccountId());
+            BigDecimal currentBalance = portfolio.getCurrentBalance();
+            BigDecimal tradeCost = trade.getTotalCost();
+            trade.setTradeTypeId(1);
+            if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
+            } else {
+                trade.setAccountId(portfolio.getAccountId());
+                Stock stock = stockDao.getStockInfo(trade.getStockId());
+                String stockName = stock.getStockName();
+                portfolioDao.updateBalance(trade);
+                StocksOwned stocksOwnedCheck = stocksOwnedDao.getStocksOwnedByIdAndName(portfolio.getAccountId(), stockName);
+                if (stocksOwnedCheck == null) {
                     stocksOwnedDao.logStocks(trade, id, stockName);
                 }
                 return tradeDao.buyStock(trade);
@@ -272,27 +314,52 @@ public class ServiceLayer {
 
     public Trade sellStock(int id, int gameId, Principal principal, Trade trade) {
         int checkId = userDao.findIdByUsername(principal.getName());
-        Game game = gameDao.getGameByPlayer(id,gameId);
-        int userId = game.getPlayerUserId();
-        Portfolio portfolio = portfolioDao.getPortfolioByAccountId(trade.getAccountId());
-        BigDecimal currentBalance = portfolio.getCurrentBalance();
-        BigDecimal tradeCost = trade.getTotalCost();
-        trade.setTradeTypeId(2);
-        if (userId == id && checkId == id) {
+        Game gameForPlayer = gameDao.getGameByPlayer(id, gameId);
+        Game gameForOrganizer = gameDao.getGameByOrganizer(id, gameId);
+        int playerId = gameForPlayer.getPlayerUserId();
+        int organizerId = gameForOrganizer.getOrganizerUserId();
+
+        if (checkId == id && id == playerId) {
+            Portfolio portfolio = portfolioDao.getPortfolioByAccountId(gameForPlayer.getPlayerAccountId());
+            BigDecimal currentBalance = portfolio.getCurrentBalance();
+            BigDecimal tradeCost = trade.getTotalCost();
+            trade.setTradeTypeId(2);
             if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
             } else {
+                trade.setAccountId(portfolio.getAccountId());
                 Stock stock = stockDao.getStockInfo(trade.getStockId());
                 String stockName = stock.getStockName();
                 portfolioDao.updateBalance(trade);
-                stocksOwnedDao.logStocks(trade, id, stockName);
+                StocksOwned stocksOwnedCheck = stocksOwnedDao.getStocksOwnedByIdAndName(portfolio.getAccountId(), stockName);
+                if (stocksOwnedCheck == null) {
+                    stocksOwnedDao.logStocks(trade, id, stockName);
+                }
+                return tradeDao.sellStock(trade);
+
+            }
+        } else if (checkId == id && id == organizerId) {
+            Portfolio portfolio = portfolioDao.getPortfolioByAccountId(gameForOrganizer.getOrganizerAccountId());
+            BigDecimal currentBalance = portfolio.getCurrentBalance();
+            BigDecimal tradeCost = trade.getTotalCost();
+            trade.setTradeTypeId(2);
+            if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
+            } else {
+                trade.setAccountId(portfolio.getAccountId());
+                Stock stock = stockDao.getStockInfo(trade.getStockId());
+                String stockName = stock.getStockName();
+                portfolioDao.updateBalance(trade);
+                StocksOwned stocksOwnedCheck = stocksOwnedDao.getStocksOwnedByIdAndName(portfolio.getAccountId(), stockName);
+                if (stocksOwnedCheck == null) {
+                    stocksOwnedDao.logStocks(trade, id, stockName);
+                }
                 return tradeDao.sellStock(trade);
 
             }
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
-
     }
 }
 
