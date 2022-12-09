@@ -44,6 +44,8 @@ public class JdbcGameDao implements GameDao {
         }
         return games;
     }
+
+
     @Override
     public Game getGameById(int gameId) {
         Game game = new Game();
@@ -68,6 +70,8 @@ public class JdbcGameDao implements GameDao {
         }
         return game;
     }
+
+
 
     @Override
     public Game createGame(Game game, int accountId) {

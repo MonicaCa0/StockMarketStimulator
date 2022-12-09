@@ -62,7 +62,7 @@ public class JdbcTradeDao implements TradeDao{
     public Trade buyStock(Trade trade){
         String sql = "INSERT INTO trade(stock_id, account_id, trade_type_id, total_cost, amount_of_shares " +
                 "VALUES(?,?,?,?,?) RETURNING trade_id";
-        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, trade.getStockId(), trade.getAccountID(), 1, trade.getTotalCost(), trade.getAmountOfShares());
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, trade.getStockId(), trade.getAccountId(), 1, trade.getTotalCost(), trade.getAmountOfShares());
         return getTradeById(id);
     }
 
@@ -70,7 +70,7 @@ public class JdbcTradeDao implements TradeDao{
     public Trade sellStock(Trade trade){
         String sql = "INSERT INTO trade(stock_id, account_id, trade_type_id, total_cost, amount_of_shares " +
                 "VALUES(?,?,?,?,?) RETURNING trade_id";
-        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, trade.getStockId(), trade.getAccountID(), 2, trade.getTotalCost(), trade.getAmountOfShares());
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, trade.getStockId(), trade.getAccountId(), 2, trade.getTotalCost(), trade.getAmountOfShares());
         return getTradeById(id);
     }
 
@@ -80,8 +80,8 @@ public class JdbcTradeDao implements TradeDao{
         Trade trade = new Trade();
         trade.setTradeId(result.getInt("trade_id"));
         trade.setStockId(result.getInt("stock_id"));
-        trade.setAccountID(result.getInt("account_id"));
-        trade.setTradeType(result.getInt("trade_type_id"));
+        trade.setAccountId(result.getInt("account_id"));
+        trade.setTradeTypeId(result.getInt("trade_type_id"));
         trade.setTradeDesc(result.getString("trade_type_id"));
         trade.setTotalCost(result.getBigDecimal("total_cost"));
         trade.setTradeDesc(result.getString("trade_type_desc"));

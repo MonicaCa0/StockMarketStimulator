@@ -230,9 +230,13 @@ public class ServiceLayer {
         int checkId = userDao.findIdByUsername(principal.getName());
         Game game = gameDao.getGameById(gameID);
         int userId = game.getPlayerUserId();
-
+        Portfolio portfolio = portfolioDao.getPortfolioByAccountId(trade.getAccountId());
         if(userId == id && checkId == id) {
-            return tradeDao.buyStock(trade);
+            if(trade.getTradeTypeId() == 1){
+
+                return tradeDao.buyStock(trade);
+
+            }
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }

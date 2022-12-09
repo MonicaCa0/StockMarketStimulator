@@ -7,7 +7,10 @@ public class Trade {
     private int tradeId;
     private int stockId;
     private int accountId;
-    private int tradeType;
+    private int tradeTypeId;
+    private String tradeDesc;
+    BigDecimal totalCost;
+    private double amountOfShares;
 
     public String getTradeDesc() {
         return tradeDesc;
@@ -16,36 +19,13 @@ public class Trade {
     public void setTradeDesc(String tradeDesc) {
         this.tradeDesc = tradeDesc;
     }
-
-    private String tradeDesc;
-    BigDecimal totalCost;
-    private double amountOfShares;
-    //if user entered in # of shares to buy or dollars
-
-
-
-    private int accountID;
-
-
-
-    public int getAccountID() {
-        return accountID;
+    public int getTradeTypeId() {
+        return tradeTypeId;
     }
 
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
+    public void setTradeTypeId(int tradeTypeId) {
+        this.tradeTypeId = tradeTypeId;
     }
-
-
-
-    public int getTradeType() {
-        return tradeType;
-    }
-
-    public void setTradeType(int tradeType) {
-        this.tradeType = tradeType;
-    }
-
     public BigDecimal getTotalCost() {
         return totalCost;
     }
