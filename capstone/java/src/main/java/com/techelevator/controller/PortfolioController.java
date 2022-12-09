@@ -10,7 +10,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/portfolio")
+@RequestMapping("/portfolios")
 public class PortfolioController {
     private final ServiceLayer serviceLayer;
 

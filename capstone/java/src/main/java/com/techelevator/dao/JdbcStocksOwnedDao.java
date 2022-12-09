@@ -81,8 +81,8 @@ public class JdbcStocksOwnedDao implements StocksOwnedDao{
         stocksOwned.setUserId(result.getInt("user_id"));
         stocksOwned.setStockName(result.getString("stock_name"));
         stocksOwned.setAccountId(result.getInt("account_id"));
-        if(result.getBigDecimal("total_amount_shares") != null) {
-            stocksOwned.setTotalAmountOfShares(result.getBigDecimal("total_amount_shares"));
+        if(result.getBigDecimal("total_amount_of_shares") != null) {
+            stocksOwned.setTotalAmountOfShares(result.getBigDecimal("total_amount_of_shares"));
         }
         return stocksOwned;
 
