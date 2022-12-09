@@ -296,10 +296,13 @@ public class ServiceLayer {
                         stockExists = true;
                     }
                 }
-                if (!stockExists) {
+                if (stockExists) {
+                    stockOwnedDao.updateStocks(trade, stockName);
+
+                }else {
                     stockOwnedDao.logStocks(trade, id, stockName);
                 }
-                return tradeDao.buyStock(trade);
+                return tradeDao.sellStock(trade);
             }
         } else if (checkId == id && id == organizerId) {
             Portfolio portfolio = portfolioDao.getPortfolioByAccountId(gameForOrganizer.getOrganizerAccountId());
@@ -340,20 +343,35 @@ public class ServiceLayer {
         Game gameForOrganizer = gameDao.getGameByOrganizer(id, gameId);
         int playerId = gameForPlayer.getPlayerUserId();
         int organizerId = gameForOrganizer.getOrganizerUserId();
-
         if (checkId == id && id == playerId) {
             Portfolio portfolio = portfolioDao.getPortfolioByAccountId(gameForPlayer.getPlayerAccountId());
             BigDecimal currentBalance = portfolio.getCurrentBalance();
             BigDecimal tradeCost = trade.getTotalCost();
             trade.setTradeTypeId(2);
-            if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
+            if(gameForPlayer.getApprovalId() ==1){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You must accept the invite to trade stocks");
+            }
+            else if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
             } else {
                 trade.setAccountId(portfolio.getAccountId());
                 Stock stock = stockDao.getStockInfo(trade.getStockId());
+                String stockName = stock.getStockName();
                 portfolioDao.updateBalance(trade, id);
-                return tradeDao.sellStock(trade);
+                boolean stockExists = false;
+                List<StockOwned> stocks = stockOwnedDao.getAllStocksByAccountId(portfolio.getAccountId());
+                for (StockOwned stockInAccount : stocks) {
+                    if (stockInAccount.getStockName().equals(stockName)) {
+                        stockExists = true;
+                    }
+                }
+                if (!stockExists) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot sell a stock you do not own");
 
+                }else {
+                    stockOwnedDao.updateStocks(trade, stockName);
+                }
+                return tradeDao.sellStock(trade);
             }
         } else if (checkId == id && id == organizerId) {
             Portfolio portfolio = portfolioDao.getPortfolioByAccountId(gameForOrganizer.getOrganizerAccountId());
@@ -364,8 +382,23 @@ public class ServiceLayer {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
             } else {
                 trade.setAccountId(portfolio.getAccountId());
+
                 Stock stock = stockDao.getStockInfo(trade.getStockId());
+                String stockName = stock.getStockName();
                 portfolioDao.updateBalance(trade, id);
+                boolean stockExists = false;
+                List<StockOwned> stocks = stockOwnedDao.getAllStocksByAccountId(portfolio.getAccountId());
+                for (StockOwned stockInAccount : stocks) {
+                    if (stockInAccount.getStockName().equals(stockName)) {
+                        stockExists = true;
+                    }
+                }
+                if (!stockExists) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot sell a stock you do not own");
+
+                }else {
+                    stockOwnedDao.updateStocks(trade, stockName);
+                }
                 return tradeDao.sellStock(trade);
             }
         } else {

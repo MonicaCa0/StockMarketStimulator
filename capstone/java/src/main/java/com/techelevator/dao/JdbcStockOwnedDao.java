@@ -69,7 +69,7 @@ public class JdbcStockOwnedDao implements StockOwnedDao {
             jdbcTemplate.update(sql, trade.getAmountOfShares(), trade.getAccountId(), stockName);
         } else if(trade.getTradeTypeId() == 2){
             String sql = "UPDATE stocks_owned SET total_amount_of_shares = total_amount_of_shares - ? WHERE account_id = ? AND stock_name = ?";
-            jdbcTemplate.update(sql,trade.getAmountOfShares(),trade.getStockId(), stockName);
+            jdbcTemplate.update(sql,trade.getAmountOfShares(),trade.getAccountId(), stockName);
         }
     }
 
