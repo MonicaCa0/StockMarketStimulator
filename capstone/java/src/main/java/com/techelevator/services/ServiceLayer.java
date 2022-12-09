@@ -385,23 +385,27 @@ public class ServiceLayer {
 
                 Stock stock = stockDao.getStockInfo(trade.getStockId());
                 String stockName = stock.getStockName();
+                StockOwned stockOwnedCheck = new StockOwned();
                 portfolioDao.updateBalance(trade, id);
                 boolean stockExists = false;
                 List<StockOwned> stocks = stockOwnedDao.getAllStocksByAccountId(portfolio.getAccountId());
                 for (StockOwned stockInAccount : stocks) {
                     if (stockInAccount.getStockName().equals(stockName)) {
                         stockExists = true;
+                        stockOwnedCheck = stockInAccount;
                     }
                 }
                 if (!stockExists) {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot sell a stock you do not own");
 
-                }else {
+                } else if (stockOwnedCheck.getTotalAmountOfShares() == 0 ||  stockOwnedCheck.getTotalAmountOfShares() < trade.getAmountOfShares()) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You currently do not have enough shares to sell.");
+                } else {
                     stockOwnedDao.updateStocks(trade, stockName);
+                    return tradeDao.sellStock(trade);
                 }
-                return tradeDao.sellStock(trade);
             }
-        } else {
+        }else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
     }
