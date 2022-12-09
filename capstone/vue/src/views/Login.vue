@@ -1,8 +1,8 @@
 <template>
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
-        <div class="container">
-          <div class="content">
+        <div class="containerLog">
+          <div class="contentLog">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
       <div
         class="alert alert-danger"
@@ -93,7 +93,7 @@ export default {
   
 }
 
-.container{
+.containerLog{
   height: 50vh;
     background-color: rgba(255,255,255,1) ;
     border-radius: 8px;
@@ -101,7 +101,7 @@ export default {
     box-shadow: 20px 15px 40px rgba(234, 255, 69, .5);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;   
 }
-.content{
+.contentLog{
   display: flex;
     flex-direction: column;
     align-items: center;

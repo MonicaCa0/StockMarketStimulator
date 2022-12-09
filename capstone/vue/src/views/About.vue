@@ -1,8 +1,8 @@
 <template>
-  <div id="about">
-      <div class="content">
+  <div id="aboutPage">
+      <div class="contentAbout">
           <h1> Welcome to Apricot Stocks!</h1>
-          <div class="container">
+          <div class="containerAbout">
               
               <div class ="text">
             <p>Have fear about using your own money in the stock market? We have a solution! Apricot is a virtual stock market stimulator where you can hone your stock market skills
@@ -33,7 +33,7 @@ components:{
 
 <style scoped>
 
-#about{
+#aboutPage{
 height: 100vh; 
 background-image:linear-gradient(0.25turn, rgba(175, 178, 237, .9) 0%,rgba(255, 172, 189, .9),rgba(175, 178, 237, .9)),
 url("../assets/stocks.webp");
@@ -56,7 +56,7 @@ h1{
     
     
 }
-.container{
+.containerAbout{
 
 }
 
@@ -73,7 +73,7 @@ h1{
 }
 
 
-.content{
+.contentAbout{
     font-family: Cambria, Cochin;
 }
 

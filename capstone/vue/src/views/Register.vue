@@ -1,8 +1,8 @@
 <template>
   <div id="register" class="text-center">
     <form class="form-register" @submit.prevent="register">
-      <div class="container">
-        <div class="content">
+      <div class="containerReg">
+        <div class="contentReg">
       <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -110,7 +110,7 @@ export default {
   
 }
 
-.container{
+.containerReg{
     height: 50vh;
     background-color: rgba(255,255,255,1) ;
     border-radius: 8px;
@@ -118,7 +118,7 @@ export default {
     box-shadow: 20px 15px 40px rgba(234, 255, 69, .5);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
-.content{
+.contentReg{
   display: flex;
     flex-direction: column;
     align-items: center;
