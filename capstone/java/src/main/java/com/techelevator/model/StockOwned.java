@@ -2,12 +2,12 @@ package com.techelevator.model;
 
 import java.math.BigDecimal;
 
-public class StocksOwned {
+public class StockOwned {
     private int stocksOwnedId;
     private int userId;
     private String stockName;
     private int accountId;
-    private BigDecimal totalAmountOfShares;
+    private double totalAmountOfShares;
 
     public int getStocksOwnedId() {
         return stocksOwnedId;
@@ -41,11 +41,11 @@ public class StocksOwned {
         this.accountId = accountId;
     }
 
-    public BigDecimal getTotalAmountOfShares() {
+    public double getTotalAmountOfShares() {
         return totalAmountOfShares;
     }
 
-    public void setTotalAmountOfShares(BigDecimal totalAmountOfShares) {
+    public void setTotalAmountOfShares(double totalAmountOfShares) {
         this.totalAmountOfShares = totalAmountOfShares;
     }
 }

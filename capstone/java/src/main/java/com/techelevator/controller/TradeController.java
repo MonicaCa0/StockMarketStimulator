@@ -19,8 +19,15 @@ public class TradeController {
         this.serviceLayer = serviceLayer;
     }
 
+//    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+//    public List<Trade> getAllTradesByGameMade(@PathVariable int id, Principal principal){
+//        return serviceLayer.getAllTrades(id, principal);
+//    }
+
+
+
     @RequestMapping(path = "/{id}/allTrades/{gameID}", method = RequestMethod.GET)
-    public List<Trade> getAllTrades(@PathVariable int id, @PathVariable int gameID, Principal principal){
+    public List<Trade> getAllTradesByGame(@PathVariable int id, @PathVariable int gameID, Principal principal){
         return serviceLayer.getAllTrades(id, gameID, principal);
     }
 

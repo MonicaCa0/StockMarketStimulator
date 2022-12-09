@@ -13,7 +13,7 @@ public interface PortfolioDao {
     List<Portfolio> getAllPortfolios(int userId);
     Portfolio getPortfolioByAccountId(int accountId);
     Portfolio createPortfolio(int userId);
-    Portfolio updateBalance(Trade trade);
+    Portfolio updateBalance(Trade trade,int id);
     BigDecimal updatePortfolioBalance(int accountId, BigDecimal balance);
     void updatePortfolio(Portfolio portfolio);
 
