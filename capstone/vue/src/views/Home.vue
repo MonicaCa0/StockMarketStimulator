@@ -1,11 +1,26 @@
 <template>
   <div id="Homeabout">
-      <div class="Homecontent">
+       <h2>How To Play</h2>
+
+  
           <h1> Leaderboard</h1>
-          <h2>Stocks</h2>
-          <div class="Homecontainer">
-           
-          </div>
+           <div class="Homecontainer">
+               <div class="Homecontent">
+               <table>
+                   <tr class="user">
+                       <th>Username</th>
+                   </tr>
+                    <td>
+                    <li v-for="user in users" :key="user.id">
+                    {{user.username}}
+                    </li>
+                    </td>
+                   </table>
+                   </div>
+      </div>
+     
+      <div>
+
       </div>
       </div>
     
@@ -13,10 +28,19 @@
 </template>
 
 <script >
-
-
-
- 
+import userService from '../services/UserService'
+    export default{
+        data(){
+            return{
+            users: [],
+        };
+    },
+    created(){
+        userService.getAllUsers().then(response =>{
+            this.users = response.data;
+        })
+    }
+    }
 </script>
 
 <style scoped>
@@ -31,41 +55,57 @@ color: #3e309c;
 display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: left;
     
 
-
 }
+.user{
+    font-size: 25px;
+  
+}
+
+
+h2{
+    padding-top: 20px;
+    font-size:50px;
+     text-align: center;
+    color:white;
+    text-shadow:2px 2px#6A6EBD;
+}
+
+
+
+.Homecontainer{
+    height: 30vh;
+    background-color: rgba(255,255,255,1) ;
+    border-radius: 8px;
+    padding: 20px 100px 10px 40px;
+    box-shadow: 20px 15px 40px rgba(234, 255, 69, .5);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    list-style: none;
+}
+
+.stockcontainer{
+     height: 30vh;
+    background-color: rgba(255,255,255,1) ;
+    border-radius: 8px;
+    padding: 20px 225px 10px 40px;
+    box-shadow: 20px 15px 40px rgba(234, 255, 69, .5);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    list-style: none;
+}
+
+
+
 h1{
     font-size:50px;
     text-align: center;
-    color:#EAFF45;
-    text-shadow:1px 1px#6A6EBD;
+    color:white;
+    text-shadow:2px 2px#6A6EBD;
     
     
 }
 
-
-
-
-
-.text{
-    font-size:23px;
-    padding-left:250px;
-    padding-right: 250px;
-    text-align: center;
-    padding-bottom: 15px;
-    
-}
-
-
-.Homecontent{
-    font-family: Cambria, Cochin;
-}
-
-.body{
-    padding: 20px;
-    text-align: center;
-}
 
 .lowerButtons{
     cursor: pointer;
