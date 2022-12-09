@@ -96,6 +96,7 @@ public class ServiceLayer {
         int userIdFromGame = checkGame.getOrganizerUserId();
         int checkId = userDao.findIdByUsername(principal.getName());
         boolean exists = false;
+        boolean organizerId = false;
         List<Game> games = gameDao.getAllPlayersInvitedToAGame(checkGame.getGameId());
         if (userIdFromGame == id && checkId == id) {
             for (Game g : games) {
@@ -103,20 +104,27 @@ public class ServiceLayer {
                     exists = true;
                 }
             }
-            if (exists) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The player has already been invited to the game.");
-            } else {
-                checkGame.setPlayerUserId(game.getPlayerUserId());
-                Portfolio portfolio = portfolioDao.createPortfolio(game.getPlayerUserId());
-                int accountId = portfolio.getAccountId();
-                return gameDao.addUser(checkGame, accountId);
-
+            if (userIdFromGame == game.getPlayerUserId()) {
+                organizerId = true;
             }
-        } else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+            if (organizerId) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot invite yourself.");
+            }
+                else if (exists) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The player has already been invited to the game.");
+                } else {
+                    checkGame.setPlayerUserId(game.getPlayerUserId());
+                    Portfolio portfolio = portfolioDao.createPortfolio(game.getPlayerUserId());
+                    int accountId = portfolio.getAccountId();
+                    return gameDao.addUser(checkGame, accountId);
+
+                }
+            } else {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
+            }
+
         }
 
-    }
 
     public List<Game> getAllPlayersInvited(int gameId, Principal principal) {
         int checkId = userDao.findIdByUsername(principal.getName());
@@ -274,7 +282,10 @@ public class ServiceLayer {
             BigDecimal currentBalance = portfolio.getCurrentBalance();
             BigDecimal tradeCost = trade.getTotalCost();
             trade.setTradeTypeId(1);
-            if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
+            if(gameForPlayer.getApprovalId() ==1){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You must accept the invite to trade stocks");
+            }
+            else if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
             } else {
                 trade.setAccountId(portfolio.getAccountId());
@@ -293,7 +304,7 @@ public class ServiceLayer {
             BigDecimal currentBalance = portfolio.getCurrentBalance();
             BigDecimal tradeCost = trade.getTotalCost();
             trade.setTradeTypeId(1);
-            if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
+          if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
             } else {
                 trade.setAccountId(portfolio.getAccountId());
