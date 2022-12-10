@@ -25,7 +25,7 @@ export default {
     </h1>
    
 
-    <sidebarlink to="/" font-awesome-icon icon="fa-solid fa-house" >Home</sidebarlink>
+    <sidebarlink to="/home" font-awesome-icon icon="fa-solid fa-house" >Home</sidebarlink>
     <sidebarlink to="/portfolio" i class="fa-solid fa-file">Portfolio</sidebarlink>
     <sidebarlink to="/games" icon="fa-solid fa-gamepad">Games</sidebarlink>
     <sidebarlink to="/trade" icon="fas fa-users">Trade</sidebarlink>

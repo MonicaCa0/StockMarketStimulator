@@ -4,14 +4,11 @@ import com.techelevator.model.Stock;
 import com.techelevator.services.ApiService;
 import com.techelevator.services.ServiceLayer;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@CrossOrigin
 @RequestMapping(path = "/stocks")
 @RestController
 public class StockController {
