@@ -258,26 +258,25 @@ public class ServiceLayer {
     }
     public Stock getStockByDateAndName( String info, LocalDate date) {
           Stock stock = stockDao.getStockByDateAndName(date, info);
-//          if(stock == null){
-              Stock n =getStockByDateAndNameFromAPI(info,date);
-            stock=  stockDao.createStock(n);
-//          }
+          if(stock.getStockName() == null || stock.getDate() == null){
+              stock = getStockByDateAndNameFromAPI(info,date);
+            stockDao.createStock(stock);
+          }
         return stock;
     }
 
 
     public Stock getCurrentStock(String info) {
-        LocalDate localDate = LocalDate.now().minusDays(1);
-        Stock newStock = apiService.getStockCurrent(info);
-//        Stock stock = new Stock();
-//              stock=  stockDao.getStockByDateAndName(localDate, info);
-//        if (stock != null) {
-            stockDao.createStock(newStock);
-//        }
-        return newStock;
+        LocalDate date = LocalDate.now().minusDays(1);
+        Stock stock = stockDao.getStockByDateAndName(date, info);
+        if (stock.getStockName() == null || stock.getDate() == null) {
+            stock = apiService.getStockCurrent(info);
+            stockDao.createStock(stock);
+        }
+        return stock;
     }
 
-    public List<Stock> getAllStocks() {
+        public List<Stock> getAllStocks() {
         return stockDao.getAllStocks();
     }
 
