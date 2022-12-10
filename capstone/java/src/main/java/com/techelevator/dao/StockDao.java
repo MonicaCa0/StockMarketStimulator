@@ -11,5 +11,5 @@ public interface StockDao {
     List<Stock> getAllStocks();
     Stock createStock(Stock stock);
     public List<Stock> getAllStocksByDate(LocalDate date);
-    public Stock getStockByDate(LocalDate date, String info);
+    public Stock getStockByDateAndName(LocalDate date, String info);
 }

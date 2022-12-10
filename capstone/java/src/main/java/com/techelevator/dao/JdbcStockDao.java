@@ -44,7 +44,7 @@ public class JdbcStockDao implements StockDao{
     }
 
     @Override
-    public Stock getStockByDate(LocalDate date, String info) {
+    public Stock getStockByDateAndName(LocalDate date, String info) {
         Stock stock = new Stock();
         String sql = "SELECT stock_id, stock_name, current_stock_price, stock_price_at_close, date FROM stock WHERE date = ? AND stock_name = ?";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, date, info);

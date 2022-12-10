@@ -40,6 +40,6 @@ public class StockController {
 
     @RequestMapping(path = "/{info}/{date}", method = RequestMethod.GET)
     public Stock getStocksBDateAndName(@PathVariable String info, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date){
-        return serviceLayer.getStockByDateAndName(date,info);
+        return serviceLayer.getStockByDateAndName(info, date);
     }
 }

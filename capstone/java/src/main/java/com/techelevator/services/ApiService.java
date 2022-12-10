@@ -30,4 +30,15 @@ public class ApiService {
         stock.setDate(n.getDate());
         return stock;
     }
+
+    public Stock getStockCurrentByDate(String info, LocalDate date){
+        Stock stock = new Stock();
+        StockDTO  n ;
+        n = restTemplate.getForObject(API_BASE_URL + info + "/" + date + API_KEY, StockDTO.class);
+        stock.setStockName(n.getStockName());
+        stock.setCurrentStockPrice(n.getCurrentStockPrice());
+        stock.setStockPriceAtClose(n.getStockPriceAtClose());
+        stock.setDate(n.getDate());
+        return stock;
+    }
 }
