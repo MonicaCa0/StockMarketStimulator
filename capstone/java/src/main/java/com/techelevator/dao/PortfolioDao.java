@@ -16,7 +16,7 @@ public interface PortfolioDao {
     Portfolio updateBalance(Trade trade,int id);
     BigDecimal updatePortfolioBalance(int accountId, BigDecimal balance);
     void updatePortfolio(Portfolio portfolio);
-
+    Portfolio updateBalanceForEndOfGame(BigDecimal balance, int id, int accountId);
     void deletePortfolio(int userId);
 
 }

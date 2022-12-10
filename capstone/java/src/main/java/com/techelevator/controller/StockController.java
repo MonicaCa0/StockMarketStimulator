@@ -19,9 +19,9 @@ public class StockController {
         this.serviceLayer = serviceLayer;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Stock> getStock(){
-        return serviceLayer.populateStock();}
+    @RequestMapping(path="/{date}/date",method = RequestMethod.GET)
+    public List<Stock> getStock(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
+        return serviceLayer.populateStock(date);}
 
     @RequestMapping(path = "/{info}" ,method = RequestMethod.GET)
     public Stock getCurrentStock(@PathVariable String info){

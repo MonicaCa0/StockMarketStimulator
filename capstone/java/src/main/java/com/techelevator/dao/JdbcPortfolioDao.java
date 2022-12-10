@@ -70,6 +70,14 @@ public JdbcPortfolioDao(JdbcTemplate jdbcTemplate){
     }
 
     @Override
+    public Portfolio updateBalanceForEndOfGame(BigDecimal balance, int id, int accountId) {
+            String sql = "UPDATE portfolio SET current_balance = current_balance + ?, user_id = ? WHERE account_id = ? ";
+            jdbcTemplate.update(sql, balance, id, accountId);
+
+        return getPortfolioByAccountId(accountId);
+    }
+
+    @Override
     public BigDecimal updatePortfolioBalance(int accountId, BigDecimal balance) {
             String sql = "UPDATE portfolio SET portfolio_balance = ? WHERE account_id = ? ";
             jdbcTemplate.update(sql,balance, accountId);
@@ -83,7 +91,6 @@ public JdbcPortfolioDao(JdbcTemplate jdbcTemplate){
     String sql = "UPDATE portfolio SET account_id = ?, user_id = ? current_balance = ?, portfolio_balance = ? WHERE user_id = ?";
 
     jdbcTemplate.update(sql, portfolio.getAccountId(),portfolio.getUserId(), portfolio.getCurrentBalance(),portfolio.getPortfolioBalance(), portfolio.getUserId());
-
     }
 
     @Override

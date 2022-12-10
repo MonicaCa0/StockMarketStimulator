@@ -181,14 +181,25 @@ public class ServiceLayer {
         }
     }
 
-    public List<Stock> populateStock() {
+    public List<Stock> populateStock(LocalDate date) {
         File file = new File("src\\Stocks.txt");
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String stockName = scanner.nextLine();
-                Stock stock = apiService.getStockCurrent(stockName);
-                stockDao.createStock(stock);
-            }
+                List<Stock> stockList = stockDao.getAllStocksByDate(date);
+                boolean stockExists = false;
+                for (Stock s : stockList) {
+                    if (stockName.equals(s.getStockName())) {
+                        stockExists = true;
+                        break;
+                    }
+                }
+                    if(!stockExists){
+                        Stock stock = apiService.getStockCurrent(stockName);
+                        stockDao.createStock(stock);
+                    }
+                }
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -247,6 +258,31 @@ public class ServiceLayer {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
     }
+
+    private BigDecimal portfolioBalanceForEndOfGame(int id, int accountId, LocalDate date) {
+            List<StockOwned> stocksOwned = new ArrayList<>();
+            stocksOwned = stockOwnedDao.getAllStocksByAccountId(accountId);
+            List<Stock> stocks = stockDao.getAllStocksByDate(date);
+            String stockName = "";
+            BigDecimal runningTotal = new BigDecimal(0);
+            double totalStocksOwned = 0;
+            for (StockOwned s : stocksOwned) {
+                stockName = s.getStockName();
+                totalStocksOwned = s.getTotalAmountOfShares();
+                for (Stock stock : stocks) {
+                    if (stockName.equals(stock.getStockName())) {
+                        runningTotal =  runningTotal.add(stock.getStockPriceAtClose().multiply(BigDecimal.valueOf(totalStocksOwned)));
+
+                    }
+                }
+
+            }
+           portfolioDao.updateBalanceForEndOfGame(runningTotal,id,accountId);
+            portfolioDao.updatePortfolioBalance(accountId,BigDecimal.valueOf(0));
+                return runningTotal;
+    }
+
+
 
   public  Stock getStockByDateAndNameFromAPI(String info, LocalDate date){
         Stock stock = apiService.getStockCurrentByDate(info,date);
@@ -381,15 +417,12 @@ public class ServiceLayer {
         int organizerId = gameForOrganizer.getOrganizerUserId();
         if (checkId == id && id == playerId) {
             Portfolio portfolio = portfolioDao.getPortfolioByAccountId(gameForPlayer.getPlayerAccountId());
-            BigDecimal currentBalance = portfolio.getCurrentBalance();
             BigDecimal tradeCost = trade.getTotalCost();
             trade.setTradeTypeId(2);
             if(gameForPlayer.getApprovalId() ==1){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You must accept the invite to trade stocks");
             }
-            else if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
-            }  else if (tradeCost.compareTo(BigDecimal.valueOf(0)) <=0) {
+             else if (tradeCost.compareTo(BigDecimal.valueOf(0)) <=0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Your total cost must be greater than zero");
             } else {
                 trade.setAccountId(portfolio.getAccountId());
@@ -418,16 +451,12 @@ public class ServiceLayer {
             }
         } else if (checkId == id && id == organizerId) {
             Portfolio portfolio = portfolioDao.getPortfolioByAccountId(gameForOrganizer.getOrganizerAccountId());
-            BigDecimal currentBalance = portfolio.getCurrentBalance();
             BigDecimal tradeCost = trade.getTotalCost();
             trade.setTradeTypeId(2);
-            if ((currentBalance.compareTo(BigDecimal.valueOf(0)) <= 0) || currentBalance.compareTo(tradeCost) <= 0) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough money in your account");
-            }  else if (tradeCost.compareTo(BigDecimal.valueOf(0)) <=0) {
+           if (tradeCost.compareTo(BigDecimal.valueOf(0)) <=0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Your total cost must be greater than zero");
             } else {
                 trade.setAccountId(portfolio.getAccountId());
-
                 Stock stock = stockDao.getStockInfo(trade.getStockId());
                 String stockName = stock.getStockName();
                 StockOwned stockOwnedCheck = new StockOwned();
@@ -455,5 +484,22 @@ public class ServiceLayer {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
         }
     }
+
+    //Not Complete need to return portfolios based on the game
+
+    public List<Portfolio> endGame(int gameId){
+        Game game = gameDao.getGameById(gameId);
+        LocalDate date = LocalDate.now();
+        LocalDate checkDate = game.getDateFinished();
+        if(checkDate.equals(date)){
+            List<Game> games = gameDao.getAllApprovedPlayersInAGame(gameId);
+            for(Game sellGame: games){
+                portfolioBalanceForEndOfGame(sellGame.getPlayerUserId(),sellGame.getPlayerAccountId(),date);
+            }
+            portfolioBalanceForEndOfGame(game.getOrganizerUserId(),game.getOrganizerAccountId(),date);
+        }
+            return null;
+    }
+
 }
 

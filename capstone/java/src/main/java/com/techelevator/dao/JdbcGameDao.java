@@ -121,7 +121,7 @@ public class JdbcGameDao implements GameDao {
         List<Game> players = new ArrayList<>();
         String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id, gh.game_id, gh.account_id, gh.approval_id, a.approval_desc  "+
                 "FROM game g " +
-                "JOIN game_history gh ON g.game_id = gh.game_id  " +
+                "LEFT JOIN game_history gh ON g.game_id = gh.game_id  " +
                 "JOIN approval a ON gh.approval_id = a.approval_id " +
                 "WHERE g.game_id = ?";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, gameId);
@@ -139,7 +139,7 @@ public class JdbcGameDao implements GameDao {
         String approvalDesc = "Approved";
         String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id, gh.game_id, gh.account_id, gh.approval_id, a.approval_desc  "+
                 "FROM game g " +
-        "JOIN game_history gh ON g.game_id = gh.game_id  " +
+        "LEFT JOIN game_history gh ON g.game_id = gh.game_id  " +
                 "JOIN approval a ON gh.approval_id = a.approval_id " +
                 "WHERE g.game_id = ? AND a.approval_desc = ?";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, gameId, approvalDesc);
@@ -157,7 +157,7 @@ public class JdbcGameDao implements GameDao {
         String approvalDesc = "Pending";
         String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id, gh.game_id, gh.account_id, gh.approval_id, a.approval_desc "+
                 "FROM game g " +
-                "JOIN game_history gh ON g.game_id = gh.game_id  " +
+                "LEFT JOIN game_history gh ON g.game_id = gh.game_id  " +
                 "JOIN approval a ON gh.approval_id = a.approval_id " +
                 "WHERE gh.user_id = ? AND a.approval_desc = ?";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, playerId, approvalDesc);
@@ -201,7 +201,7 @@ public class JdbcGameDao implements GameDao {
        List<Game> games = new ArrayList<>();
         String sql = "SELECT g.game_id, g.game_name, g.date_finished, g.date_start, g.organizer_user_id, g.organizer_account_id, gh.user_id, gh.game_id, gh.account_id, gh.approval_id, a.approval_desc "+
                 "FROM game g " +
-                "JOIN game_history gh ON g.game_id = gh.game_id  " +
+                "LEFT JOIN game_history gh ON g.game_id = gh.game_id  " +
                 "JOIN approval a ON gh.approval_id = a.approval_id " +
                 "WHERE gh.user_id = ? ";
         SqlRowSet result = jdbcTemplate.queryForRowSet(sql, playerId);

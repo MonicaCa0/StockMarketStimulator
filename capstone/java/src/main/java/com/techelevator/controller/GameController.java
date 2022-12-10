@@ -69,6 +69,10 @@ public class GameController {
      public List<Game> getAllGamesForPlayer(@PathVariable int playerId, Principal principal){
        return serviceLayer.getAllGamesForPlayer(playerId, principal) ;
     }
+//    @RequestMapping(path="/{gameId}/gameEnd")
+//    public List<Portfolios> getAllPortfoliosForEndOfGame(@PathVariable int gameId){
+//        return serviceLayer.
+//    }
 
 
 }
