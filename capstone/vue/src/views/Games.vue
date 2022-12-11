@@ -1,5 +1,6 @@
 <template>
 <div class="background">
+         <sidebar v-if="$store.state.user.username"></sidebar>
   <div class="gradient">
   <div class="Gamecontainer">
     <div class="Gamegame-page">
@@ -56,6 +57,15 @@
     </div>
 </template>
 
+
+<script>
+import Sidebar from '@/components/sidebar/sidebar.vue'
+export default {
+components:{
+  Sidebar
+}
+}
+</script>
 
 <style scoped>
 

@@ -27,6 +27,9 @@ export default {
 </template>
 
 <style scoped>
+*{
+    box-sizing: border-box;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.1s;
@@ -60,4 +63,5 @@ export default {
   width: 25px;
   margin-right: 10px;
 }
+
 </style>

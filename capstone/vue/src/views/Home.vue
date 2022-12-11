@@ -1,5 +1,6 @@
 <template>
   <div id="Homeabout">
+        <sidebar v-if="$store.state.user.username"></sidebar>
        <h2>How To Play</h2>
           <h1> Leaderboard</h1>
            <div class="Homecontainer">
@@ -27,7 +28,11 @@
 
 <script >
 import userService from '../services/UserService'
+import Sidebar from '@/components/sidebar/sidebar.vue'
     export default{
+        components:{
+            Sidebar
+        },
         data(){
             return{
             users: [],
