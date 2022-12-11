@@ -87,12 +87,21 @@ menu
 *{
   box-sizing: border-box;
 }
+.links{
+
+  margin-bottom: 15px;
+  padding-top: 15px;
+
+}
+.links:hover{
+ height: 40px;
+ padding-top: 15px;
+}
 menu{
   margin:0 -1rem;
   .button{
     display: flex;
     align-items: center;
-   
   }
 }
 .sidebar {
@@ -137,7 +146,7 @@ menu{
       transition: 0.2 ease-out;
     }
     .text{
-      color: var(-light);
+      color: var(--light);
         transition: 0.2 ease-out;
     }
 
@@ -192,11 +201,6 @@ transition: 0.2s ease-out;
 }
 
 
- 
-
-sidebar h1 {
-  height: 2.5em;
-}
 .collapse-icon {
   position: absolute;
   bottom: 0;
@@ -215,10 +219,9 @@ sidebar h1 {
   align-content: center;
   white-space: nowrap;
   padding: 0 9px 0 9px;
-  
 }
 span.text{
-  opacity: 1;
+
   display: inline-block;
   width: 100%;
   font-size:20px ;
