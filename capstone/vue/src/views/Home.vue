@@ -1,8 +1,6 @@
 <template>
   <div id="Homeabout">
        <h2>How To Play</h2>
-
-  
           <h1> Leaderboard</h1>
            <div class="Homecontainer">
                <div class="Homecontent">

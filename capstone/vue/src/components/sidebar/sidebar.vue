@@ -21,7 +21,7 @@ export default {
         <div>V</div>
         <div>S</div>
       </span>
-      <span v-else>Apricot Stocks</span>
+      <span class="text" v-else>Apricot Stocks</span>
     </h1>
    
 
@@ -83,5 +83,12 @@ sidebar h1 {
   transform: rotate(180deg);
   transition: 0.2s linear;
 }
-
+/* .text{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  white-space: nowrap;
+  
+} */
 </style>
