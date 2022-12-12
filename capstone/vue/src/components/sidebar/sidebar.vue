@@ -82,7 +82,6 @@ export default {
 .links{
   height: 50px;
   margin-bottom: 20px;
-
   text-decoration: none;
 }
 
@@ -136,7 +135,7 @@ h3{
   float: left;
   position: fixed;
   overflow: hidden;
-  min-height: 100vh;
+  height: 100vh;
   z-index: 1;
   top: 0;
   left: 0;

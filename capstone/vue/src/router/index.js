@@ -11,6 +11,7 @@ import CreateGame from '../views/MainGamePage/CreateGame.vue'
 import JoinGame from '../views/MainGamePage/JoinGame.vue'
 import ViewCurrentGames from '../views/MainGamePage/ViewCurrentGames.vue'
 import Portfolio from '../views/Portfolio.vue'
+import AddNewGame from '../views/AddNewGame.vue'
 import Games from '../views/Games.vue'
 import store from '../store/index'
 import About from '../views/About.vue'
@@ -130,6 +131,14 @@ const router = new Router({
       path: "/research",
       name: "research",
       component: Research,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/games/:id/addNewGame",
+      name: "addNewGame",
+      component: AddNewGame,
       meta: {
         requiresAuth: true
       }

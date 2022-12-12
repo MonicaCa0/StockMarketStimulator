@@ -39,7 +39,7 @@ public class GameController {
         return serviceLayer.getAllPlayersApproved(gameId, principal);
     }
 
-   @RequestMapping(path ="/{id}/create", method= RequestMethod.POST)
+   @RequestMapping(path ="/{id}/create/", method= RequestMethod.POST)
     public Game createGame(@RequestBody Game game, @PathVariable int id, Principal principal){
            return serviceLayer.createNewGame(game, principal, id);
    }

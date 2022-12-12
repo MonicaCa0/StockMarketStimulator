@@ -21,4 +21,8 @@ public class UsersController {
     public List<User> getAllUsers(){
         return serviceLayer.getAllUsers();
     }
+    @RequestMapping(path="/users/{id}")
+    public User getUserById(int id){
+        return serviceLayer.getUserById(id);
+    }
 }
