@@ -148,14 +148,7 @@ input{
   padding: 5px 10px;
   
 }
-input:focus{
-  border-color: rgba(255, 172, 189);
-   border-style: solid;
-  border-radius: 10px;
-  text-align: left;
-  padding: 5px 10px;
 
-}
 
 input::placeholder{
 padding-left: 5px;

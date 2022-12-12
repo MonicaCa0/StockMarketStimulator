@@ -4,8 +4,7 @@ import { collapsed, toggleSidebar } from './state'
 export default {
   data(){
     return{
-      isExpanded:false,
-      isExpandedForText:false
+      isExpanded: localStorage.getItem("isExpanded") === "true",
     }
   },
   components: { sidebarlink,  },
@@ -15,6 +14,7 @@ export default {
   methods:{
     ToggleMenu(){
       this.isExpanded = !this.isExpanded;
+      localStorage.setItem("isExpanded", this.isExpanded)
     }
   }
 }
@@ -106,14 +106,9 @@ logout
   box-sizing: border-box;
 }
 .links{
-  margin-bottom: 15px;
+  height: 45px;
+  margin-bottom: 20px;
   padding-top: 15px;
-}
-.logo{
-  margin-bottom: 1rem;
-  .material-symbols-rounded{
-    width: 2rem;
-  }
 }
 h3{
   font-size: 1.4rem;
@@ -137,7 +132,7 @@ h3{
     transition: 0.2s ease-out;
     .material-icons{
       font-size: 2rem;
-      color:#8387e2;
+      color:#6A6EBD;
       margin-right: 2rem;
       transition: 0.2s ease-out;
     }
@@ -146,6 +141,11 @@ h3{
    
     }
     
+  }
+  
+  .router-link-exact-active{
+    background-color: #f1eaaa;
+    border-right:6px solid rgba(255, 172, 189);
   }
 }
 
@@ -170,6 +170,12 @@ h3{
     position:fixed;
     z-index: 99;
   }
+  .logo{
+  margin-bottom: 1rem;
+  .material-symbols-rounded{
+    width: 2rem;
+  }
+}
 }
   h3, .text{
     opacity: 0;
