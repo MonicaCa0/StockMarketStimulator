@@ -28,19 +28,17 @@ export default {
 
 <style scoped>
 *{
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
-.fade-enter-active,
+/* .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.1s;
 }
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
+} */
 .link {
-  display: flex;
-  align-items: center;
   cursor: pointer;
   position: relative;
   font-weight: 400;
@@ -59,9 +57,10 @@ export default {
   background-color: var(--sidebar-item-active);
 }
 .link .icon {
-  flex-shrink: 0;
   width: 25px;
   margin-right: 10px;
+ 
 }
+
 
 </style>

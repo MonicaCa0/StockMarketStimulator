@@ -8,7 +8,7 @@ export default {
       isExpandedForText:false
     }
   },
-  components: { sidebarlink },
+  components: { sidebarlink,  },
   setup() {
     return { collapsed, toggleSidebar }
   },
@@ -43,9 +43,9 @@ menu
       </span>
       <span class="text" v-else>Apricot Stocks</span>
     </h1> -->
-   
+  
      <div class="menu-toggle-wrap" >
-       <h1 class="text">Apricot Stocks</h1>
+       <h1 class="text logo">Apricot Stocks</h1>
        <button class="menu-toggle" @click="ToggleMenu">
          <span class="material-icons">
            <span class="material-symbols-rounded">
@@ -55,12 +55,30 @@ menu
        </button>
      </div>
     <div class="menu" >
-    <sidebarlink class="button links" to="/home" font-awesome-icon icon="fa-solid fa-house" ><span class="text">Home</span></sidebarlink>
-    <sidebarlink  to="/portfolio" i class="fa-solid fa-file button links"> <span class="text">Portfolio</span></sidebarlink>
-    <sidebarlink class="button links links" to="/games" icon="fa-solid fa-gamepad"><span class="text">Games</span></sidebarlink>
-    <sidebarlink class="button links" to="/trade" icon="fas fa-users"><span class="text">Trade</span></sidebarlink>
-    <sidebarlink class="button links " to="/image" icon="fas fa-image"><span class="text">Research</span></sidebarlink> 
-    <sidebarlink class="button links" to="/logout"><span class="text">Logout</span></sidebarlink>
+      <h3>Menu</h3>
+    <sidebarlink class="button links" to="/home" font-awesome-icon icon="fa-solid fa-house" > 
+    <span class="material-icons"><span class="material-symbols-rounded" title="Home">
+home
+</span></span> <span class="text">Home</span></sidebarlink>
+    <sidebarlink  to="/portfolio" i class="fa-solid fa-file button links"> <span class="material-icons"><span class="material-symbols-rounded" title="Portfolio">
+account_balance_wallet
+</span></span> <span class="text">Portfolio</span></sidebarlink>
+    <sidebarlink class="button links links" to="/games" icon="fa-solid fa-gamepad"> <span class="material-icons"><span class="material-symbols-rounded" title="Games">
+gamepad
+</span></span><span class="text">Games</span></sidebarlink>
+    <sidebarlink class="button links" to="/trade" icon="fas fa-users">
+    <span class="material-icons">
+      <span class="material-symbols-rounded" title="Trade">
+currency_exchange
+</span></span><span class="text">Trade</span></sidebarlink>
+    <sidebarlink class="button links " to="/image" icon="fas fa-image"><span class="material-icons">
+      <span class="material-symbols-rounded" title="Research">
+library_books
+</span></span><span class="text">Research</span></sidebarlink> 
+    <sidebarlink class="button links" to="/logout"><span class="material-icons">
+      <span class="material-symbols-rounded" title="Logout">
+logout
+</span></span><span class="text">Logout</span></sidebarlink>
 
     <span
       class="collapse-icon"
@@ -79,7 +97,7 @@ menu
   --sidebar-bg-color: #AFB2ED;
   --sidebar-item-hover: #f8ed86;
   --sidebar-item-active: #f5f844;
-  --sidebar-width: 300px;
+  --sidebar-width: 270px;
 }
 </style>
 
@@ -88,22 +106,49 @@ menu
   box-sizing: border-box;
 }
 .links{
-
   margin-bottom: 15px;
   padding-top: 15px;
-
+}
+.logo{
+  margin-bottom: 1rem;
+  .material-symbols-rounded{
+    width: 2rem;
+  }
+}
+h3{
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+ margin-left: 50px;
+  font-family: sans-serif;
+  color:rgb(255, 255, 255, 0.93);
+ margin-top: 0;
 }
 .links:hover{
- height: 40px;
+ height: 50px;
  padding-top: 15px;
+
 }
-menu{
+.menu{
   margin:0 -1rem;
   .button{
     display: flex;
     align-items: center;
+    padding: 0.5rem 1rem;
+    transition: 0.2s ease-out;
+    .material-icons{
+      font-size: 2rem;
+      color:#8387e2;
+      margin-right: 2rem;
+      transition: 0.2s ease-out;
+    }
+    .text{
+      transition: 0.2s ease-out;
+   
+    }
+    
   }
 }
+
 .sidebar {
   text-shadow: 0.4px .5px #6A6EBD;
   color: white;
@@ -117,8 +162,8 @@ menu{
   top: 0;
   left: 0;
   bottom: 0;
-  padding: 0.5em;
-  transition: 0.3s ease-out;
+  padding: 0.8em;
+  transition: 0.2s ease-out;
   display: flex;
   flex-direction: column;
   @media(max-width:768px){
@@ -126,33 +171,44 @@ menu{
     z-index: 99;
   }
 }
-   .button, .text{
+  h3, .text{
     opacity: 0;
-    transition: 0.3 ease-out;
+    transition: 0.3s ease-out;
 
   } 
+  .button{
+    transition: 0.3s ease-out;
+  }
+
+.material-icons{
+  opacity: 1;
+}
+
 .isExpanded{
   width: var(--sidebar-width);
  .menu-toggle-wrap{
     top: -2rem;
    
   }
-    .button, .text{
+
+    h3,.button, .text{
     opacity: 1;
   } 
-  &.material-icons{
+  .button{
+    .material-icons{
+      margin-right: 1rem;
+    }
+  }
+  .material-icons{
     font-size:2rem;
-    color:var(--light);
-      transition: 0.2 ease-out;
+      transition: 0.2s ease-out;
     }
     .text{
-      color: var(--light);
-        transition: 0.2 ease-out;
+        transition: 0.2s ease-out;
     }
 
 }
 
- 
 .menu-toggle-wrap{
 display: flex;
 justify-content: flex-end;
@@ -167,7 +223,7 @@ transition: 0.2s ease-out;
   transition: 0.2s ease-out;
 .material-icons{
     font-size:2rem;
-    color:rgba(106, 110, 189, 1);
+    color:#6A6EBD;
     transition:0.2s ease-out;
   }
 &:hover {
@@ -193,7 +249,7 @@ transition: 0.2s ease-out;
   .material-icons{
     font-size: 2rem;
     color: var(--light);
-    transition: ease-out;
+    transition:0.2s ease-out;
   }
   
 
@@ -201,41 +257,19 @@ transition: 0.2s ease-out;
 }
 
 
-.collapse-icon {
-  position: absolute;
-  bottom: 0;
-  padding: 0.75em;
-  color: rgba(255, 255, 255, 0.7);
-  transition: 0.2s linear;
-}
-.rotate-180 {
-  transform: rotate(180deg);
-  transition: 0.2s linear;
-}
-.text{
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  white-space: nowrap;
-  padding: 0 9px 0 9px;
-}
 span.text{
-
-  display: inline-block;
+  // display: inline-block;
   width: 100%;
   font-size:20px ;
   margin-bottom: 4px;
   padding-bottom: 10px;
   text-align: center;
   font-family: sans-serif;
+  transition: 0.3s ease-out;
 }
 button{
   border: none;
   background: none;
 }
-.links{
-  padding:19px;
-  
-}
+
 </style>
