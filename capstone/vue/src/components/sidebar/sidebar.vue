@@ -1,48 +1,7 @@
-<script >
-import sidebarlink from './sidebarlink.vue'
-import { collapsed, toggleSidebar } from './state'
-export default {
-  data(){
-    return{
-      isExpanded: localStorage.getItem("isExpanded") === "true",
-    }
-  },
-  components: { sidebarlink,  },
-  setup() {
-    return { collapsed, toggleSidebar }
-  },
-  methods:{
-    ToggleMenu(){
-      this.isExpanded = !this.isExpanded;
-      localStorage.setItem("isExpanded", this.isExpanded)
-    }
-  }
-}
-</script>
-
-
-
 
 <template>
     <div class="sidebar " :class="{isExpanded: isExpanded ? 'true': ''}">
-  
-     <!-- <div class="menu-toggle-wrap" >
-       <h1 class="text">Apricot Stocks</h1>
-       <button class="menu-toggle" @click="ToggleMenu">
-         <span class="material-icons">
-           <span class="material-symbols-rounded">
-menu
-</span>
-         </span>
-       </button>
-     </div> -->
-         <!-- <h1>
-      <span v-if="collapsed">
-        <div>V</div>
-        <div>S</div>
-      </span>
-      <span class="text" v-else>Apricot Stocks</span>
-    </h1> -->
+
   
      <div class="menu-toggle-wrap" >
        <h1 class="text logo">Apricot Stocks</h1>
@@ -56,42 +15,57 @@ menu
      </div>
     <div class="menu" >
       <h3>Menu</h3>
-    <sidebarlink class="button links" to="/home" font-awesome-icon icon="fa-solid fa-house" > 
+    <router-link class="button links" to="/home" font-awesome-icon icon="fa-solid fa-house" > 
     <span class="material-icons"><span class="material-symbols-rounded" title="Home">
 home
-</span></span> <span class="text">Home</span></sidebarlink>
-    <sidebarlink  to="/portfolio" i class="fa-solid fa-file button links"> <span class="material-icons"><span class="material-symbols-rounded" title="Portfolio">
+</span></span> <span class="text">Home</span></router-link>
+    <router-link  to="/portfolio" i class="fa-solid fa-file button links"> <span class="material-icons"><span class="material-symbols-rounded" title="Portfolio">
 account_balance_wallet
-</span></span> <span class="text">Portfolio</span></sidebarlink>
-    <sidebarlink class="button links links" to="/games" icon="fa-solid fa-gamepad"> <span class="material-icons"><span class="material-symbols-rounded" title="Games">
+</span></span> <span class="text">Portfolio</span></router-link>
+    <router-link class="button links links" to="/games" icon="fa-solid fa-gamepad"> <span class="material-icons"><span class="material-symbols-rounded" title="Games">
 gamepad
-</span></span><span class="text">Games</span></sidebarlink>
-    <sidebarlink class="button links" to="/trade" icon="fas fa-users">
+</span></span><span class="text">Games</span></router-link>
+    <router-link class="button links" to="/trade" icon="fas fa-users">
     <span class="material-icons">
       <span class="material-symbols-rounded" title="Trade">
 currency_exchange
-</span></span><span class="text">Trade</span></sidebarlink>
-    <sidebarlink class="button links " to="/image" icon="fas fa-image"><span class="material-icons">
+</span></span><span class="text">Trade</span></router-link>
+    <router-link class="button links " to="/research" icon="fas fa-image"><span class="material-icons">
       <span class="material-symbols-rounded" title="Research">
 library_books
-</span></span><span class="text">Research</span></sidebarlink> 
-    <sidebarlink class="button links" to="/logout"><span class="material-icons">
+</span></span><span class="text">Research</span></router-link> 
+    <router-link class="button links" to="/logout"><span class="material-icons">
       <span class="material-symbols-rounded" title="Logout">
 logout
-</span></span><span class="text">Logout</span></sidebarlink>
+</span></span><span class="text">Logout</span></router-link>
 
-    <span
-      class="collapse-icon"
-      :class="{ 'rotate-180': collapsed }"
-      @click="toggleSidebar"
-    >
-      <i class="fas fa-angle-double-left" />
-    </span>
     </div>
 </div>
     
 </template>
-
+<script >
+// import sidebarlink from './sidebarlink.vue'
+// import { collapsed, toggleSidebar } from './state'
+export default {
+  data(){
+    return{
+      isExpanded: localStorage.getItem("isExpanded") === "true",
+    }
+  },
+  components: {
+    //  sidebarlink
+    },
+  // setup() {
+  //   return { collapsed, toggleSidebar }
+  // },
+  methods:{
+    ToggleMenu(){
+      this.isExpanded = !this.isExpanded;
+      localStorage.setItem("isExpanded", this.isExpanded)
+    }
+  }
+}
+</script>
 <style>
 :root{
   --sidebar-bg-color: #AFB2ED;

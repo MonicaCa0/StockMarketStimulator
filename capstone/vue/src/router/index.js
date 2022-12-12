@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
+import Trade from '../views/Trade.vue'
+import Research from '../views/Research.vue'
 import LandingPage from '../views/LandingPage.vue'
 import CreateGame from '../views/MainGamePage/CreateGame.vue'
 import JoinGame from '../views/MainGamePage/JoinGame.vue'
@@ -114,6 +116,22 @@ const router = new Router({
       component: About,
       meta: {
         requiresAuth: false
+      }
+    },
+    {
+      path: "/trade",
+      name: "trade",
+      component: Trade,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/research",
+      name: "research",
+      component: Research,
+      meta: {
+        requiresAuth: true
       }
     }
   ]
