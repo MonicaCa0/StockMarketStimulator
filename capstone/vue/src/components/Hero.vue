@@ -37,8 +37,7 @@ components:{
     background-image: url('../assets/yellowObjects.svg');
     background-repeat: no-repeat;
     background-size: cover;
-   
-    
+     
 }
 .content{
     height: 100%;
@@ -51,8 +50,11 @@ components:{
      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 .gradient{
+    height: 100vh;
     background-image:linear-gradient(-45deg,#AFB2ED 10%,#FFACBD,#AFB2ED );
-  
+    background-repeat: no-repeat;
+    background-size: cover;
+     
 }
 h1, p{
 color:#EAFF45;

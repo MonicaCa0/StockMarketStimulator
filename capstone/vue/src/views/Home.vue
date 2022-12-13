@@ -41,6 +41,7 @@ import Sidebar from '@/components/sidebar/sidebar.vue'
     created(){
         userService.getAllUsers().then(response =>{
             this.users = response.data;
+            this.$store.commit('SET_USERS', this.users)
         })
     }
     }

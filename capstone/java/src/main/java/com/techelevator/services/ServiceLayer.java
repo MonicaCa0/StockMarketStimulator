@@ -62,10 +62,9 @@ public class ServiceLayer {
 
     public Game createNewGame(Game game, Principal principal, int id) {
         int userId = userDao.findIdByUsername(principal.getName());
-
         if (id == userId) {
+            game.setOrganizerUserId(id);
             Portfolio portfolio = portfolioDao.createPortfolio(game.getOrganizerUserId());
-            game.setOrganizerUserId(userId);
             return gameDao.createGame(game, portfolio.getAccountId());
 
         } else {

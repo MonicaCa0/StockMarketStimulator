@@ -4,6 +4,7 @@ import com.techelevator.model.User;
 import com.techelevator.services.ServiceLayer;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +21,13 @@ public class UsersController {
     @RequestMapping(path="/users")
     public List<User> getAllUsers(){
         return serviceLayer.getAllUsers();
+    }
+    @RequestMapping(path="/users/{id}/")
+    public User getUserById(@PathVariable int id){
+        return serviceLayer.getUserById(id);
+    }
+    @RequestMapping(path="/users/{username}")
+    public int findUserByUsername(@PathVariable String username){
+        return serviceLayer.findIdByUsername(username);
     }
 }

@@ -14,7 +14,7 @@ menu
        </button>
      </div>
     <div class="menu" >
-      <h3>Menu</h3>
+      <h3 >Menu</h3>
     <router-link class="button links" to="/home" font-awesome-icon icon="fa-solid fa-house" > 
     <span class="material-icons"><span class="material-symbols-rounded" title="Home">
 home
@@ -22,7 +22,7 @@ home
     <router-link  to="/portfolio" i class="fa-solid fa-file button links"> <span class="material-icons"><span class="material-symbols-rounded" title="Portfolio">
 account_balance_wallet
 </span></span> <span class="text">Portfolio</span></router-link>
-    <router-link class="button links links" to="/games" icon="fa-solid fa-gamepad"> <span class="material-icons"><span class="material-symbols-rounded" title="Games">
+    <router-link class="button links " to="/games" icon="fa-solid fa-gamepad"> <span class="material-icons"><span class="material-symbols-rounded" title="Games">
 gamepad
 </span></span><span class="text">Games</span></router-link>
     <router-link class="button links" to="/trade" icon="fas fa-users">
@@ -44,20 +44,12 @@ logout
     
 </template>
 <script >
-// import sidebarlink from './sidebarlink.vue'
-// import { collapsed, toggleSidebar } from './state'
 export default {
   data(){
     return{
       isExpanded: localStorage.getItem("isExpanded") === "true",
     }
   },
-  components: {
-    //  sidebarlink
-    },
-  // setup() {
-  //   return { collapsed, toggleSidebar }
-  // },
   methods:{
     ToggleMenu(){
       this.isExpanded = !this.isExpanded;
@@ -71,7 +63,7 @@ export default {
   --sidebar-bg-color: #AFB2ED;
   --sidebar-item-hover: #f8ed86;
   --sidebar-item-active: #f5f844;
-  --sidebar-width: 270px;
+  --sidebar-width: 290px;
 }
 </style>
 
@@ -80,16 +72,21 @@ export default {
   box-sizing: border-box;
 }
 .links{
-  height: 45px;
+  height: 50px;
   margin-bottom: 20px;
-  padding-top: 15px;
+  text-decoration: none;
+}
+
+h1{
+   white-space: nowrap;
 }
 h3{
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
- margin-left: 50px;
-  font-family: sans-serif;
-  color:rgb(255, 255, 255, 0.93);
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+ margin-left: 30px;
+ margin-right: 10px;
+  font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
+  color:rgb(255, 255, 255, 0.87);
  margin-top: 0;
 }
 .links:hover{
@@ -116,8 +113,7 @@ h3{
     }
     
   }
-  
-  .router-link-exact-active{
+  .router-link-exact-active, .router-link-active{
     background-color: #f1eaaa;
     border-right:6px solid rgba(255, 172, 189);
   }
@@ -128,10 +124,9 @@ h3{
   color: white;
   background-color: var(--sidebar-bg-color);
   width: calc(2rem + 32px);
-  float: left;
   position: fixed;
   overflow: hidden;
-  min-height: 100vh;
+  height: 100vh;
   z-index: 1;
   top: 0;
   left: 0;
@@ -196,13 +191,13 @@ align-items: center;
 padding-top: 25px;
 position: relative;
 top: 0px;
-margin-left: 4px;
+margin-left:50px;
 transition: 0.2s ease-out;
-
 .menu-toggle{
   transition: 0.2s ease-out;
 .material-icons{
     font-size:2rem;
+    margin-left: 15px;
     color:#6A6EBD;
     transition:0.2s ease-out;
   }
@@ -224,27 +219,27 @@ transition: 0.2s ease-out;
     text-decoration: none;
     padding: 0.5rem 1rem;
     transition: 0.2s ease-out;
-    
-  }
+  
   .material-icons{
     font-size: 2rem;
-    color: var(--light);
+    color: #6A6EBD;
     transition:0.2s ease-out;
   }
-  
+  .text{
+    transition:0.2s ease-out;
+  }
 
-  
+  &:hover{
+    background-color:#f8ed86;
+  }
+  }
 }
 
 
 span.text{
-  // display: inline-block;
-  width: 100%;
+  color: white;
   font-size:20px ;
-  margin-bottom: 4px;
-  padding-bottom: 10px;
-  text-align: center;
-  font-family: sans-serif;
+  font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
   transition: 0.3s ease-out;
 }
 button{

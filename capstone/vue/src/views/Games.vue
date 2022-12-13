@@ -8,13 +8,11 @@
       <div class="all-buttons">
         <div class="create-button">
           <router-link
-      to="/create"
-      custom
-      v-slot="{ navigate }"
+      v-bind:to="{name: 'addNewGame', params:{id: userId}}"
+      
     >
       <button
-        @click="navigate"
-        role="link"
+
       >
        Create Game
       </button>
@@ -59,10 +57,37 @@
 
 
 <script>
+import userService from '../services/UserService'
 import Sidebar from '@/components/sidebar/sidebar.vue'
 export default {
+  data(){
+    return{
+      users:[],
+      id: 0,
+    }
+  },
 components:{
   Sidebar
+}, methods:{
+  created(){
+    userService.getAllUsers().then(res =>{
+       this.users = res.data;   
+    } ).catch(error =>  {
+        if (error.res.status == 404){
+            // this.$router.push('/home')
+        }
+    })
+}, 
+methods:{
+  userId(){
+    let user = this.users.filter(user => {
+      return user.username === this.$store.state.user.username;
+    })
+
+   return user.id;
+   
+  }
+}
 }
 }
 </script>
