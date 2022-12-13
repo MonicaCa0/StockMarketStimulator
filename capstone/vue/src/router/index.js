@@ -10,6 +10,7 @@ import LandingPage from '../views/LandingPage.vue'
 import CreateGame from '../views/MainGamePage/CreateGame.vue'
 import JoinGame from '../views/MainGamePage/JoinGame.vue'
 import ViewCurrentGames from '../views/MainGamePage/ViewCurrentGames.vue'
+import ViewGame from '../views/ViewGame.vue'
 import Portfolio from '../views/Portfolio.vue'
 import AddNewGame from '../views/AddNewGame.vue'
 import Games from '../views/Games.vue'
@@ -139,6 +140,15 @@ const router = new Router({
       path: "/games/:id/addNewGame",
       name: "addNewGame",
       component: AddNewGame,
+      meta: {
+        requiresAuth: true
+      }
+    }
+    ,
+    {
+      path: "/games/:gameId",
+      name: "viewGame",
+      component: ViewGame,
       meta: {
         requiresAuth: true
       }

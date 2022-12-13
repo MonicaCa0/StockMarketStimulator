@@ -1,6 +1,6 @@
 <template>
     <div   class="Main">
-        <form  >
+        <form  v-on:submit.prevent>
             <h1>Create A New Game</h1>
             <p>Use this form to create a new game.</p>
             <div class="display">
@@ -18,8 +18,8 @@
 </template>
 
 <script>
-
-import gameService from '../services/GameService'
+ import GameServices from '@/services/GameServices.js'
+   import moment from "moment"
 export default {
 data(){
     return{
@@ -32,21 +32,23 @@ methods: {
     onSubmit(){
         const newGame ={
                 gameName: this.gameName,
-                dateFinished: this.dateFinished
+                dateFinished:  moment(this.dateFinished).format("MM-DD-YYYY")
                  };
-        
+         alert(newGame.dateFinished + " "+ newGame.gameName)
         let id = this.$route.params.id;
-        gameService.addNewGame(id,newGame).then(res => {
+       GameServices.createGame(id, newGame).then(res => {
+           alert("newGame")
             if(res.status === 201){
-             this.$router.push(`/games`);
                 this.gameName=''
                 this.dateFinished=''
         }  
+        }).catch(error => {
+            alert(error)
         })
        
 }, cancel(){
     this.$router.push('/games');
-},
+}
 }
 }
 </script>

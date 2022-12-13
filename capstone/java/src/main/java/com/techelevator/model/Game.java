@@ -13,7 +13,6 @@ public class Game {
     @JsonProperty("gameName")
     private String gameName;
     @JsonProperty( "dateFinished")
-    @NotBlank(message = "Please insert the day that your game is finished")
     private LocalDate dateFinished;
     private LocalDate dateStart;
     @JsonProperty("playerUserId")

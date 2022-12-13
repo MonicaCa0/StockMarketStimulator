@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Component
@@ -60,11 +61,18 @@ public class ServiceLayer {
         return userDao.findIdByUsername(username);
     }
 
-    public Game createNewGame(Game game, Principal principal, int id) {
-        int userId = userDao.findIdByUsername(principal.getName());
+    public Game createNewGame(GameDTO gameDTO, int id, Principal principal) {
+       int userId = userDao.findIdByUsername(principal.getName());
         if (id == userId) {
+            Game game = new Game();
+
             game.setOrganizerUserId(id);
             Portfolio portfolio = portfolioDao.createPortfolio(game.getOrganizerUserId());
+            game.setGameName(gameDTO.getGameName());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+            String dateFinished = gameDTO.getDateFinished();
+            LocalDate date =LocalDate.parse( dateFinished,formatter);
+            game.setDateFinished(date);
             return gameDao.createGame(game, portfolio.getAccountId());
 
         } else {
@@ -490,14 +498,14 @@ public class ServiceLayer {
         Game game = gameDao.getGameById(gameId);
         LocalDate date = LocalDate.now();
         LocalDate checkDate = game.getDateFinished();
-        if(checkDate.equals(date)){
+//        if(checkDate.equals(date)){
             List<Game> games = gameDao.getAllApprovedPlayersInAGame(gameId);
             for(Game sellGame: games){
                 portfolioBalanceForEndOfGame(sellGame.getPlayerUserId(),sellGame.getPlayerAccountId(),date);
             }
             portfolioBalanceForEndOfGame(game.getOrganizerUserId(),game.getOrganizerAccountId(),date);
-        }
-            return null;
+            List<Portfolio> portfolios = portfolioDao.getAllPortfoliosByGame(gameId);
+            return portfolios;
     }
 
 }

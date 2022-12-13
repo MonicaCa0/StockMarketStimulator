@@ -1,5 +1,9 @@
 <template>
-  <game-list :games="$store.state.games"></game-list>
+<div class="Main">
+  <div class="container">
+  <game-list class="display" :games="$store.state.games"></game-list>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -12,9 +16,7 @@ components:{
 },
  created(){
         GameServices.viewAllGames().then(response => {
-            alert('view all gm')
               this.$store.commit('SET_GAMES', response.data);
-         
         });
 
 }
@@ -22,6 +24,30 @@ components:{
 }
 </script>
 
-<style>
+<style lang= "scss" scoped>
+  
+    .container{
+      width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        row-gap: 20px;
+        background-color:rgba(255, 255, 255, 0.829) ;
+        border-radius: 14px;
+    }
 
+    .display{
+    
+        row-gap: 10px;
+         display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+ 
+   
+  
+   
+  
 </style>

@@ -32,6 +32,22 @@ public JdbcPortfolioDao(JdbcTemplate jdbcTemplate){
         return portfolios;
     }
 
+    public List<Portfolio> getAllPortfoliosByGame(int gameId) {
+        List<Portfolio> portfolios = new ArrayList<>();
+        String sql = "SELECT p.account_id, p.user_id, p.current_balance, p.portfolio_balance FROM portfolio p " +
+                "JOIN game_history gh ON gh.account_id = p.account_id " +
+                "JOIN game g ON g.organizer_account_id = p.account_id "+
+                "WHERE gh.game_id = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, gameId);
+
+
+        while(rowSet.next()){
+            portfolios.add(mapToPortfolio(rowSet));
+        }
+
+        return portfolios;
+    }
+
     @Override
     public Portfolio getPortfolioByAccountId(int accountId) {
         Portfolio portfolio = null;

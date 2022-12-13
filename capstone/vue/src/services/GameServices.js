@@ -8,11 +8,10 @@ const http = axios.create({
 export default{
 
     createGame(id, game){
-        return http.post(`/games/${id}/create`, game);
+        return http.post(`/games/${id}/create/`, game);
     },
 
     viewAllGames(){
-        alert('view all games')
         return  http.get('/games')
     },
 

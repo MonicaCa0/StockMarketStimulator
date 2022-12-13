@@ -2,6 +2,8 @@ package com.techelevator.controller;
 
 
 import com.techelevator.model.Game;
+import com.techelevator.model.GameDTO;
+import com.techelevator.model.Portfolio;
 import com.techelevator.services.ServiceLayer;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,15 +35,19 @@ public class GameController {
     public List<Game> getAllPlayersInvited(@PathVariable int gameId, Principal principal){
         return serviceLayer.getAllPlayersInvited(gameId, principal);
     }
+    @RequestMapping(path="/{gameId}/endGame", method= RequestMethod.GET)
+    public List<Portfolio> endGame(@PathVariable int gameId, Principal principal){
+        return serviceLayer.endGame(gameId);
+    }
     //returns all players that approved the request
     @RequestMapping(path="/{gameId}/players/approved", method= RequestMethod.GET)
     public List<Game> getAllPlayersApproved(@PathVariable int gameId, Principal principal){
         return serviceLayer.getAllPlayersApproved(gameId, principal);
     }
 
-   @RequestMapping(path ="/{id}/create", method= RequestMethod.POST)
-    public Game createGame(@RequestBody Game game, @PathVariable int id, Principal principal){
-           return serviceLayer.createNewGame(game, principal, id);
+   @RequestMapping(path ="/{id}/create/", method= RequestMethod.POST)
+    public Game createGame(@RequestBody GameDTO gameDTO, @PathVariable int id, Principal principal){
+           return serviceLayer.createNewGame(gameDTO, id, principal);
    }
 
     @RequestMapping(path="/{id}/organizer")
