@@ -1,6 +1,7 @@
 <template>
 <div class="background">
-         <sidebar v-if="$store.state.user.username"></sidebar>
+         <sidebar></sidebar>
+           <GameDisplay></GameDisplay>
   <div class="gradient">
   <div class="Gamecontainer">
     <div class="Gamegame-page">
@@ -8,17 +9,11 @@
       <div class="all-buttons">
         <div class="create-button">
           <router-link
-      v-bind:to="{name: 'addNewGame', params:{id: $store.state.user.id}}"
-      
-    >
-      <button
-
-      >
-       Create Game
-      </button>
+      v-bind:to="{name: 'addNewGame', params:{id: $store.state.user.id}}">
+      <button> Create Game</button>
     </router-link>
     </div>
-
+  
     <div class="join-button">
           <router-link
       to="/join"
@@ -57,7 +52,7 @@
 
 
 <script>
-import userService from '../services/UserService'
+import GameDisplay from '@/components/GameDisplay.vue'
 import Sidebar from '@/components/sidebar/sidebar.vue'
 export default {
   data(){
@@ -67,27 +62,15 @@ export default {
     }
   },
 components:{
-  Sidebar
+  Sidebar,
+  GameDisplay
 }, methods:{
   created(){
-    userService.getAllUsers().then(res =>{
-       this.users = res.data;   
-    } ).catch(error =>  {
-        if (error.res.status == 404){
-            // this.$router.push('/home')
-        }
-    })
+ 
 }, 
 methods:{
-  userId(){
-    let user = this.users.filter(user => {
-      return user.username === this.$store.state.user.username;
-    })
-
-   return user.id;
    
   }
-}
 }
 }
 </script>
@@ -95,9 +78,9 @@ methods:{
 <style scoped>
 
 .background{
-    background-color:#AFB2ED;
+  display: flex;
     height:100vh;
-    justify-content: center;
+
 }
 
 .Gamecontainer{
