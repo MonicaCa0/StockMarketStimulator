@@ -44,20 +44,12 @@ logout
     
 </template>
 <script >
-// import sidebarlink from './sidebarlink.vue'
-// import { collapsed, toggleSidebar } from './state'
 export default {
   data(){
     return{
       isExpanded: localStorage.getItem("isExpanded") === "true",
     }
   },
-  components: {
-    //  sidebarlink
-    },
-  // setup() {
-  //   return { collapsed, toggleSidebar }
-  // },
   methods:{
     ToggleMenu(){
       this.isExpanded = !this.isExpanded;
@@ -121,7 +113,7 @@ h3{
     }
     
   }
-  .router-link-exact-active{
+  .router-link-exact-active, .router-link-active{
     background-color: #f1eaaa;
     border-right:6px solid rgba(255, 172, 189);
   }
@@ -135,7 +127,7 @@ h3{
   float: left;
   position: fixed;
   overflow: hidden;
-  height: 100vh;
+  min-height: 100vh;
   z-index: 1;
   top: 0;
   left: 0;
