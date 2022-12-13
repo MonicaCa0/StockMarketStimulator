@@ -1,12 +1,10 @@
 package com.techelevator.controller;
 
+import com.techelevator.model.LeaderboardDTO;
 import com.techelevator.model.User;
 import com.techelevator.services.ServiceLayer;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @CrossOrigin
@@ -30,4 +28,7 @@ public class UsersController {
     public int findUserByUsername(@PathVariable String username){
         return serviceLayer.findIdByUsername(username);
     }
+
+    @RequestMapping(path="/users/leaders", method = RequestMethod.GET)
+    public List<LeaderboardDTO> getLeaderboard() {return serviceLayer.getLeaderboard();}
 }
