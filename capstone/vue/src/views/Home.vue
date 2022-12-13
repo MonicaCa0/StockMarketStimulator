@@ -15,14 +15,17 @@
                     {{user.username}}
                     </li>
                     </td>
+                   
                    </table>
                    </div>
                    <GameDisplay></GameDisplay>
+                    
       </div>
      
       <div>
 
       </div>
+      <Leaderboard></Leaderboard>
       </div>
     
      
@@ -32,11 +35,14 @@
 import userService from '../services/UserService'
 import Sidebar from '@/components/sidebar/sidebar.vue'
 import GameDisplay from '@/components/GameDisplay.vue'
+import Leaderboard from '@/components/leaderboard.vue'
     export default{
         components:{
             Sidebar,
-            GameDisplay
+            GameDisplay,
+            Leaderboard
         },
+       
         data(){
             return{
             users: [],

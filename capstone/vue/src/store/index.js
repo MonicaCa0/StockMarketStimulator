@@ -22,7 +22,8 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     users: [],
-    games:[]
+    games:[],
+    leaders:[]
     
   },
   mutations: {
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     },
   SET_ID(state,id){
       state.id = id;
+    },
+    SET_LEADERS(state, leaders){
+      state.leaders = leaders;
     }
     ,
     LOGOUT(state) {
