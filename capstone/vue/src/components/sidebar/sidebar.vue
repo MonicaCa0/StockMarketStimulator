@@ -82,11 +82,11 @@ h1{
 }
 h3{
   font-size: 1.3rem;
-  margin-bottom: 1rem;
- margin-left: 50px;
+  margin-bottom: 2rem;
+ margin-left: 30px;
  margin-right: 10px;
-  font-family: sans-serif;
-  color:rgb(255, 255, 255, 0.92);
+  font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
+  color:rgb(255, 255, 255, 0.87);
  margin-top: 0;
 }
 .links:hover{
@@ -124,10 +124,9 @@ h3{
   color: white;
   background-color: var(--sidebar-bg-color);
   width: calc(2rem + 32px);
-  float: left;
   position: fixed;
   overflow: hidden;
-  min-height: 100vh;
+  height: 100vh;
   z-index: 1;
   top: 0;
   left: 0;
@@ -240,7 +239,7 @@ transition: 0.2s ease-out;
 span.text{
   color: white;
   font-size:20px ;
-  font-family: sans-serif;
+  font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
   transition: 0.3s ease-out;
 }
 button{

@@ -1,10 +1,10 @@
 <template>
   <div>
-      <hero></hero>
+      <hero class="main"></hero>
   </div>
 </template>
 
-<script>
+<script >
 import Hero from '../components/Hero.vue'
 export default {
   name: 'landingPage',
@@ -14,6 +14,6 @@ components:{
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

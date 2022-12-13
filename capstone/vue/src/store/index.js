@@ -20,7 +20,10 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
+    users: [],
+    id: 0,
+    
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -32,6 +35,13 @@ export default new Vuex.Store({
       state.user = user;
       localStorage.setItem('user',JSON.stringify(user));
     },
+    SET_USERS(state, users){
+      state.users = users;
+    },
+  SET_ID(state,id){
+      state.id = id;
+    }
+    ,
     LOGOUT(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');

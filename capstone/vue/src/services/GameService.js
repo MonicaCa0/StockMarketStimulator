@@ -11,5 +11,9 @@ export default{
     
     organizerGames(id){
         return http.get(`/${id}/organizer`);
+    },
+
+    addNewGame(id, game){
+        return http.post(`/games/${id}/create`, game)
     }
 }

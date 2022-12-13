@@ -9,8 +9,8 @@ export default{
     getAllUsers(){
         return http.get('/users');
     }, 
-    getUserById(id){
-        return http.get(`/users/${id}`);
+    getUserById(name){
+        return http.get(`/users/${name}`);
     }
 
     

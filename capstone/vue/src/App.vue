@@ -12,9 +12,7 @@ export default {
 </script>
 
 <style scoped>
-body{
-  margin: 0px
-}
+
 
 </style>
 
