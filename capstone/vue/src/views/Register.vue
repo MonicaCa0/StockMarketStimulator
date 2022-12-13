@@ -111,10 +111,10 @@ export default {
 }
 
 .containerReg{
-    height: 50vh;
+    height: 550px;
     background-color: rgba(255,255,255,1) ;
     border-radius: 8px;
-    padding: 30px 70px 170px 70px;
+  padding: 40px 70px 100px 70px;
     box-shadow: 20px 15px 40px rgba(234, 255, 69, .5);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }

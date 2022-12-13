@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-
+@CrossOrigin
 @RequestMapping(path = "/trades")
 @RestController
 public class TradeController {

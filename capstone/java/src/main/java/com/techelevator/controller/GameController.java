@@ -14,7 +14,7 @@ import java.security.Principal;
 import java.util.List;
 
 
-
+@CrossOrigin
 @RestController
 @RequestMapping(path="/games")
 public class GameController {

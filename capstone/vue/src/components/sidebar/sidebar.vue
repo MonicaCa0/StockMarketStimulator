@@ -15,22 +15,24 @@ menu
      </div>
     <div class="menu" >
       <h3 >Menu</h3>
-    <router-link class="button links" to="/home" font-awesome-icon icon="fa-solid fa-house" > 
-    <span class="material-icons"><span class="material-symbols-rounded" title="Home">
+    <router-link class="button links" to="/home"  > 
+    <span class="material-icons">
+      <span class="material-symbols-rounded" title="Home">
 home
-</span></span> <span class="text">Home</span></router-link>
-    <router-link  to="/portfolio" i class="fa-solid fa-file button links"> <span class="material-icons"><span class="material-symbols-rounded" title="Portfolio">
+</span></span> 
+<span class="text">Home</span></router-link>
+    <router-link  to="/portfolio" class=" button links"> <span class="material-icons"><span class="material-symbols-rounded" title="Portfolio">
 account_balance_wallet
 </span></span> <span class="text">Portfolio</span></router-link>
-    <router-link class="button links " to="/games" icon="fa-solid fa-gamepad"> <span class="material-icons"><span class="material-symbols-rounded" title="Games">
+    <router-link class="button links " to="/games" > <span class="material-icons"><span class="material-symbols-rounded" title="Games">
 gamepad
 </span></span><span class="text">Games</span></router-link>
-    <router-link class="button links" to="/trade" icon="fas fa-users">
+    <router-link class="button links" to="/trade">
     <span class="material-icons">
       <span class="material-symbols-rounded" title="Trade">
 currency_exchange
 </span></span><span class="text">Trade</span></router-link>
-    <router-link class="button links " to="/research" icon="fas fa-image"><span class="material-icons">
+    <router-link class="button links " to="/research" ><span class="material-icons">
       <span class="material-symbols-rounded" title="Research">
 library_books
 </span></span><span class="text">Research</span></router-link> 

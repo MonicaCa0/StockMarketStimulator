@@ -1,8 +1,8 @@
 <template>
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
-        <div class="containerLog">
-          <div class="contentLog">
+        <div class="container">
+          <div class="content">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
       <div
         class="alert alert-danger"
@@ -94,15 +94,15 @@ export default {
   
 }
 
-.containerLog{
-  height: 50vh;
+.container{
+  height: 550px;
     background-color: rgba(255,255,255,1) ;
     border-radius: 8px;
-    padding: 30px 70px 150px 70px;
+    padding: 30px 70px 100px 70px;
     box-shadow: 20px 15px 40px rgba(234, 255, 69, .5);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;   
 }
-.contentLog{
+.content{
   display: flex;
     flex-direction: column;
     align-items: center;
@@ -138,7 +138,7 @@ button{
     padding:12px 24px 12px 24px;
     width: 65%;
     color: #6A6EBD;
-    margin-bottom: 22px;
+    margin-bottom: 18px;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 input{
@@ -184,9 +184,9 @@ color:#9699c7;
 }
 @media screen and (max-width: 900px) {
  .container{
-    height: 50vh;
+    height: 50%;
     padding: 40px 70px 120px 70px;
-    row-gap: 10px;
+    row-gap: 10x;
     width: 60%;
     border-radius: 8px;
     box-shadow: 20px 15px 40px rgba(234, 255, 69, .5);

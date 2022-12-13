@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.model.Portfolio;
 import com.techelevator.services.ServiceLayer;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/portfolios")
 public class PortfolioController {

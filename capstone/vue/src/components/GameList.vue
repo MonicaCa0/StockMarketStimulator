@@ -2,9 +2,9 @@
  <section class="main">
       <h3>Games {{$store.state.user.username}} Created</h3>
       <ul>
-          <li v-for="game in games" v-bind:key="game.id" >
-              <h4>{{game.gameName}}</h4>
-              <p>{{game.dateFinished}</p>
+          <li v-for="game in games" v-bind:key="game.gameId" >
+              <h4>{{game.gameId}}</h4>
+              <p>{{game.gameName}}</p>
           </li>
       </ul>
     </section>
@@ -13,8 +13,8 @@
 <script>
 export default {
     name: 'game-list',
-    props: ['games']
-    
+    props:['games'],
+   
 }
 
 
@@ -22,5 +22,13 @@ export default {
 
 <style scoped>
 
-
+.main{
+    background-color: black;
+}
+p{
+    color: purple;
+}
+h4{
+    color: red;
+}
 </style>

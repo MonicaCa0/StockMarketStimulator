@@ -1,6 +1,6 @@
 <template>
-    <div class="Main">
-        <form @click="onSubmit" >
+    <div   class="Main">
+        <form  >
             <h1>Create A New Game</h1>
             <p>Use this form to create a new game.</p>
             <div class="display">
@@ -9,7 +9,7 @@
         <label for="dateFinished"><span>Date Game Finishes</span></label>
          <input  class="input" id="dateFinished" type="date" v-model="dateFinished" required>
        <div class="buttons">
-        <button type="submit" >Submit</button>
+        <button @click="onSubmit" type="submit" >Submit</button>
         <button @click="cancel">Cancel</button>
         </div>
         </div>
@@ -33,15 +33,14 @@ methods: {
         const newGame ={
                 gameName: this.gameName,
                 dateFinished: this.dateFinished
-                 }
+                 };
         
         let id = this.$route.params.id;
         gameService.addNewGame(id,newGame).then(res => {
             if(res.status === 201){
              this.$router.push(`/games`);
-    
-            this.gameName=''
-            this.dateFinished=''
+                this.gameName=''
+                this.dateFinished=''
         }  
         })
        

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const http = axios.create(
     {
@@ -8,7 +8,9 @@ const http = axios.create(
 
 
 export default{
-    
+    getAllGames(){
+        return http.get(`/games`)
+    },
     organizerGames(id){
         return http.get(`/${id}/organizer`);
     },

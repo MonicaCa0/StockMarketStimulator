@@ -8,7 +8,7 @@
       <div class="all-buttons">
         <div class="create-button">
           <router-link
-      v-bind:to="{name: 'addNewGame', params:{id: userId}}"
+      v-bind:to="{name: 'addNewGame', params:{id: $store.state.user.id}}"
       
     >
       <button

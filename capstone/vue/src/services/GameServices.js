@@ -12,7 +12,8 @@ export default{
     },
 
     viewAllGames(){
-        return http.get('')
+        alert('view all games')
+        return  http.get('/games')
     },
 
     getGamesByPlayer(playerId){

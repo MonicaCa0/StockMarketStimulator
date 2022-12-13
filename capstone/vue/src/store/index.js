@@ -22,7 +22,7 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     users: [],
-    id: 0,
+    games:[]
     
   },
   mutations: {
@@ -38,6 +38,9 @@ export default new Vuex.Store({
     SET_USERS(state, users){
       state.users = users;
     },
+    SET_GAMES(state, games){
+      state.games = games;
+    },
   SET_ID(state,id){
       state.id = id;
     }
@@ -49,5 +52,7 @@ export default new Vuex.Store({
       state.user = {};
       axios.defaults.headers.common = {};
     }
+  }, getters: {
+    
   }
 })
