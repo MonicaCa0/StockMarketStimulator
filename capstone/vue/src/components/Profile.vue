@@ -4,9 +4,9 @@
           <h1 class="header">Portfolio</h1>
           <div class="content">
               <h2>Stocks</h2>
-              <li v-for="stocks in stock" :key="stocks.id">
-                    {{stocks.stock_name}}
-              </li>
+              </div>
+              <div class ="stocks">
+                  <StockDisplay></StockDisplay>
               </div>
 
         </div>
@@ -15,7 +15,11 @@
 
 <script >
 import stockService from '../services/StockService'
+import StockDisplay from '@/components/StockDisplay.vue'
 export default{
+    components:{
+        StockDisplay
+    },
         data(){
             return{
             stock: [],
@@ -64,6 +68,10 @@ h2{
     color:white;
     text-shadow:2px 2px#6A6EBD;
    
+}
+
+.stocks{
+    font-size:20px
 }
 
 
