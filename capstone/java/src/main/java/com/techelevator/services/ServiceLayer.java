@@ -61,8 +61,15 @@ public class ServiceLayer {
         return userDao.findIdByUsername(username);
     }
 
+<<<<<<< HEAD
     public Game createNewGame(GameDTO gameDTO, int id, Principal principal) {
        int userId = userDao.findIdByUsername(principal.getName());
+=======
+    public List<LeaderboardDTO> getLeaderboard() {return userDao.getLeaderboard();}
+
+    public Game createNewGame(Game game, Principal principal, int id) {
+        int userId = userDao.findIdByUsername(principal.getName());
+>>>>>>> 49df1161d3ab14cae91cdd8bc5913d3c8c3c357b
         if (id == userId) {
             Game game = new Game();
 

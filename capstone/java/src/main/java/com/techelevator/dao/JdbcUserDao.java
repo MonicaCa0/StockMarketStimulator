@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.techelevator.model.LeaderboardDTO;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -82,6 +83,23 @@ public class JdbcUserDao implements UserDao {
         return jdbcTemplate.update(insertUserSql, username, password_hash, ssRole) == 1;
     }
 
+    @Override
+    public List<LeaderboardDTO> getLeaderboard(){
+        List<LeaderboardDTO> leaders = new ArrayList<>();
+        String sql = "SELECT u.username, p.portfolio_balance " +
+                "FROM users u " +
+                "JOIN game_history gh ON gh.user_id = u.user_id " +
+                "JOIN portfolio p ON p.account_id = gh.account_id " +
+                "JOIN game g ON g.game_id = gh.game_id " +
+                "ORDER BY p.portfolio_balance DESC ";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            LeaderboardDTO leader = mapRowToUserBalance(results);
+            leaders.add(leader);
+        }
+        return leaders;
+    }
+
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
         user.setId(rs.getInt("user_id"));
@@ -90,5 +108,12 @@ public class JdbcUserDao implements UserDao {
         user.setAuthorities(Objects.requireNonNull(rs.getString("role")));
         user.setActivated(true);
         return user;
+    }
+
+    private LeaderboardDTO mapRowToUserBalance(SqlRowSet rs) {
+        LeaderboardDTO leaderboard = new LeaderboardDTO();
+        leaderboard.setUsername(rs.getString("username"));
+        leaderboard.setPortfolioBalance((rs.getBigDecimal("portfolio_balance")));
+        return leaderboard;
     }
 }
