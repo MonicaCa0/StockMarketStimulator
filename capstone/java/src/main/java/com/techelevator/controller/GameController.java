@@ -34,7 +34,7 @@ public class GameController {
         return serviceLayer.getAllPlayersInvited(gameId, principal);
     }
     //returns all players that approved the request
-    @RequestMapping(path="{gameId}/players/approved", method= RequestMethod.GET)
+    @RequestMapping(path="/{gameId}/players/approved", method= RequestMethod.GET)
     public List<Game> getAllPlayersApproved(@PathVariable int gameId, Principal principal){
         return serviceLayer.getAllPlayersApproved(gameId, principal);
     }

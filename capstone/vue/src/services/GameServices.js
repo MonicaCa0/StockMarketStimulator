@@ -2,46 +2,42 @@ import axios from 'axios';
 
 
 const http = axios.create({
-    baseURL: "https://api.polygon.io/v1/open-close/"
+    baseURL: 'http://localhost:9000'
 });
 
 export default{
 
-    createGame(){
-        return http.post('/{id}/create');
+    createGame(id, game){
+        return http.post(`/games/${id}/create`, game);
     },
 
     viewAllGames(){
         return http.get('')
     },
 
-    getGamesByPlayer(){
-        return http.get('/{playerId}/player');
+    getGamesByPlayer(playerId){
+        return http.get(`/games/${playerId}/player`);
     },
 
-    getGamesByOrganizer(){
-        return http.get('/{id}/organizer')
+    getGamesByOrganizer(id){
+        return http.get(`/games/${id}/organizer`)
     },
 
-    addUser(){
-        return http.post('/{id}/addUser');
+    addUser(id){
+        return http.post(`/games/${id}/addUser`);
     },
 
-    allApprovedPlayers(){
-        return http.get('{gameId}/players/approved');
+    allApprovedPlayers(gameId){
+        return http.get(`/games/${gameId}/players/approved`);
     },
 
-    allInvitedPlayers(){
-        return http.get('/{gameId}/players');
+    allInvitedPlayers(gameId){
+        return http.get(`/games/${gameId}/players`);
     },
 
-    approveOrDeny(){
-        return http.post('/{playerId}/response/{gameId}')
+    approveOrDeny(playerId){
+        return http.post(`/games/${playerId}/response/{gameId}`)
     }
-
-
-
-
 
 }
 
