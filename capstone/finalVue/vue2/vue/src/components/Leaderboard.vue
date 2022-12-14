@@ -1,12 +1,14 @@
 <template>
       <div class="container">
           <h1>Leader Board</h1>
+          <p>Good Luck!</p>
           <div class="content">
               <li v-for="leader in $store.state.leaders" v-bind:key="leader.username">
                     <p>{{leader.username}}</p>
                     <p>{{leader.portfolioBalance}}</p>
                     <span></span>
               </li>
+              
               </div>
 
         </div>
