@@ -38,6 +38,9 @@ export default new Vuex.Store({
     SET_STOCKS(state, stocks){
       state.stocks = stocks;
     },
+    SET_GAMES(state, games){
+      state.games = games;
+    },
     SET_LEADERS(state, leaders){
       state.leaders = leaders;
     },

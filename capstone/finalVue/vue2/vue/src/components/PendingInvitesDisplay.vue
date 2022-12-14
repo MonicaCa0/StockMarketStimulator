@@ -1,24 +1,20 @@
 <template>
 <div class="main">
   <div class="container">
-  <pending-invites-list class="display" :games="$store.state.invites"></pending-invites-list>
+  <pending-invites-list class="display" :invites="$store.state.invites"></pending-invites-list>
   </div>
   </div>
 </template>
 
 <script>
 import PendingInvitesList from '../components/PendingInvitesList.vue'
- import GameService from '@/services/GameService.js'
-export default {
 
+export default {
 components:{
     PendingInvitesList
 },
-created(){
-    GameService.getPendingInvites().then( res => {
-        this.$store.commit('SET_INVITES', res.data)
-    })
-}
+
+
 
 }
 </script>

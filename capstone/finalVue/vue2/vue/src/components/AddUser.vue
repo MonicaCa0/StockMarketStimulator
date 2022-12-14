@@ -46,6 +46,7 @@ methods: {
             if(res.status === 201){
                 this.gameName=''
                 this.dateFinished=''
+                this.router.push('/games')
         }  
         }).catch(error => {
             alert(error)

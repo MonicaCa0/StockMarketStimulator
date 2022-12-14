@@ -2,6 +2,7 @@
 <template>
             <select v-model="game.gameName">
                 <option value="">Please Select A Game</option>
+                
                 <option value="game.gameName" v-for="game in $store.state.games" v-bind:key="game.gameId" >{{game.gameName}}</option>
             </select>
    
@@ -16,7 +17,7 @@ export default {
             }
         }
     },
-    created(){
+    create(){
 
         GameService.viewAllGames().then(response => {
               this.$store.commit('SET_GAMES', response.data);

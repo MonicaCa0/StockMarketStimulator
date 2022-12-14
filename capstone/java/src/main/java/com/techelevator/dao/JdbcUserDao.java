@@ -91,6 +91,7 @@ public class JdbcUserDao implements UserDao {
                 "JOIN game_history gh ON gh.user_id = u.user_id " +
                 "JOIN portfolio p ON p.account_id = gh.account_id " +
                 "JOIN game g ON g.game_id = gh.game_id " +
+                "JOIN game g ON g.organizer_account_id = g " +
                 "ORDER BY p.portfolio_balance DESC ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while (results.next()) {

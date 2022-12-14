@@ -1,45 +1,50 @@
 import axios from 'axios';
 
-
-const http = axios.create({
-    baseURL: 'http://localhost:9000'
+const currentToken = localStorage.getItem('token')
+const apiClient = axios.create({
+  baseURL: "http://localhost:9000",
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${currentToken}`
+  }
 });
 
 export default{
 
     createGame(id, game){
-        return http.post(`/games/${id}/create/`, game);
+        return apiClient.post(`/games/${id}/create/`, game);
     },
 
     viewAllGames(){
-        return  http.get('/games')
+        return  apiClient.get('/games')
     },
     getAllPendingGames(playerId){
-        return http.get(`/games/${playerId}/invites`);
+        return apiClient.get(`/games/${playerId}/invites`);
     },
 
     getGamesByPlayer(playerId){
-        return http.get(`/games/${playerId}/player`);
+        return apiClient.get(`/games/${playerId}/player`);
     },
 
     getGamesByOrganizer(id){
-        return http.get(`/games/${id}/organizer`)
+        return apiClient.get(`/games/${id}/organizer`)
     },
 
     addUser(id){
-        return http.post(`/games/${id}/addUser`);
+        return apiClient.post(`/games/${id}/addUser`);
     },
 
     allApprovedPlayers(gameId){
-        return http.get(`/games/${gameId}/players/approved`);
+        return apiClient.get(`/games/${gameId}/players/approved`);
     },
 
     allInvitedPlayers(gameId){
-        return http.get(`/games/${gameId}/players`);
+        return apiClient.get(`/games/${gameId}/players`);
     },
 
     approveOrDeny(playerId){
-        return http.post(`/games/${playerId}/response/{gameId}`)
+        return apiClient.post(`/games/${playerId}/response/{gameId}`)
     }
 
 }

@@ -21,8 +21,6 @@ export default{
     getAllPendingGames(playerId){
         return http.get(`/games/${playerId}/invites`);
     },
-
-
     getGamesByOrganizer(id){
         return http.get(`/games/${id}/organizer`)
     },

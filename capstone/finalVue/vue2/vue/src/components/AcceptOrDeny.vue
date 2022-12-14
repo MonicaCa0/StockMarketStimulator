@@ -2,12 +2,12 @@
     <div   class="Main">
         <form  v-on:submit.prevent>
             <h1>Create A New Game</h1>
-            <p>Use this form to create a new game.</p>
+            <p>Deny Or Accepy Request For Game {{game.gameName}}.</p>
             <div class="display">
         <label for="gameName"><span>Game Name</span></label>
-         <input class="input" type="text" v-model="gameName" required>
+    
         <label for="dateFinished"><span>Date Game Finishes</span></label>
-         <input  class="input" id="dateFinished" type="date" v-model="dateFinished" required>
+  
        <div class="buttons">
         <button @click="onSubmit" type="submit" >Submit</button>
         <button @click="cancel">Cancel</button>

@@ -15,7 +15,7 @@
   <router-link v-bind:to="{name:'addUser', params:{id: $store.state.user.id}}">
       <Button :title="'Add a Player'">  Add a Player</Button>
   </router-link>
-   <router-link  v-bind:to="{name:'acceptOrDeny'}">
+   <router-link  v-bind:to="{name:'home'}">
       <Button :title="'Accept or Deny Invite'"> 
        Accept or Deny
       </Button>
@@ -31,6 +31,7 @@ import GameDisplay from '../components/GameDisplay.vue'
 import PendingInvitesDisplay from '../components/PendingInvitesDisplay.vue'
 export default {
   name: "games",
+  props:['gameId'],
   components:{
     Header,
     GameDisplay,

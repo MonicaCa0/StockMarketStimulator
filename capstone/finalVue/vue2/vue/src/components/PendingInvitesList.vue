@@ -21,7 +21,7 @@ export default {
 
 },
    created(){
-       GameService.getAllPendingGames().then(res => {
+       GameService.getAllPendingGames(3).then(res => {
            this.$store.commit('SET_INVITES', res.data )
        })
    }
