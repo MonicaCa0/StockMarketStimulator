@@ -12,4 +12,5 @@ public interface StockOwnedDao {
     void updateStocks(Trade trade, String stockName);
     StockOwned logStocks(Trade trade, int userId, String stockName);
     StockOwned getStockOwnedByIdAndName(int accountId, String stockName);
+    void deleteStockOwned(int accountId, String StockName);
 }

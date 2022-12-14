@@ -2,10 +2,17 @@
 <div class="container">
        <Header></Header>
   <div class="Main">
+    <div class="background">
+  <h1 class="game-page-header"> Games Page</h1>
+         <div class="inner-content">
+               <div class="inner-display">
+           <GameDisplay class="game-display" />
+           </div>
+          </div>
+</div>
   </div>
 </div>
 </template>
-
 <script>
 import Header from '../components/Header.vue'
 export default {

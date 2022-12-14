@@ -5,6 +5,7 @@ import com.techelevator.model.Stock;
 import com.techelevator.model.Trade;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
 import javax.sound.sampled.Port;
@@ -32,20 +33,20 @@ public JdbcPortfolioDao(JdbcTemplate jdbcTemplate){
         return portfolios;
     }
 
-    public List<Portfolio> getAllPortfoliosByGame(int gameId) {
-        List<Portfolio> portfolios = new ArrayList<>();
-        String sql = "SELECT p.account_id, p.user_id, p.current_balance, p.portfolio_balance FROM portfolio p " +
-                "JOIN game_history gh ON gh.account_id = p.account_id " +
-                "JOIN game g ON g.organizer_account_id = p.account_id "+
-                "WHERE gh.game_id = ?";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, gameId);
+    public Portfolio getPortfoliosByGame(int gameId, int accountId) {
+       Portfolio portfolio = new Portfolio();
+        String sql = " SELECT p.account_id, p.user_id, p.current_balance, p.portfolio_balance, u.username FROM portfolio p "+
+                "JOIN users u ON u.user_id = p.user_id "+
+                " JOIN game g ON g.organizer_account_id = p.account_id "+
+                 " JOIN game_history gh ON gh.game_id = g.game_id "+
+                    " WHERE g.game_id = ? AND p.account_id = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, gameId,accountId);
 
 
-        while(rowSet.next()){
-            portfolios.add(mapToPortfolio(rowSet));
+        if(rowSet.next()){
+           portfolio = mapToPortfolioToFinal(rowSet);
         }
-
-        return portfolios;
+        return portfolio;
     }
 
     @Override
@@ -121,6 +122,15 @@ public JdbcPortfolioDao(JdbcTemplate jdbcTemplate){
         portfolio.setUserId(result.getInt("user_id"));
         portfolio.setCurrentBalance(result.getBigDecimal("current_balance"));
         portfolio.setPortfolioBalance(result.getBigDecimal("portfolio_balance"));
+        return portfolio;
+    }
+    private Portfolio mapToPortfolioToFinal(SqlRowSet result){
+        Portfolio portfolio = new Portfolio();
+        portfolio.setAccountId(result.getInt("account_id"));
+        portfolio.setUserId(result.getInt("user_id"));
+        portfolio.setCurrentBalance(result.getBigDecimal("current_balance"));
+        portfolio.setPortfolioBalance(result.getBigDecimal("portfolio_balance"));
+        portfolio.setUsername(result.getString("username"));
         return portfolio;
     }
 

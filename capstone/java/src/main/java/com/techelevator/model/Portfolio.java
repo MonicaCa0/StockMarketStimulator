@@ -8,6 +8,15 @@ public class Portfolio {
     private int userId;
     private BigDecimal currentBalance;
     private BigDecimal portfolioBalance;
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public int getAccountId() {
         return accountId;

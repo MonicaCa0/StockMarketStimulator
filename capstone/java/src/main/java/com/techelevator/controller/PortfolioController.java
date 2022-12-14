@@ -1,11 +1,9 @@
 package com.techelevator.controller;
 
 import com.techelevator.model.Portfolio;
+import com.techelevator.model.StockOwned;
 import com.techelevator.services.ServiceLayer;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -28,6 +26,10 @@ public List<Portfolio> getAllPortfolios(@PathVariable int id, Principal principa
     @RequestMapping("/{id}/account/{accountId}")
     public Portfolio getAllPortfolios(@PathVariable int id, @PathVariable int accountId, Principal principal){
         return serviceLayer.getPortfolioByAccountId(id,accountId, principal);
+    }
+    @RequestMapping(path="{id}/stocksOwned/{accountId}", method= RequestMethod.GET)
+    public List<StockOwned> getAllStocksOwned(@PathVariable int id, @PathVariable int accountId, Principal principal){
+    return serviceLayer.getAllStocksOwned(id,principal, accountId);
     }
 
     @RequestMapping("/{id}/balance/{accountId}")

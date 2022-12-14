@@ -72,7 +72,10 @@ public class JdbcStockOwnedDao implements StockOwnedDao {
             jdbcTemplate.update(sql,trade.getAmountOfShares(),trade.getAccountId(), stockName);
         }
     }
-
+        public void deleteStockOwned(int accountId, String stockName){
+        String sql = "DELETE from stocks_owned WHERE account_id = ? AND stock_name = ?";
+        jdbcTemplate.update(sql,accountId, stockName);
+        }
 
     private StockOwned mapToStocksOwned(SqlRowSet result){
         StockOwned stockOwned = new StockOwned();
