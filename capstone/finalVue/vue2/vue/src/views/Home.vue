@@ -2,19 +2,23 @@
 <div class="container">
   <Header></Header>
   <div class="Main">
-  
     <h1>Home</h1>
-   
+     <div class=leaderboard>
+    <Leaderboard></Leaderboard>
+  </div>
   </div>
 </div>
 </template>
 
 <script>
 import Header from '../components/Header.vue'
+import Leaderboard from '../components/Leaderboard.vue'
+
 export default {
   name: "home",
   components:{
-    Header
+    Header,
+    Leaderboard
   }
 };
 </script>
