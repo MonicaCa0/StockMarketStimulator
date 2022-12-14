@@ -18,6 +18,6 @@ public interface PortfolioDao {
     void updatePortfolio(Portfolio portfolio);
     Portfolio updateBalanceForEndOfGame(BigDecimal balance, int id, int accountId);
     void deletePortfolio(int userId);
-    List<Portfolio> getAllPortfoliosByGame(int gameId);
+    Portfolio getPortfoliosByGame(int gameId, int accountId);
 
 }

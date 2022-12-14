@@ -1,11 +1,14 @@
 <template>
       <div class="container">
           <h1>Leader Board</h1>
+          <p>Good Luck!</p>
           <div class="content">
               <li v-for="leader in $store.state.leaders" v-bind:key="leader.username">
                     <p>{{leader.username}}</p>
                     <p>{{leader.portfolioBalance}}</p>
+                    <span></span>
               </li>
+              
               </div>
 
         </div>
@@ -30,7 +33,7 @@ created(){
 
 <style scoped>
 .container{
-    height: 30vh;
+    height: auto;
     background-color: rgba(255,255,255,1) ;
     border-radius: 8px;
     padding: 20px 100px 10px 40px;
@@ -65,5 +68,8 @@ h2{
     text-align: center;
     text-shadow:2px 2px#6A6EBD;
    
+}
+li {
+    margin: 10px;
 }
 </style>

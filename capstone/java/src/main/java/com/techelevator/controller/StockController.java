@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.model.Stock;
+import com.techelevator.model.StockOwned;
 import com.techelevator.services.ApiService;
 import com.techelevator.services.ServiceLayer;
 import org.springframework.format.annotation.DateTimeFormat;

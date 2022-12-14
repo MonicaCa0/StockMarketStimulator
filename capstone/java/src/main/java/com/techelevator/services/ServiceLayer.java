@@ -242,9 +242,12 @@ public class ServiceLayer {
         if(id == checkId) {
 
             LocalDate date = LocalDate.now().minusDays(1);
-            List<StockOwned> stocksOwned = new ArrayList<>();
-            stocksOwned = stockOwnedDao.getAllStocksByAccountId(accountId);
-            List<Stock> stocks = stockDao.getAllStocksByDate(date);
+            List<StockOwned> stocksOwned =  stockOwnedDao.getAllStocksByAccountId(accountId);
+            List<Stock> stocks = new ArrayList<>();
+            for(StockOwned checkStock: stocksOwned){
+                stocks.add(getCurrentStock(checkStock.getStockName()));
+            }
+
             String stockName = "";
             BigDecimal runningTotal = new BigDecimal(0);
             double totalStocksOwned = 0;
@@ -268,28 +271,42 @@ public class ServiceLayer {
     }
 
     private BigDecimal portfolioBalanceForEndOfGame(int id, int accountId, LocalDate date) {
-            List<StockOwned> stocksOwned = new ArrayList<>();
-            stocksOwned = stockOwnedDao.getAllStocksByAccountId(accountId);
-            List<Stock> stocks = stockDao.getAllStocksByDate(date);
-            String stockName = "";
-            BigDecimal runningTotal = new BigDecimal(0);
-            double totalStocksOwned = 0;
-            for (StockOwned s : stocksOwned) {
-                stockName = s.getStockName();
-                totalStocksOwned = s.getTotalAmountOfShares();
-                for (Stock stock : stocks) {
-                    if (stockName.equals(stock.getStockName())) {
-                        runningTotal =  runningTotal.add(stock.getStockPriceAtClose().multiply(BigDecimal.valueOf(totalStocksOwned)));
 
-                    }
+        List<StockOwned> stocksOwned =  stockOwnedDao.getAllStocksByAccountId(accountId);
+        List<Stock> stocks = new ArrayList<>();
+        for(StockOwned checkStock: stocksOwned){
+            stocks.add(getCurrentStock(checkStock.getStockName()));
+        }
+
+        String stockName = "";
+        BigDecimal runningTotal = new BigDecimal(0);
+        double totalStocksOwned = 0;
+        for (StockOwned s : stocksOwned) {
+            stockName = s.getStockName();
+            totalStocksOwned = s.getTotalAmountOfShares();
+            for (Stock stock : stocks) {
+                if (stockName.equals(stock.getStockName())) {
+                    runningTotal =  runningTotal.add(stock.getStockPriceAtClose().multiply(BigDecimal.valueOf(totalStocksOwned)));
+
                 }
-
             }
+
+        }
            portfolioDao.updateBalanceForEndOfGame(runningTotal,id,accountId);
             portfolioDao.updatePortfolioBalance(accountId,BigDecimal.valueOf(0));
                 return runningTotal;
     }
 
+
+    public List<StockOwned> getAllStocksOwned(int id, Principal principal, int accountId){
+        int checkId = userDao.findIdByUsername(principal.getName());
+
+        if(id == checkId) {
+            return stockOwnedDao.getAllStocksByAccountId(accountId);
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The stock based on the information provided was not found. Please try again");
+        }
+    }
 
 
   public  Stock getStockByDateAndNameFromAPI(String info, LocalDate date){
@@ -497,15 +514,17 @@ public class ServiceLayer {
 
     public List<Portfolio> endGame(int gameId){
         Game game = gameDao.getGameById(gameId);
+        List<Portfolio> portfolios = new ArrayList<>();
         LocalDate date = LocalDate.now();
-        LocalDate checkDate = game.getDateFinished();
+//        LocalDate checkDate = game.getDateFinished();
 //        if(checkDate.equals(date)){
             List<Game> games = gameDao.getAllApprovedPlayersInAGame(gameId);
             for(Game sellGame: games){
                 portfolioBalanceForEndOfGame(sellGame.getPlayerUserId(),sellGame.getPlayerAccountId(),date);
+                portfolios.add(portfolioDao.getPortfoliosByGame(gameId, sellGame.getPlayerAccountId()));
             }
             portfolioBalanceForEndOfGame(game.getOrganizerUserId(),game.getOrganizerAccountId(),date);
-            List<Portfolio> portfolios = portfolioDao.getAllPortfoliosByGame(gameId);
+              portfolios.add(portfolioDao.getPortfoliosByGame(gameId, game.getOrganizerAccountId()));
             return portfolios;
     }
 
