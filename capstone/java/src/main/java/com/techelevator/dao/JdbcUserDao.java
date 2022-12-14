@@ -89,7 +89,7 @@ public class JdbcUserDao implements UserDao {
         String sql = "SELECT u.username, p.portfolio_balance " +
                 "FROM users u " +
                 "JOIN game_history gh ON gh.user_id = u.user_id " +
-                "JOIN portfolio p ON p.account_id = gh.account_id " +
+                "JOIN portfolio p ON p.user_id = gh.account_id " +
                 "JOIN game g ON g.game_id = gh.game_id " +
                 "JOIN game g ON g.organizer_account_id = g " +
                 "ORDER BY p.portfolio_balance DESC ";

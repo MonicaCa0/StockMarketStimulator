@@ -87,6 +87,16 @@
 
 <style >
 
+.container{
+     height: 100vh; 
+background:linear-gradient(0.25turn, rgba(175, 178, 237, .9) 0%,rgba(255, 172, 189, .9),rgba(175, 178, 237, .9));
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+
+
+}
+
 .Stock-header{
     font-size: 40px;
     padding-bottom: 5px;
