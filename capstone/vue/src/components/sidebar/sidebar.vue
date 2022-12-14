@@ -1,5 +1,6 @@
 
 <template>
+<div >
     <div class="sidebar " :class="{isExpanded: isExpanded ? 'true': ''}">
 
   
@@ -43,7 +44,7 @@ logout
 
     </div>
 </div>
-    
+    </div>
 </template>
 <script >
 export default {
@@ -137,10 +138,6 @@ h3{
   transition: 0.2s ease-out;
   display: flex;
   flex-direction: column;
-  @media(max-width:768px){
-    position:fixed;
-    z-index: 99;
-  }
   .logo{
   margin-bottom: 1rem;
   .material-symbols-rounded{

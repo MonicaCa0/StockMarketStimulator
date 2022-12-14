@@ -34,10 +34,8 @@ methods: {
                 gameName: this.gameName,
                 dateFinished:  moment(this.dateFinished).format("MM-DD-YYYY")
                  };
-         alert(newGame.dateFinished + " "+ newGame.gameName)
         let id = this.$route.params.id;
        GameServices.createGame(id, newGame).then(res => {
-           alert("newGame")
             if(res.status === 201){
                 this.gameName=''
                 this.dateFinished=''

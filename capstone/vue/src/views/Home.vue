@@ -17,7 +17,7 @@
                     </td>
                    </table>
                    </div>
-                   <GameDisplay></GameDisplay>
+                
       </div>
      
       <div>
@@ -31,11 +31,9 @@
 <script >
 import userService from '../services/UserService'
 import Sidebar from '@/components/sidebar/sidebar.vue'
-import GameDisplay from '@/components/GameDisplay.vue'
     export default{
         components:{
             Sidebar,
-            GameDisplay
         },
         data(){
             return{

@@ -60,7 +60,8 @@ public class ServiceLayer {
     public int findIdByUsername(String username) {
         return userDao.findIdByUsername(username);
     }
-    public List<LeaderboardDTO> getLeaderboard() {return userDao.getLeaderboard();}
+    public List<LeaderboardDTO> getLeaderboard() {
+        return userDao.getLeaderboard();}
     public Game createNewGame(GameDTO gameDTO, int id, Principal principal) {
        int userId = userDao.findIdByUsername(principal.getName());
         if (id == userId) {
