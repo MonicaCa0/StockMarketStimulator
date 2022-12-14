@@ -23,7 +23,8 @@ export default new Vuex.Store({
     user: currentUser || {},
     users: [],
     games:[],
-    leaders:[]
+    leaders:[],
+    invites: []
     
   },
   mutations: {
@@ -42,8 +43,8 @@ export default new Vuex.Store({
     SET_GAMES(state, games){
       state.games = games;
     },
-  SET_ID(state,id){
-      state.id = id;
+    SET_INVITES(state, invites){
+      state.invites = invites;
     },
     SET_LEADERS(state, leaders){
       state.leaders = leaders;

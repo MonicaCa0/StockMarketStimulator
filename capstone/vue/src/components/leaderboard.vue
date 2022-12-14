@@ -2,7 +2,7 @@
       <div class="container">
           <h1>Leader Board</h1>
           <div class="content">
-              <li v-for="leader in $store.state.leaders" v-bind:key="leader.username">
+              <li v-for="leader in users" v-bind:key="leader.username">
                     <p>{{leader.username}}</p>
                     <p>{{leader.portfolioBalance}}</p>
               </li>
@@ -16,7 +16,14 @@ import userService from "@/services/UserService.js"
 export default {
 data(){
             return{
-            users: [],
+            users: [ {
+        "portfolioBalance": 0.00,
+        "username": "Hey"
+    },
+    {
+        "portfolioBalance": 0.00,
+        "username": "admin"
+    },],
         };
     },
 created(){

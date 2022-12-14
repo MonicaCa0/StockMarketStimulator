@@ -24,7 +24,7 @@
       <div>
 
       </div>
-     <SelectGameName></SelectGameName>
+  
       </div>
     
      
@@ -33,11 +33,11 @@
 <script >
 import userService from '../services/UserService'
 import Sidebar from '@/components/sidebar/sidebar.vue'
-import SelectGameName from '../components/SelectGameName.vue'
+
     export default{
         components:{
             Sidebar,
-            SelectGameName
+           
         },
        
         data(){

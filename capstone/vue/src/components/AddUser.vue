@@ -5,12 +5,9 @@
             <p>Use this form to create add a player to your game.</p>
             <div class="display">
         <label for="gameName"><span>Game Name</span></label>
-        <select class="input" name="" id="" v-model="game.gameName">
-            <option value="">Please Select One</option>
-            <option value="Hello" ></option>
-        </select>
+        <select-game-name class="input"></select-game-name>
         <label for="userId"><span>Username</span></label>
-            <input class="input" type="text" v-model="gameName" required>
+        <select-username class="input" />
        <div class="buttons">
         <button @click="onSubmit" type="submit" >Submit</button>
         <button @click="cancel">Cancel</button>
@@ -22,8 +19,8 @@
 
 <script>
  import GameServices from '@/services/GameServices.js'
-
-
+import SelectGameName from '../components/SelectGameName.vue'
+import SelectUsername from '../components/SelectUsername.vue'
 export default {
 data(){
     return{
@@ -33,7 +30,8 @@ data(){
     }
 },
 components:{
-
+SelectGameName,
+SelectUsername
 },
 methods: {
     onSubmit(){

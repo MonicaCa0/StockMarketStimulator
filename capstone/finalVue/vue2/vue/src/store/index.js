@@ -22,7 +22,8 @@ export default new Vuex.Store({
     user: currentUser || {},
     users: [],
     games: [],
-    leaders: []
+    leaders: [],
+    invites: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     },
     SET_LEADERS(state, leaders){
       state.leaders = leaders;
+    },
+    SET_INVITES(state, invites){
+      state.invites = invites
     },
     LOGOUT(state) {
       localStorage.removeItem('token');

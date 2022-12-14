@@ -1,30 +1,38 @@
 <template>
  <section class="main">
-      <h3>Games  Created</h3>
+      <h3>Pending Invites</h3>
       <span></span>
-          <tr  v-for="game in games" v-bind:key="game.gameId">
+          <tr  v-for="game in invites" v-bind:key="game.gameId">
             <td >
-                 <!-- <router-link class="link" :to="{name: 'viewGame', params:{gameId: game.gameId}}" > -->
+                 <router-link class="link" :to="{name: 'acceptOrDeny', params:{gameId: game.gameId}}" >
               <p>  {{game.gameId + ".   " + game.gameName}}</p>  
-                    <!-- </router-link> -->
+                    </router-link>
           </td>
         </tr>
     </section>
 </template>
 
 <script>
+ import GameServices from '@/services/GameServices.js'
 export default {
     name: 'game-list',
-    props:['games'],
-   
+    props:['invites'],
+    data(){
+
+},
+   created(){
+       GameServices.getAllPendingGames().then(res => {
+           this.$store.commit('SET_INVITES', res.data )
+       })
+   }
 }
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .main{
         height: 300px;
-        width: 320px;
+        width: 300px;
         display: flex;
         align-items: center;
     
@@ -41,6 +49,11 @@ display: flex;
 align-items: center;
 list-style: none;
   border-bottom: 1.2px dotted #FFACBD;
+
+  &:hover{
+      background-color:#6A6EBD ;
+    color: white;
+  }
 }
 tr{
   display: flex;

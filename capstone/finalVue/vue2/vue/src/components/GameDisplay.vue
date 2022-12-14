@@ -1,5 +1,5 @@
 <template>
-<div class="Main">
+<div class="main">
   <div class="container">
   <game-list class="display" :games="$store.state.games"></game-list>
   </div>
@@ -8,7 +8,7 @@
 
 <script>
 import GameList from '../components/GameList.vue'
- import GameServices from '@/services/GameServices.js'
+ import GameServices from '@/services/GameService.js'
 export default {
 
 components:{
@@ -24,7 +24,7 @@ components:{
 }
 </script>
 
-<style lang= "scss" scoped>
+<style  scoped>
   
     .container{
          width: 400px;
@@ -35,7 +35,7 @@ components:{
         justify-content: center;
         font-size: 18px;
         row-gap: 20px;
-        overflow: scroll;
+        overflow: auto;
         background-color:rgba(255, 255, 255, 0.829) ;
         border-radius: 14px;
     }

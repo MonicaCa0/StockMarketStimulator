@@ -63,7 +63,7 @@ public class ServiceLayer {
     public List<LeaderboardDTO> getLeaderboard() {
         return userDao.getLeaderboard();}
     public Game createNewGame(GameDTO gameDTO, int id, Principal principal) {
-       int userId = userDao.findIdByUsername(principal.getName());
+        int userId = userDao.findIdByUsername(principal.getName());
         if (id == userId) {
             Game game = new Game();
 
@@ -75,6 +75,7 @@ public class ServiceLayer {
             LocalDate date =LocalDate.parse( dateFinished,formatter);
             game.setDateFinished(date);
             return gameDao.createGame(game, portfolio.getAccountId());
+
 
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to access this resource");
