@@ -5,7 +5,6 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import LandingPage from '../views/LandingPage.vue'
-// import ViewPendingGames from '../views/ViewPendingGames.vue'
 import Trade from '../views/Trade.vue'
 import Portfolio from '../views/Portfolio.vue'
 import About from '../views/About.vue'
@@ -128,7 +127,7 @@ const router = new Router({
       }
     },
     {
-      path: "/games/:id/addUser",
+      path: "/games/:id/addPlayer",
       name: "addUser",
       component: AddUser,
       meta: {

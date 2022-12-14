@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="Header">
       <div class="logo">
       <h1>Apricot Stocks</h1>
       </div>
@@ -25,7 +25,7 @@ export default {
 <style scoped>
 
 
-.main{
+.Header{
     height: 90px;
     display: flex;
     align-items: center;

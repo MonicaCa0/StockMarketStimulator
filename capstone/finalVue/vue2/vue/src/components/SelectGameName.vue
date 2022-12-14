@@ -7,7 +7,7 @@
    
 </template>
 <script>
-import GameServices from '@/services/GameServices.js'
+import GameService from '../services/GameService.js'
 export default {
     data(){
         return{
@@ -18,7 +18,7 @@ export default {
     },
     created(){
 
-        GameServices.viewAllGames().then(response => {
+        GameService.viewAllGames().then(response => {
               this.$store.commit('SET_GAMES', response.data);
         });
     }

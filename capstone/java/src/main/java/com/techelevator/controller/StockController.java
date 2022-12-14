@@ -33,7 +33,6 @@ public class StockController {
     public List<Stock> getAllStocks(){
         return serviceLayer.getAllStocks();
     }
-
     //TestPath to make sure that date parameter was not the issue, this works
 
     @RequestMapping(path = "/{info}/{date}", method = RequestMethod.GET)

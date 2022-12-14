@@ -1,10 +1,11 @@
 <template>
 <div class="background">
-  <h1 class="game-page-header"> Games Page</h1>
+  <h1> Games Page</h1>
          <div class="inner-content">
           <sidebar /> 
                <div class="inner-display">
            <GameDisplay class="game-display" />
+           <PendingInvitesDisplay></PendingInvitesDisplay>
            </div>
           </div>
 <div class="buttons">
@@ -29,6 +30,7 @@
 
 <script>
 import GameDisplay from '@/components/GameDisplay.vue'
+import PendingInvitesDisplay from '@/components/PendingInvitesDisplay.vue'
 import Sidebar from '@/components/sidebar/sidebar.vue'
 import Button from '@/components/Button.vue'
 export default {
@@ -41,7 +43,8 @@ export default {
 components:{
   Sidebar,
   GameDisplay,
-  Button
+  Button,
+  PendingInvitesDisplay
 }, methods:{
   created(){
  
@@ -65,10 +68,13 @@ methods:{
 }
 .inner-display{
   display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+  column-gap:20px;
 }
 h1{
-  text-align: center;
-font-size:50px;
+    text-align: center;
+    font-size:50px;
     text-align: center;
     color:white;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;

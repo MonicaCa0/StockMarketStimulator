@@ -14,6 +14,9 @@ export default{
     viewAllGames(){
         return  http.get('/games')
     },
+    getAllPendingGames(playerId){
+        return http.get(`/games/${playerId}/invites`);
+    },
 
     getGamesByPlayer(playerId){
         return http.get(`/games/${playerId}/player`);

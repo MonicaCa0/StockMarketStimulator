@@ -18,6 +18,10 @@ export default{
     getGamesByPlayer(playerId){
         return http.get(`/games/${playerId}/player`);
     },
+    getAllPendingGames(playerId){
+        return http.get(`/games/${playerId}/invites`);
+    },
+
 
     getGamesByOrganizer(id){
         return http.get(`/games/${id}/organizer`)

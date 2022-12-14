@@ -1,30 +1,29 @@
 <template>
-<div class="Main">
+<div class="main">
   <div class="container">
-  <game-list class="display" :games="$store.state.games"></game-list>
+  <pending-invites-list class="display" :games="$store.state.invites"></pending-invites-list>
   </div>
   </div>
 </template>
 
 <script>
-import GameList from '../components/GameList.vue'
- import GameServices from '@/services/GameServices.js'
+import PendingInvitesList from '../components/PendingInvitesList.vue'
+ import GameService from '@/services/GameService.js'
 export default {
 
 components:{
-    GameList
+    PendingInvitesList
 },
- created(){
-        GameServices.viewAllGames().then(response => {
-              this.$store.commit('SET_GAMES', response.data);
-        });
-
+created(){
+    GameService.getPendingInvites().then( res => {
+        this.$store.commit('SET_INVITES', res.data)
+    })
 }
 
 }
 </script>
 
-<style lang= "scss" scoped>
+<style scoped>
   
     .container{
          width: 400px;
@@ -35,7 +34,7 @@ components:{
         justify-content: center;
         font-size: 18px;
         row-gap: 20px;
-        overflow: scroll;
+        overflow: auto;
         background-color:rgba(255, 255, 255, 0.829) ;
         border-radius: 14px;
     }

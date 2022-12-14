@@ -18,7 +18,7 @@
 </template>
 
 <script>
- import GameServices from '@/services/GameServices.js'
+ import GameService from '@/services/GameService.js'
    import moment from "moment"
 export default {
 data(){
@@ -35,7 +35,7 @@ methods: {
                 dateFinished:  moment(this.dateFinished).format("MM-DD-YYYY")
                  };
         let id = this.$route.params.id;
-       GameServices.createGame(id, newGame).then(res => {
+       GameService.createGame(id, newGame).then(res => {
             if(res.status === 201){
                 this.gameName=''
                 this.dateFinished=''
@@ -51,7 +51,7 @@ methods: {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 *{
     box-sizing: border-box;
 }
@@ -127,10 +127,10 @@ methods: {
     border-style:solid;
     padding:12px 30px 12px 30px;
     color: #5359c3;
-    &:hover{
+  }
+  button:hover{
         color:white;
         background-color:  #6A6EBD;
          border-color:#6A6EBD;
     }
-  }
 </style>
