@@ -390,7 +390,7 @@ public class ServiceLayer {
                     } else {
                         stockOwnedDao.logStocks(trade, id, stockName);
                     }
-                    return tradeDao.sellStock(trade);
+                    return tradeDao.buyStock(trade);
                 }
             }
         } else if (checkId == id && id == organizerId) {
