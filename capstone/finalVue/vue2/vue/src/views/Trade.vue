@@ -85,7 +85,7 @@
 </div>
 </template>
 
-<style >
+<style scoped>
 
 .container{
      height: 100vh; 

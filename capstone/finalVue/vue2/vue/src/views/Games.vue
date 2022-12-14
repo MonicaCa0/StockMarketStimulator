@@ -1,10 +1,10 @@
 <template>
 <div class="container">
   <Header></Header>
-  <div class="Main">
+  <div class="main1">
         <h1> Games Page</h1>
                <div class="inner-display">
-           <GameDisplay class="game-display" />
+           <GameDisplay />
            <PendingInvitesDisplay></PendingInvitesDisplay>
            </div>
 <div class="buttons">
@@ -14,11 +14,6 @@
     </router-link>
   <router-link v-bind:to="{name:'addUser', params:{id: $store.state.user.id}}">
       <Button :title="'Add a Player'">  Add a Player</Button>
-  </router-link>
-   <router-link  v-bind:to="{name:'home'}">
-      <Button :title="'Accept or Deny Invite'"> 
-       Accept or Deny
-      </Button>
   </router-link>
   </div>
   </div>
@@ -42,7 +37,7 @@ export default {
 </script>
 
 <style scoped>
-.Main{
+.main1{
 height: 100vh; 
 background:linear-gradient(0.25turn, rgba(175, 178, 237, .9) 0%,rgba(255, 172, 189, .9),rgba(175, 178, 237, .9));
 background-repeat: no-repeat;
@@ -53,7 +48,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: space-around;
-/* row-gap: 20px; */
+row-gap: 20px;
 text-align: left;
 }
 .inner-display {
@@ -64,7 +59,7 @@ text-align: left;
 .buttons{
   display: flex;
   justify-content: space-evenly;
-  column-gap: 10px;
+  column-gap: 40px;
 }
  button,.updated{
          cursor: pointer;
