@@ -1,13 +1,12 @@
 <template>
       <div class="container">
-          <h1>Leaderboard</h1>
-          <p>Good Luck!</p>
+          <h1>Top Games</h1>
           <div class="content">
-              <li v-for="leader in $store.state.leaders" v-bind:key="leader.username">
-                    <p>{{leader.username}}</p>
-                    <p>{{leader.portfolioBalance}}</p>
-                    <span></span>
+              <li>
+                  Game 1: $50,000
               </li>
+              <li>Game 2: $4,000</li>
+              <li>Game 3: $500</li>
               
               </div>
 
@@ -15,19 +14,18 @@
 </template>
 
 <script>
-import userService from "@/services/UserService.js"
+import portfolioService from '../services/PortfolioService'
 export default {
 data(){
-            return{
-            users: [],
-        };
-    },
-created(){
-    userService.getLeaderBoard().then(response =>{
-        //this.leaders = response.data;
-        this.$store.commit('SET_LEADERS', response.data)
-    })
-}
+    return{
+        portfolio: [],
+    }
+},
+    created(){
+        portfolioService.getAllPortfolios().then(response =>{
+            this.$store.commit('SET_PORTFOLIOS', response.data)
+        })
+    }
 }
 </script>
 

@@ -47,6 +47,9 @@ export default new Vuex.Store({
     SET_INVITES(state, invites){
       state.invites = invites
     },
+    SET_PORTFOLIOS(state, portfolios){
+      state.portfolios = portfolios
+    },
     LOGOUT(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');

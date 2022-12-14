@@ -7,9 +7,7 @@
     
       <router-link class="link" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link  class="link" v-bind:to="{ name: 'games' }">Games</router-link>&nbsp;|&nbsp;
-       <router-link class="link" v-bind:to="{ name: 'portfolio' }">Portfolio</router-link>&nbsp;|&nbsp;
        <router-link class="link" v-bind:to="{ name: 'trade' }">Trade</router-link>&nbsp;|&nbsp;
-       <router-link class="link" v-bind:to="{ name: 'research' }">Research</router-link>&nbsp;|&nbsp;
       <router-link  class="link" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
       
     </div>
