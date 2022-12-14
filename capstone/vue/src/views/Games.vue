@@ -1,59 +1,36 @@
 <template>
 <div class="background">
-         <sidebar></sidebar>
-           <GameDisplay></GameDisplay>
-  <div class="gradient">
-  <div class="Gamecontainer">
-    <div class="Gamegame-page">
-        <h1 class="game-page-header"> Games Page</h1>
-      <div class="all-buttons">
-        <div class="create-button">
-          <router-link
+  <h1 class="game-page-header"> Games Page</h1>
+         <div class="inner-content">
+          <sidebar /> 
+               <div class="inner-display">
+           <GameDisplay class="game-display" />
+           </div>
+          </div>
+<div class="buttons">
+<router-link
       v-bind:to="{name: 'addNewGame', params:{id: $store.state.user.id}}">
-      <button> Create Game</button>
+      <Button :title="'Create Game'"></Button>
     </router-link>
-    </div>
-  
-    <div class="join-button">
-          <router-link
-      to="/join"
-      custom
-      v-slot="{ navigate }"
-    >
-      <button
-        @click="navigate"
-        role="link"
-      >
-       Join Game
-      </button>
-    </router-link>
-    </div>
-
-    <div class="view-button">
-         <router-link
-      to="/view"
-      custom
-      v-slot="{ navigate }"
-    >
-      <button
-        @click="navigate"
-        role="link"
-      >
-       View Games
-      </button>
-    </router-link>
-    </div>
-    </div>
-    </div>
-    </div>
+  <router-link v-bind:to="{name:'addUser', params:{id: $store.state.user.id}}">
+      <Button :title="'Add a Player'"> >
+       Add Players
+      </Button>
+  </router-link>
+   <router-link  v-bind:to="{name:'acceptOrDeny'}">
+      <Button :title="'Accept or Deny Invite'"> >
+       Add Players
+      </Button>
+  </router-link>
   </div>
-    </div>
+</div>
 </template>
 
 
 <script>
 import GameDisplay from '@/components/GameDisplay.vue'
 import Sidebar from '@/components/sidebar/sidebar.vue'
+import Button from '@/components/Button.vue'
 export default {
   data(){
     return{
@@ -63,7 +40,8 @@ export default {
   },
 components:{
   Sidebar,
-  GameDisplay
+  GameDisplay,
+  Button
 }, methods:{
   created(){
  
@@ -75,105 +53,59 @@ methods:{
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  
 .background{
-  display: flex;
     height:100vh;
-
-}
-
-.Gamecontainer{
-    height: 100vh;
-    background-image: url('../assets/yellowObjects.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
-   
-   
-    
-}
-
-.gradient{
-   background-image:linear-gradient(-45deg,#AFB2ED 10%,#FFACBD,#AFB2ED );
-}
-
-.Gamegame-page{
-    font-family: Roboto;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    column-gap: 50px;
-    
-
+   align-items: center;
+   justify-content: space-between;
+   
 }
-
-.game-page-header{
+.inner-display{
   display: flex;
-font-size: 60px;
-font-family: Roboto;
-justify-content: center;
-color: white;
-text-shadow:2px 2px#6A6EBD ;
-
 }
-
-.all-buttons{
-  font: inherit;
+h1{
+  text-align: center;
+font-size:50px;
+    text-align: center;
+    color:white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-shadow:2px 2px#6A6EBD
+}
+.buttons{
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  align-content: center;
-  flex-direction: column;
-   background: #ffffffcc;
-   border-color:#EAFF45;
-    border-radius: 60px;
+align-items: center;
+  justify-items: center;
+  justify-content: center;
+  column-gap: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+   button{
+    cursor: pointer;
+    background:#EAFF45;
+    border-color:#EAFF45;
+    border-radius: 6px;
     border-style:solid;
-    padding:30px 60px 30px 30px;
-    height: 200px;
+    padding:12px 30px 12px 30px;
+    color: #5359c3;
+    font-size: 15px;
+    text-align: center;
+    &:hover{
+        color:white;
+        background-color:  #6A6EBD;
+         border-color:#6A6EBD;
+    }
+  }
+  
 }
 
-button{
-  border: none;
-  background: transparent;
-  font: inherit;
 
-} 
 
-.create-button{
-  display: flex;
-  justify-content: center;
-  font-size: 18px ;
-   background:#EAFF45;
- 
-    border-radius: 30px;
-    padding:20px 60px 20px 60px;
 
-   
-}
 
-.join-button{
-  display: flex;
-  justify-content: center;
-  font-size: 18px ;
-   background:#EAFF45;
-
-    border-radius: 30px;
-    padding:20px 60px 20px 60px;
-
-   
-}
-
-.view-button{
-  display: flex;
-  justify-content: center;
-  font-size: 18px ;
-   background:#EAFF45;
-   
-    border-radius: 30px;
-    padding:20px 60px 20px 60px;
-
-   
-}
 
 
   

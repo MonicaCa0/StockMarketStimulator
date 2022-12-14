@@ -66,7 +66,7 @@ span{
         border-bottom: 1.2px solid #EAFF45;
 }
   h3{
-        /* border-bottom: 1.2px solid #EAFF45; */
+      
         outline: #FFACBD;
         color: #6A6EBD;
         padding: 13px 25px 20px 25px; 

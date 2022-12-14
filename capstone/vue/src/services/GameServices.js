@@ -23,8 +23,8 @@ export default{
         return http.get(`/games/${id}/organizer`)
     },
 
-    addUser(id){
-        return http.post(`/games/${id}/addUser`);
+    addUser(id, game){
+        return http.post(`/games/${id}/addUser`, game);
     },
 
     allApprovedPlayers(gameId){

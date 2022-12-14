@@ -1,16 +1,13 @@
 <template>
-    <div class="Main">
+    <div   class="Main">
         <form  v-on:submit.prevent>
-            <h1>Add a Player</h1>
-            <p>Use this form to create add a player to your game.</p>
+            <h1>Create A New Game</h1>
+            <p>Use this form to create a new game.</p>
             <div class="display">
         <label for="gameName"><span>Game Name</span></label>
-        <select class="input" name="" id="" v-model="game.gameName">
-            <option value="">Please Select One</option>
-            <option value="Hello" ></option>
-        </select>
-        <label for="userId"><span>Username</span></label>
-            <input class="input" type="text" v-model="gameName" required>
+         <input class="input" type="text" v-model="gameName" required>
+        <label for="dateFinished"><span>Date Game Finishes</span></label>
+         <input  class="input" id="dateFinished" type="date" v-model="dateFinished" required>
        <div class="buttons">
         <button @click="onSubmit" type="submit" >Submit</button>
         <button @click="cancel">Cancel</button>
@@ -22,29 +19,23 @@
 
 <script>
  import GameServices from '@/services/GameServices.js'
-
-
+   import moment from "moment"
 export default {
 data(){
     return{
             gameName: '',
-            playerUserId: "",
+            dateFinished: "",
         errorMsg:"",
     }
 },
-components:{
-
-},
 methods: {
     onSubmit(){
-        const newPlayer ={
-                gameName: this.game.gameName,
-                playerUserId: this.game.playerUserId
+        const newGame ={
+                gameName: this.gameName,
+                dateFinished:  moment(this.dateFinished).format("MM-DD-YYYY")
                  };
-         alert(newPlayer.gameName + " "+ newPlayer.gameName)
         let id = this.$route.params.id;
-       GameServices.addUser(id, newPlayer).then(res => {
-           alert("newGame")
+       GameServices.createGame(id, newGame).then(res => {
             if(res.status === 201){
                 this.gameName=''
                 this.dateFinished=''
@@ -64,7 +55,7 @@ methods: {
 *{
     box-sizing: border-box;
 }
-    .Main{
+    .main{
         height: 100vh;
         display: flex;
         align-items: center;
@@ -124,7 +115,10 @@ methods: {
        font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
       
    }
-    
+    input[type=date]{
+
+    color: #6A6EBD;
+   }
   button,.updated{
          cursor: pointer;
     background:#EAFF45;
@@ -138,6 +132,5 @@ methods: {
         background-color:  #6A6EBD;
          border-color:#6A6EBD;
     }
-    
   }
-  </style>
+</style>

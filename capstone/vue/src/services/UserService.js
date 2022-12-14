@@ -11,6 +11,9 @@ export default{
     }, 
     getUserById(name){
         return http.get(`/users/${name}`);
+    },
+    getLeaderBoard(){
+        return http.get(`/users/leaders`);
     }
 
     

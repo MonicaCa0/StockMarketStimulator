@@ -4,19 +4,17 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
-import Trade from '../views/Trade.vue'
-import Research from '../views/Research.vue'
 import LandingPage from '../views/LandingPage.vue'
-import CreateGame from '../views/MainGamePage/CreateGame.vue'
-import JoinGame from '../views/MainGamePage/JoinGame.vue'
-import ViewCurrentGames from '../views/MainGamePage/ViewCurrentGames.vue'
-import ViewGame from '../views/ViewGame.vue'
+// import ViewPendingGames from '../views/ViewPendingGames.vue'
+import Trade from '../views/Trade.vue'
 import Portfolio from '../views/Portfolio.vue'
-import AddNewGame from '../views/AddNewGame.vue'
+import About from '../views/About.vue'
 import AddUser from '../views/AddUser.vue'
+import AddNewGame from '../views/AddNewGame.vue'
+import AcceptOrDeny from '../views/AcceptOrDeny.vue'
+import Research from '../views/Research.vue'
 import Games from '../views/Games.vue'
 import store from '../store/index'
-import About from '../views/About.vue'
 
 Vue.use(Router)
 
@@ -39,6 +37,14 @@ const router = new Router({
       component: Home,
       meta: {
         requiresAuth: true
+      }
+    },
+    {
+      path: '/',
+      name: 'landing',
+      component: LandingPage,
+      meta: {
+        requiresAuth: false
       }
     },
     {
@@ -66,33 +72,9 @@ const router = new Router({
       }
     },
     {
-      path: "/",
-      name: "landing",
-      component: LandingPage,
-      meta: {
-        requiresAuth: false
-      }
-    },
-    {
-      path: "/create",
-      name: "create",
-      component: CreateGame,
-      meta:{
-        requiresAuth: true
-      }
-    },
-    {
-      path: "/join",
-      name: "join",
-      component: JoinGame,
-      meta:{
-        requiresAuth: true
-      }
-    },
-    {
       path: "/games/:gameId/response",
       name: "acceptOrDeny",
-      component: ViewCurrentGames,
+      component: AcceptOrDeny,
       meta:{
         requiresAuth: true
       }
@@ -153,15 +135,7 @@ const router = new Router({
         requiresAuth: true
       }
     }
-    ,
-    {
-      path: "/games/:gameId",
-      name: "viewGame",
-      component: ViewGame,
-      meta: {
-        requiresAuth: true
-      }
-    }
+  
   ]
 })
 
