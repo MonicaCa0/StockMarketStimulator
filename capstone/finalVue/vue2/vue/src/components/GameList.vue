@@ -4,9 +4,9 @@
       <span></span>
           <tr  v-for="game in games" v-bind:key="game.gameId">
             <td >
-                 <!-- <router-link class="link" :to="{name: 'viewGame', params:{gameId: game.gameId}}" > -->
+                 <router-link class="link" :to="{name: 'trade', params:{gameId: game.gameId}}" >
               <p>  {{game.gameId + ".   " + game.gameName}}</p>  
-                    <!-- </router-link> -->
+                    </router-link> 
           </td>
         </tr>
         <tr>

@@ -76,7 +76,7 @@ methods: {
         align-items: center;
         justify-content: center;
         row-gap: 20px;
-        background-color:rgba(255, 255, 255, 0.829) ;
+        background-color:rgba(255, 255, 255) ;
      
         border-radius: 14px;
     }
