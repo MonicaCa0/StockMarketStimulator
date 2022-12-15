@@ -67,5 +67,9 @@ text-align: left;
         background-color:  #6A6EBD;
          border-color:#6A6EBD;
     }
-
+h1{
+      color: white;
+      font-size: 45px;
+      text-shadow: 1.5px 1.5px #6A6EBD;
+    }
 </style>
