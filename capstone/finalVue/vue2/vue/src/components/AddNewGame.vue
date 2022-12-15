@@ -39,14 +39,14 @@ methods: {
             if(res.status === 201){
                 this.gameName=''
                 this.dateFinished=''    
-                this.$router.push('/games')
+                this.$router.push({name: 'Games'})
         }  
         }).catch(error => {
             alert(error)
         })
        
 }, cancel(){
-    this.$router.push('/games');
+    this.$router.push({name: 'Games'});
 }
 }
 }

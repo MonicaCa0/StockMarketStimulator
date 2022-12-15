@@ -3,10 +3,11 @@ package com.techelevator.services;
 import com.techelevator.model.Stock;
 import com.techelevator.model.StockDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
-
+@CrossOrigin
 @Component
 public class ApiService {
     private final RestTemplate restTemplate = new RestTemplate();

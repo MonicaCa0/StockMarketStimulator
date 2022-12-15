@@ -8,7 +8,7 @@ import LandingPage from '../views/LandingPage.vue'
 import Trade from '../views/Trade.vue'
 import Portfolio from '../views/Portfolio.vue'
 import About from '../views/About.vue'
-import AddUser from '../views/AddUser.vue'
+// import AddUser from '../views/AddUser.vue'
 import AddNewGame from '../views/AddNewGame.vue'
 import AcceptOrDeny from '../views/AcceptOrDeny.vue'
 import Research from '../views/Research.vue'
@@ -31,14 +31,6 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/home',
-      name: 'home',
-      component: Home,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
       path: '/',
       name: 'landing',
       component: LandingPage,
@@ -46,6 +38,16 @@ const router = new Router({
         requiresAuth: false
       }
     },
+
+    {
+      path: '/home',
+      name: 'home',
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
+    },
+   
     {
       path: "/login",
       name: "login",
@@ -88,7 +90,7 @@ const router = new Router({
     },
     {
       path: "/games",
-      name: "games",
+      name: "Games",
       component: Games,
       meta:{
         requiresAuth: true
@@ -126,23 +128,23 @@ const router = new Router({
         requiresAuth: true
       }
     },
-    {
-      path: "/games/:id/addPlayer",
-      name: "addUser",
-      component: AddUser,
-      meta: {
-        requiresAuth: true
-      }
-    }
-    ,
-    {
-      path: "/trade/:gameId",
-      name: "trading",
-      component: Trade,
-      meta: {
-        requiresAuth: true
-      }
-    }
+    // {
+    //   path: "/games/:id/addPlayer",
+    //   name: "addUser",
+    //   component: AddUser,
+    //   meta: {
+    //     requiresAuth: true
+    //   }
+    // }
+    // ,
+    // {
+    //   path: "/trade/:gameId",
+    //   name: "trading",
+    //   component: Trade,
+    //   meta: {
+    //     requiresAuth: true
+    //   }
+    // }
   
   ]
 })

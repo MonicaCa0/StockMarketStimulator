@@ -6,7 +6,7 @@
        <div id="nav">
     
       <router-link class="link" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link  class="link" v-bind:to="{ name: 'games' }">Games</router-link>&nbsp;|&nbsp;
+      <router-link  class="link" v-bind:to="{ name: 'Games' }">Games</router-link>&nbsp;|&nbsp;
        <router-link class="link" v-bind:to="{ name: 'trade' }">Trade</router-link>&nbsp;|&nbsp;
       <router-link  class="link" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
       
