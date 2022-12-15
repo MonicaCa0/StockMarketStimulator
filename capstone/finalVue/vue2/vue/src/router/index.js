@@ -134,6 +134,15 @@ const router = new Router({
         requiresAuth: true
       }
     }
+    ,
+    {
+      path: "/trade/:gameId",
+      name: "trading",
+      component: Trade,
+      meta: {
+        requiresAuth: true
+      }
+    }
   
   ]
 })

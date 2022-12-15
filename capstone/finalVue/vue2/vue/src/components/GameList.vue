@@ -10,29 +10,40 @@
           </td>
         </tr>
         <tr>
+          <router-link class="link" :to="{name: 'trading', params:{gameId: 1}}" >
             <td >
               <p>Ultimate Trading</p>  
+              
           </td>
+          </router-link>
         </tr>
           <tr>
+            <router-link class="link" :to="{name: 'trading', params:{gameId: 2}}" >
             <td >
               <p>Ultimate Trading Round 2</p>  
           </td>
+            </router-link>
         </tr>
           <tr>
+            <router-link class="link" :to="{name: 'trading', params:{gameId: 3}}" >
             <td >
               <p>ETFs only</p>  
           </td>
+            </router-link>
         </tr>
           <tr>
+            <router-link class="link" :to="{name: 'trading', params:{gameId: 4}}" >
             <td >
               <p>Options Options Options</p>  
           </td>
+            </router-link>
         </tr>
           <tr>
+            <router-link class="link" :to="{name: 'trading', params:{gameId: 5}}" >
             <td >
               <p>Gold is Gold</p>  
           </td>
+            </router-link>
         </tr>
     </section>
 </template>

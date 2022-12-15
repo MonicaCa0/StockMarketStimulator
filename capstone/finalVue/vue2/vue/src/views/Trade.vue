@@ -2,7 +2,10 @@
 <div class="container">
        <Header></Header>
   <div class="Main">
+    <div class="top">
       <div class=" Stock-header">  Founder's Choice</div>
+      <input id="searchbar" v-on:keyup.enter="onSubmit" type="text" v-model="search" placeholder="Search for a stock"/>
+      </div>
       <div class="Stocks">
           <div class="stock-block">
               <div class="stock-name"><b> Microsoft </b>
@@ -59,7 +62,7 @@
          <button class="buy-button"> Buy </button>
          <button class="sell-button"> Sell </button>
          </div>
-
+        <stock-display></stock-display>
          <div class="holdings">
              <h1 class="holdings-header">Holdings</h1>
             <select >
@@ -135,7 +138,10 @@ background-size: cover;
       text-shadow: 1px 1px #6A6EBD;
   
 }
-
+.top{
+  display: flex;
+  column-gap: 50px;
+}
 .buy-button{
     margin-left: 20px;
        cursor: pointer;
@@ -189,20 +195,44 @@ select{
     border-radius:6px;
     border-style:solid; 
 }
+#searchbar{
+  width: 60%;
+  height: 45px;
+  border-radius: 20px;
+}
+input::placeholder#searchbar{
+  margin-right: 100px;
+}
 
 </style>
 
 <script>
-
-
+import StockDisplay from '../components/StockDisplay.vue';
+import StockService from '../services/StockService.js'
 import Header from '../components/Header.vue'
 
 export default {
   name: "Trade",
+  data(){
+    return{
+    search: '',
+    stock: {}
+    }
+  },
   components:{
     Header,
- 
+    StockDisplay
+  
+  
+  },
+  methods:{
+  onSubmit(){
+    StockService.searchForAStock(this.search).then(res => {
+      this.$store.commit('SET_STOCKS', res.data)
+    })  
   
   }
+  }
+
 }
 </script>

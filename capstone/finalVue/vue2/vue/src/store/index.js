@@ -23,7 +23,8 @@ export default new Vuex.Store({
     users: [],
     games: [],
     leaders: [],
-    invites: []
+    invites: [],
+    stocks:[]
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
