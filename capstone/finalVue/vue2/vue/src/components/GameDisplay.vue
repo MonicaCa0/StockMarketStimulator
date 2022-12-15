@@ -36,7 +36,7 @@ components:{
         font-size: 18px;
         row-gap: 20px;
         overflow: auto;
-        background-color:rgba(255, 255, 255, 0.829) ;
+        background-color:rgba(255, 255, 255) ;
         border-radius: 14px;
     }
 

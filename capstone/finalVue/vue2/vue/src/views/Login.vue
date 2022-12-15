@@ -92,7 +92,7 @@ export default {
 
 .container{
   position: relative;
-  height: 400px;
+  height: 600px;
     background-color: rgba(255,255,255,1) ;
     border-radius: 8px;
     padding: 30px 70px 100px 70px;
@@ -158,7 +158,7 @@ color:#9699c7;
 @media screen and (max-width: 1096px) {
  .container{
    position: relative;
-    height: 45vh;
+    height: 500px;
      padding: 30px 70px 100px 70px;
     row-gap: 10px;
     width: 70%;
@@ -185,7 +185,7 @@ color:#9699c7;
  @media screen and (max-width: 796px) {
  .container{
    position: relative;
-    height: 320px;
+    height: 400px;
     padding: 30px 70px 100px 70px;
     row-gap: 10x;
     width: 70%;

@@ -1,5 +1,6 @@
 <template>
 <div class="background">
+    <Header></Header>
   <div class="main">
     <add-new-game />
   </div>
@@ -8,9 +9,11 @@
 
 <script>
 import AddNewGame from '@/components/AddNewGame.vue'
+import Header from '@/components/Header.vue'
 export default {
 components:{
     AddNewGame,
+    Header
 }
 }
 </script>

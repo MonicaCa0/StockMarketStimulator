@@ -2,13 +2,35 @@
  <section class="main">
       <h3>Pending Invites</h3>
       <span></span>
-          <tr  v-for="invite in invites" v-bind:key="invite.gameId">
+          <tr  v-for="invite in invites"  v-bind:key="invite.gameId">
             <td >
                  <router-link class="link" :to="{name: 'acceptOrDeny', params:{gameId: invite.gameId}}" >
-              <p>  {{invite.gameId + ".   " + invite.gameName}}</p>  
+              <p>  {{  invite.gameName}}</p>  
                     </router-link>
           </td>
         </tr>
+          <tr>
+              <router-link class ="link"  :to="{name: 'acceptOrDeny', params:{gameId: 2}}">
+            <td >
+              <p>30 day Trading Sprint</p>  
+          </td>
+              </router-link>
+        </tr>
+          <tr>
+                <router-link class ="link"  :to="{name: 'acceptOrDeny', params:{gameId: 3}}">
+            <td >
+              <p>Battle of the Puts</p>  
+          </td>
+                </router-link>
+        </tr>
+          <tr>
+                <router-link class ="link"  :to="{name: 'acceptOrDeny', params:{gameId: 4}}">
+            <td >
+              <p>To the Moon 🚀</p>  
+          </td>
+          </router-link>
+        </tr>
+
     </section>
 </template>
 

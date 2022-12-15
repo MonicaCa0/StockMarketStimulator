@@ -39,7 +39,7 @@ methods: {
             if(res.status === 201){
                 this.gameName=''
                 this.dateFinished=''    
-                this.router.push('/games')
+                this.$router.push('/games')
         }  
         }).catch(error => {
             alert(error)
@@ -69,7 +69,7 @@ methods: {
         align-items: center;
         justify-content: center;
         row-gap: 20px;
-        background-color:rgba(255, 255, 255, 0.829) ;
+        background-color:rgba(255, 255, 255) ;
      
         border-radius: 14px;
     }
@@ -126,8 +126,8 @@ methods: {
     border-color:#EAFF45;
     border-radius: 6px;
     border-style:solid;
+     color: #5359c3;
     padding:12px 30px 12px 30px;
-    color: #5359c3;
   }
   button:hover{
         color:white;

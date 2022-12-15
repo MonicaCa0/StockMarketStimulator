@@ -1,16 +1,20 @@
 <template>
 <div class="background">
-  <div class="main">
-    <accept-or-deny />
+    <Header></Header>
+  <div class="MainPage">
+    <AcceptOrDeny />
   </div>
   </div>
 </template>
 
 <script>
+
+import Header from '@/components/Header.vue'
 import AcceptOrDeny from '@/components/AcceptOrDeny.vue'
 export default {
 components:{
     AcceptOrDeny,
+    Header
 }
 }
 </script>
@@ -20,7 +24,7 @@ components:{
     box-sizing: border-box;
 }
 
- .main{
+ .MainPage{
 display: flex;
 justify-content: center;
 align-items: center;

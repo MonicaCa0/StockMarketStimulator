@@ -2,7 +2,7 @@
 <div class="container">
   <Header></Header>
   <div class="main1">
-        <h1> Games Page</h1>
+        <h1> Current Games </h1>
                <div class="inner-display">
            <GameDisplay />
            <PendingInvitesDisplay></PendingInvitesDisplay>
@@ -74,5 +74,10 @@ text-align: left;
         color:white;
         background-color:  #6A6EBD;
          border-color:#6A6EBD;
+    }
+    h1{
+      color: white;
+      font-size: 45px;
+      text-shadow: 1.5px 1.5px #6A6EBD;
     }
 </style>

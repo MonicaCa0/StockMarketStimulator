@@ -107,7 +107,7 @@ export default {
 
 .container{
 position: relative;
-    height: 400px;
+    height: 600px;
     background-color: rgba(255,255,255,1) ;
     border-radius: 8px;
   padding: 40px 70px 100px 70px;

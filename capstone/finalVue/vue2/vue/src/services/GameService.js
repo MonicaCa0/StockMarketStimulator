@@ -43,8 +43,8 @@ export default{
         return apiClient.get(`/games/${gameId}/players`);
     },
 
-    approveOrDeny(playerId){
-        return apiClient.post(`/games/${playerId}/response/{gameId}`)
+    approveOrDeny(playerId, gameId){
+        return apiClient.post(`/games/${playerId}/response/${gameId}`)
     }
 
 }

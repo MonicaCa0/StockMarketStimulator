@@ -1,13 +1,16 @@
 <template>
-    <div   class="Main">
+   <div class="formContainer">
         <form  v-on:submit.prevent>
-            <h1>Create A New Game</h1>
-            <p>Deny Or Accepy Request For Game {{game.gameName}}.</p>
+            <h1>Invitation Response</h1>
+            <p>Use this form to Accept or Deny a game invitation.</p>
             <div class="display">
-        <label for="gameName"><span>Game Name</span></label>
-    
-        <label for="dateFinished"><span>Date Game Finishes</span></label>
-  
+        <label for="gameName"><span>Response</span></label>
+            <select  class="input" name="" id="">
+                <option value="">Please Select One</option>
+                <option value="">Accept</option>
+                <option value="">Deny</option>
+            </select>
+      
        <div class="buttons">
         <button @click="onSubmit" type="submit" >Submit</button>
         <button @click="cancel">Cancel</button>
@@ -19,23 +22,18 @@
 
 <script>
  import GameService from '@/services/GameService.js'
-   import moment from "moment"
 export default {
 data(){
     return{
-            gameName: '',
-            dateFinished: "",
-        errorMsg:"",
+             username: '',
+            approvalId:0    
     }
 },
 methods: {
     onSubmit(){
-        const newGame ={
-                gameName: this.gameName,
-                dateFinished:  moment(this.dateFinished).format("MM-DD-YYYY")
-                 };
-        let id = this.$route.params.id;
-       GameService.createGame(id, newGame).then(res => {
+        let id = this.$store.state.user.id
+        let gameId = this.$route.params.id;
+       GameService. approveOrDeny(id, gameId, this.approvalId).then(res => {
             if(res.status === 201){
                 this.gameName=''
                 this.dateFinished=''    
@@ -45,18 +43,20 @@ methods: {
             alert(error)
         })
        
-}, cancel(){
+}, 
+cancel(){
     this.$router.push('/games');
 }
 }
 }
+
 </script>
 
 <style scoped>
 *{
     box-sizing: border-box;
 }
-    .main{
+    .main12{
         height: 100vh;
         display: flex;
         align-items: center;
@@ -68,14 +68,14 @@ methods: {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        row-gap: 20px;
-        background-color:rgba(255, 255, 255, 0.829) ;
+        row-gap: 30px;
+        background-color:rgba(255, 255, 255) ;
      
         border-radius: 14px;
     }
     .display{
         width: 100%;
-        row-gap: 10px;
+        row-gap: 15px;
          display: flex;
         flex-direction: column;
         align-items: center;

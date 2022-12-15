@@ -9,6 +9,31 @@
                     <!-- </router-link> -->
           </td>
         </tr>
+        <tr>
+            <td >
+              <p>Ultimate Trading</p>  
+          </td>
+        </tr>
+          <tr>
+            <td >
+              <p>Ultimate Trading Round 2</p>  
+          </td>
+        </tr>
+          <tr>
+            <td >
+              <p>ETFs only</p>  
+          </td>
+        </tr>
+          <tr>
+            <td >
+              <p>Options Options Options</p>  
+          </td>
+        </tr>
+          <tr>
+            <td >
+              <p>Gold is Gold</p>  
+          </td>
+        </tr>
     </section>
 </template>
 

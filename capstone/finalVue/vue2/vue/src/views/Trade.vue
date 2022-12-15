@@ -102,6 +102,10 @@ background-size: cover;
     padding-bottom: 5px;
     margin-left: 10px;
    border-bottom: 2px solid #AFB2ED;
+      color: white;
+      font-size: 45px;
+      text-shadow: 1.5px 1.5px #6A6EBD;
+  
    
 }
 
@@ -118,20 +122,40 @@ background-size: cover;
 .stock-block{
     padding-top: 5px;
     padding-bottom: 5px;
+      color: #5c60a0;
+    text-shadow: .4px .1px white;
+      
+    
 }
 
 .price{
     font-size: 14px;
      margin-left: 2.5px;
-
+      color: white;
+      text-shadow: 1px 1px #6A6EBD;
+  
 }
 
 .buy-button{
     margin-left: 20px;
+       cursor: pointer;
+    background:#EAFF45;
+    border-color:#EAFF45;
+    border-radius: 6px;
+    border-style:solid;
+     color: #5359c3;
+     padding: 2px 6px;
 }
 
 .sell-button{
     margin-left: 20px;
+        cursor: pointer;
+    background:#5359c3;
+    border-color:#5359c3;
+    border-radius: 6px;
+    border-style:solid;
+     color: white;
+     padding: 2px 6px;
 }
 
 .holdings{
@@ -143,12 +167,28 @@ background-size: cover;
     font-size: 40px;
     font-weight: 100;
     
+      color: white;
+     
+      text-shadow: 1.5px 1.5px #6A6EBD;
+  
     padding-bottom: 5px;
     margin-left: 10px;
    border-bottom: 2px solid #AFB2ED;
    
 }
 
+input{
+  margin-top:5px;
+   width: 60%;
+    border-radius:6px;
+    border-style:solid; 
+}
+
+select{
+   width: 100%;
+    border-radius:6px;
+    border-style:solid; 
+}
 
 </style>
 
