@@ -7,12 +7,7 @@
     <Leaderboard></Leaderboard>
     <DisplayPortfolios></DisplayPortfolios>
   </div>
-  <div class="buttons">
-<router-link
-      v-bind:to="{name: 'addNewGame', params:{id: $store.state.user.id}}">
-      <Button :title="'Create Game'">Create Game</Button>
-    </router-link>
-    </div>
+
     
  
   </div>
@@ -35,7 +30,7 @@ export default {
 
 <style scoped>
 .Main{
- height: 100vh; 
+ height: 100%; 
 background:linear-gradient(0.25turn, rgba(175, 178, 237, .9) 0%,rgba(255, 172, 189, .9),rgba(175, 178, 237, .9));
 background-repeat: no-repeat;
 background-position: center;
