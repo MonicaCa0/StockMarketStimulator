@@ -1,12 +1,14 @@
 <template>
       <div class="container">
-          <h1>Top Games</h1>
+          <h1>Current Games</h1>
           <div class="content">
               <li>
-                  Game 1: $50,000
+                  Game 1: $105,000
+                  <p> <img src="../assets/graph1.png"/></p>
+                 
               </li>
-              <li>Game 2: $4,000</li>
-              <li>Game 3: $500</li>
+              <li>Game 2: $180,000</li>
+              <p> <img src="../assets/graph2.png" /> </p>
               
               </div>
 
@@ -31,7 +33,8 @@ data(){
 
 <style scoped>
 .container{
-    height: auto;
+    background-repeat: repeat;
+    overflow: auto;
     background-color: rgba(255,255,255,1) ;
     border-radius: 8px;
     padding: 20px 100px 10px 40px;
@@ -43,7 +46,6 @@ data(){
     justify-content: center;
 }
 .content{
-    display: flex;
     justify-content: flex-start;
 }
 h1{
@@ -68,5 +70,10 @@ h2{
 }
 li {
     margin: 10px;
+}
+
+img{
+width: 400px;
+height: auto
 }
 </style>
